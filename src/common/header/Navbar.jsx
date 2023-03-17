@@ -9,10 +9,10 @@ const Navbar = () => {
       <header className="header">
         <div className="container d_flex">
           <div className="categories d_flex">
-            <span class="fa-solid fa-border-all"></span>
+            {/* <span class="fa-solid fa-border-all"></span>
             <h4>
               Categories <i className="fa fa-chevron-down"></i>
-            </h4>
+            </h4> */}
           </div>
 
           <div className="navlink">
@@ -27,7 +27,7 @@ const Navbar = () => {
                 <Link to="/">home</Link>
               </li>
               <li>
-                <Link to="#shop">Products</Link>
+                <Link to="/">Products</Link>
               </li>
               {/* <li>
                 <Link to='/user'>user account</Link>
