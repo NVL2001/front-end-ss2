@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../components/assets/images/logo.png";
+import logo from "../../components/assets/images/logoweb.webp";
 import { Link } from "react-router-dom";
 
 const Search = ({ CartItem }) => {
@@ -15,21 +15,22 @@ const Search = ({ CartItem }) => {
         <div className="container c_flex">
           <div className="logo width ">
             <a href="/">
-              {" "}
+              {""}
               <img src={logo} alt="" />
             </a>
           </div>
 
           <div className="search-box f_flex">
             <i className="fa fa-search"></i>
-            <input type="text" placeholder="Search and hit enter..." />
-            <span>All Category</span>
+            <input type="text" placeholder="Nhập từ tìm kiếm..." />
+            {/* <span>All Category</span> */}
           </div>
 
           <div className="icon f_flex width">
-            <i className="fa fa-user icon-circle">
-              <Link to="/login"></Link>
-            </i>
+            <Link to="/user">
+              <i className="fa fa-user icon-circle"> </i>
+            </Link>
+
             {/* <LoginSignup /> */}
             <div className="cart">
               <Link to="/cart">

@@ -7,11 +7,10 @@ const Footer = () => {
       <footer>
         <div className="container grid2">
           <div className="box">
-            <h1>BEAUTIFIE</h1>
+            <h1>Rose Secret</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
-              libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
-              et lectus vel ut sollicitudin elit at amet.
+              Sản phẩm authentic<br />
+              Make you beautiful
             </p>
             {/* <div className="icon d_flex">
               <div className="img d_flex">
@@ -26,7 +25,7 @@ const Footer = () => {
           </div>
 
           <div className="box">
-            <h2>About Us</h2>
+            <h2>Về chúng tôi</h2>
             <ul>
               <li>Careers</li>
               <li>Our Stores</li>
@@ -36,7 +35,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="box">
-            <h2>Customer Care</h2>
+            <h2>Chăm sóc khách hàng</h2>
             <ul>
               <li>Help Center </li>
               <li>How to Buy </li>
@@ -46,13 +45,13 @@ const Footer = () => {
             </ul>
           </div>
           <div className="box">
-            <h2>Contact Us</h2>
+            <h2>Liên hệ</h2>
             <ul>
               <li>
-                70 Washington Square South, New York, NY 10012, United States{" "}
+                Số nhà 59, ngõ 63-Trần Quốc Vượng{" "}
               </li>
-              <li>Email: ABC.help@gmail.com</li>
-              <li>Phone: +84 996 456 780</li>
+              <li>Email: thanhxuannguyenpr@gmail.com</li>
+              <li>Phone: 0968809488</li>
             </ul>
           </div>
         </div>

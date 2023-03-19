@@ -4,23 +4,23 @@ import "./style.css"
 const Wrapper = () => {
   const data = [
     {
-      cover: <i class='fa-solid fa-truck-fast'></i>,
-      title: "Worldwide Delivery",
+      cover: <i class="fas fa-shipping-fast"></i>,
+      title: "Ship toan quoc",
       decs: "We offer competitive prices on our 100 million plus product any range.",
     },
     {
-      cover: <i class='fa-solid fa-id-card'></i>,
-      title: "Safe Payment",
+      cover: <i class="fas fa-thumbs-up"></i>,
+      title: "Uy tin",
       decs: "We offer competitive prices on our 100 million plus product any range.",
     },
     {
-      cover: <i class='fa-solid fa-shield'></i>,
-      title: "Shop With Confidence ",
+      cover: <i class="fas fa-shield-alt"></i>,
+      title: "Si le gia tot",
       decs: "We offer competitive prices on our 100 million plus product any range.",
     },
     {
-      cover: <i class='fa-solid fa-headset'></i>,
-      title: "24/7 Support ",
+      cover: <i class="fas fa-headset"></i>,
+      title: "Ho tro 24/7  ",
       decs: "We offer competitive prices on our 100 million plus product any range.",
     },
   ]

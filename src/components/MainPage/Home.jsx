@@ -1,5 +1,5 @@
 import React from "react";
-// import Categories from "./Categories";
+import Categories from "./Categories";
 import "./Home.css";
 import SliderHome from "./Slider";
 // export const HomeContext = createContext();

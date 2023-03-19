@@ -1,0 +1,23 @@
+.user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .user-profile h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .user-profile p {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .user-profile ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .user-profile li {
+    font-size: 14px;
+  }

@@ -13,8 +13,7 @@ const Discount = () => {
             </div>
             <div className='heading-right row '>
               <span>View all</span>
-              <i className='fa-solid fa-caret-right'></i>
-            </div>
+              <i class="fas fa-arrow-right"></i>            </div>
           </div>
           <Dcard />
         </div>

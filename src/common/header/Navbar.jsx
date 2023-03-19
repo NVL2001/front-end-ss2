@@ -24,10 +24,10 @@ const Navbar = () => {
             >
               {/*<ul className='link f_flex uppercase {MobileMenu ? "nav-links-MobileMenu" : "nav-links"} onClick={() => setMobileMenu(false)}'>*/}
               <li>
-                <Link to="/">home</Link>
+                <Link to="/">Trang chủ</Link>
               </li>
               <li>
-                <Link to="/">Products</Link>
+                <Link to="/product">Sản phẩm</Link>
               </li>
               {/* <li>
                 <Link to='/user'>user account</Link>
@@ -36,10 +36,10 @@ const Navbar = () => {
                 <Link to='/vendor'>vendor account</Link>
               </li> */}
               <li>
-                <Link to="/track">track my order</Link>
+                <Link to="/track">Đơn đặt hàng</Link>
               </li>
               <li>
-                <Link to="/contact">contact</Link>
+                <Link to="/contact">Liên hệ</Link>
               </li>
             </ul>
 

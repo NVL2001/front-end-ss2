@@ -16,14 +16,25 @@ const Shop = ({ addToCart }) => {
           <div className="contentWidth">
             <div className="heading d_flex">
               <div className="heading-left row  f_flex">
-                {/* category */}
-                <h1>
-                  Category<i className="fa-solid fa-caret-down"></i>
-                </h1>
+                {/* <h1>
+                  Danh mục<i className="fa-solid fa-down"></i>
+                </h1> */}
               </div>
               <div className="heading-right row ">
-                <span>View all</span>
-                <i className="fa-solid fa-caret-right"></i>
+                <div class="collection-sorting-wrapper">
+                  <div class="form-horizontal not-filter">
+                    <select name="SortBy" id="SortBy">
+                      <option value="manual">Sản phẩm nổi bật</option>
+                      <option value="best-selling">Bán chạy nhất</option>
+                      <option value="title-ascending">Tên: A-Z</option>
+                      <option value="title-descending">Tên: Z-A</option>
+                      <option value="price-ascending">Giá: Tăng dần</option>
+                      <option value="price-descending">Giá: Giảm dần</option>
+                      <option value="created-descending">Mới nhất</option>
+                      <option value="created-ascending">Cũ nhất</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="product-content  grid1">

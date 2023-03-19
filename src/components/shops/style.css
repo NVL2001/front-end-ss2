@@ -60,16 +60,16 @@
   flex-wrap: wrap;
   /* align-items: center; */
   justify-content: center;
-
+  gap: 30px;
   align-items: center;
 
 
 }
 
-.shop .product img {
-
-
-  height: 350px;
+.shop .product .img {
+  width: 100%;
+  display: block;
+  height: 220px;
 
   border-radius: 5px;
 
@@ -89,24 +89,25 @@
 }
 
 .product-details h3 {
-  font-size: 20px;
+  /* font-size: 20px; */
   font-weight: 500;
+  font-size: 14px;
   margin-bottom: 10px;
   max-width: max-content;
-  position: absolute;
-  top: 70%;
+  /* position: absolute; */
+  /* top: 70%; */
 
 }
 
 
-.product-details .rate {
+/* .product-details .rate {
   position: absolute;
   bottom: 5%;
-}
+} */
 
 .product-details h4 {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
 }
 
 .product-details button {
@@ -117,13 +118,76 @@
 }
 
 .mtop {
-  height: 600px;
-  width: 400px;
+  height: 370px;
+  width: 250px;
 }
 
 .mtop img {
-  height: 100%;
+  display: block;
+  height:auto;
   width: 100%;
   object-fit: cover;
   background-position: center;
+}
+
+.loading-spinner {
+
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-icon {
+  width: 40px;
+  height: 40px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.collection-sorting-wrapper select {
+  outline: none;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 10px;
+  padding: 0px 50px 0px 10px;
+  border-radius: 25px;
+  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+  border: none;
+}
+
+
+.collection-sorting-wrapper .form-horizontal {
+  border: 1px solid #9ea3ff;
+  float: right;
+  border-radius: 25px;
+  position: relative;
+  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+
+}
+
+.collection-sorting-wrapper .form-horizontal:after {
+  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+  content: "";
+  width: 44px;
+  height: 41px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+select {
+  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
 }
