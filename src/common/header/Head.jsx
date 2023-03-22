@@ -4,14 +4,16 @@ const Head = () => {
   return (
     <>
       <section className="head">
-        <div className="container d_flex">
+        <div className="container d_flex ">
           <div className="left row">
             <i className="fa fa-phone"></i>
             <label> 0968809488</label>
             <i className="fa fa-envelope"></i>
             <label> nvl@gmail.com</label>
             {/* MAIL TO */}
-            
+          </div>
+          <div className="center row">
+            <h1>Rose Secret</h1>
           </div>
           <div className="right row RText">
             {/* <label>Theme FAQ"s</label>
@@ -25,10 +27,9 @@ const Head = () => {
             <label>Đăng nhập</label>
             <span>🏳️</span>
             <label>Đăng ký</label> */}
-            {/* <i class="fab fa-facebook-square"></i>
-            <i class="fab fa-instagram-square"></i>
-            <i class="fab fa-twitter"></i> */}
-            <h3>Rose Secret</h3>
+            <i className="fab fa-facebook-square"></i>
+            <i className="fab fa-instagram-square"></i>
+            <i className="fab fa-twitter"></i>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const Cart = ({ CartItem, addToCart, decreaseQty }) => {
   // Stpe: 7   calucate total of items
@@ -27,8 +28,14 @@ const Cart = ({ CartItem, addToCart, decreaseQty }) => {
               return (
                 <div className="cart-list product d_flex" key={item.id}>
                   <div className="img">
-                    <img src={`http://${item.productImages[0]}`} alt="image" />
+                    <Link to={`/products/${item.id}`}>
+                      <img
+                        src={`http://${item.productImages[0]}`}
+                        alt="image"
+                      />
+                    </Link>
                   </div>
+
                   <div className="cart-details">
                     <h3>{item.name}</h3>
                     <h4>
@@ -78,7 +85,6 @@ const Cart = ({ CartItem, addToCart, decreaseQty }) => {
             <div className="checkout--button">
               <button>Thanh toán </button>
               {/* <i class="fas fa-arrow-right"> </i> */}
-
             </div>
           </div>
         </div>

@@ -2,12 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import { Spinner } from "react-bootstrap";
-import { useProduct } from "../context/ProductContext";
 import { Link } from "react-router-dom";
+import defaultImage from "../assets/images/logoweb.webp";
 
 // const ShopCart = ({ shopItems, addToCart }) => {
-const ShopCart = ({ addToCart }) => {
+const ShopCart = ({ addToCart, src }) => {
   //LIKE
   const [count, setCount] = useState(0);
   const increment = () => {
@@ -21,11 +20,8 @@ const ShopCart = ({ addToCart }) => {
       </div>
     );
   };
-  const history = useHistory();
-  const { setProductDetail } = useProduct();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [selectedProductId, setSelectedProductId] = useState(null);
   //fetch
   useEffect(() => {
     const fetchData = async () => {
@@ -40,12 +36,6 @@ const ShopCart = ({ addToCart }) => {
   }, []);
   console.log("products");
 
-  console.log(products.pageItems);
- 
-  const handleRedirectToProductDetail = (pageItem) => {
-    setProductDetail(pageItem);
-    history.push(`/details/${pageItem.id}`);
-  };
   return (
     <>
       {loading ? (
@@ -57,46 +47,38 @@ const ShopCart = ({ addToCart }) => {
               <div
                 className="box"
                 key={pageItem.id}
-                onClick={() => setSelectedProductId}
+                // onClick={() => setSelectedProductId}
               >
                 <div className="product mtop">
                   <Link to={`/products/${pageItem.id}`}>
                     {" "}
                     <div className="img">
                       <span className="discount">{pageItem.discount}% Off</span>
+
                       <img
                         src={`http://${pageItem.productImages[0]}`}
-                        alt="image"
+                        alt="..."
                       />
 
                       <div className="product-like">
                         <label>{count}</label> <br />
-                        <i
-                          className="fas fa-heart"
-                          onClick={increment}
-                        ></i>
+                        <i className="fas fa-heart" onClick={increment}></i>
                       </div>
                     </div>
                   </Link>
+                  <hr />
                   <div className="product-details">
-                    <h3>
-                    {pageItem.name.length > 60 
-                      ? `${pageItem.name.slice(0, 60)}...` : pageItem.name}
-                    </h3>
+                    <Link to={`/products/${pageItem.id}`}>
+                      <h3>
+                        {pageItem.name.length > 65
+                          ? `${pageItem.name.slice(0, 65)}...`
+                          : pageItem.name}
+                      </h3>
+                    </Link>
 
-
-                    {/* <div className="rate">
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                      <i className="fa fa-star"></i>
-                    </div> */}
                     <div className="price">
                       <h4>{pageItem.price} VND </h4>
-                      {/* step : 3
-              if hami le button ma click garryo bahne
-             */}
+
                       <button onClick={() => addToCart(pageItem)}>
                         <i className="fa fa-plus"></i>
                       </button>
@@ -113,42 +95,3 @@ const ShopCart = ({ addToCart }) => {
 };
 
 export default ShopCart;
-// return (
-//   <>
-//     {shopItems.map((shopItems, index) => {
-//       return (
-//         <div className="box">
-//           <div className="product mtop">
-//             <div className="img">
-//               <span className="discount">{shopItems.discount}% Off</span>
-//               <img src={shopItems.cover} alt="" />
-//               <div className="product-like">
-//                 <label>{count}</label> <br />
-//                 <i className="fa-regular fa-heart" onClick={increment}></i>
-//               </div>
-//             </div>
-//             <div className="product-details">
-//               <h3>{shopItems.name}</h3>
-//               {/* <div className="rate">
-//                 <i className="fa fa-star"></i>
-//                 <i className="fa fa-star"></i>
-//                 <i className="fa fa-star"></i>
-//                 <i className="fa fa-star"></i>
-//                 <i className="fa fa-star"></i>
-//               </div> */}
-//               <div className="price">
-//                 <h4>${shopItems.price}.00 </h4>
-//                 {/* step : 3
-//                    if hami le button ma click garryo bahne
-//                   */}
-//                 <button onClick={() => addToCart(shopItems)}>
-//                   <i className="fa fa-plus"></i>
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       );
-//     })}
-//   </>
-// );

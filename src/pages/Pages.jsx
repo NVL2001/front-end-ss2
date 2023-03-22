@@ -8,11 +8,11 @@ import NewArrivals from "../components/newarrivals/NewArrivals";
 import Annocument from "../components/annocument/Annocument";
 import Discount from "../components/discount/Discount";
 
-const Pages = ({ productItems, addToCart, CartItem }) => {
+const Pages = ({ addToCart, CartItem }) => {
   return (
     <>
       <Home CartItem={CartItem} />
-      <FlashDeals productItems={productItems} addToCart={addToCart} />
+      {/* <FlashDeals productItems={productItems} addToCart={addToCart} /> */}
       <TopCate />
       <NewArrivals />
       <Discount />

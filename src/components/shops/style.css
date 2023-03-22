@@ -99,6 +99,10 @@
 
 }
 
+.product-details h3:hover {
+  color: #9ea3ff;
+}
+
 
 /* .product-details .rate {
   position: absolute;
@@ -124,7 +128,7 @@
 
 .mtop img {
   display: block;
-  height:auto;
+  height: auto;
   width: 100%;
   object-fit: cover;
   background-position: center;

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 // import Catg from "./Catg";
 import ShopCart from "./ShopCart";
 import "./style.css";
@@ -7,6 +8,46 @@ import "./style.css";
 
 // const Shop = ({ addToCart, shopItems }) => {
 const Shop = ({ addToCart }) => {
+  const [products, setProducts] = useState([]);
+  const [sortOption, setSortOption] = useState("");
+  const handleSortByPriceHighToLow = () => {
+    // Sort products by price in descending order
+    setProducts([...products].sort((a, b) => b.price - a.price));
+    setSortOption("price-high-to-low");
+  };
+  const handleSortByPriceLowToHigh = () => {
+    // Sort products by price in ascending order
+    setProducts([...products].sort((a, b) => a.price - b.price));
+    setSortOption("price-low-to-high");
+  };
+  const handleSortByNameAsc = () => {
+    // Sort products by name in ascending order
+    setProducts([...products].sort((a, b) => a.name.localeCompare(b.name)));
+    setSortOption("name-asc");
+  };
+  const handleSortByNameDesc = () => {
+    // Sort products by name in descending order
+    setProducts([...products].sort((a, b) => b.name.localeCompare(a.name)));
+    setSortOption("name-desc");
+  };
+  const handleSortByNewest = () => {
+    // Sort products by date added in descending order
+    setProducts(
+      [...products].sort(
+        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+      )
+    );
+    setSortOption("newest");
+  };
+  const handleSortByOldest = () => {
+    // Sort products by date added in ascending order
+    setProducts(
+      [...products].sort(
+        (a, b) => new Date(a.dateAdded) - new Date(b.dateAdded)
+      )
+    );
+    setSortOption("oldest");
+  };
   return (
     <>
       <section id="shop" className="shop background">
@@ -21,17 +62,20 @@ const Shop = ({ addToCart }) => {
                 </h1> */}
               </div>
               <div className="heading-right row ">
-                <div class="collection-sorting-wrapper">
-                  <div class="form-horizontal not-filter">
-                    <select name="SortBy" id="SortBy">
-                      <option value="manual">Sản phẩm nổi bật</option>
-                      <option value="best-selling">Bán chạy nhất</option>
-                      <option value="title-ascending">Tên: A-Z</option>
-                      <option value="title-descending">Tên: Z-A</option>
-                      <option value="price-ascending">Giá: Tăng dần</option>
-                      <option value="price-descending">Giá: Giảm dần</option>
-                      <option value="created-descending">Mới nhất</option>
-                      <option value="created-ascending">Cũ nhất</option>
+                <div className="collection-sorting-wrapper">
+                  <div className="form-horizontal not-filter">
+                    <select
+                      name="SortBy"
+                      id="SortBy"
+                      value={sortOption}
+                      onChange={(event) => setSortOption(event.target.value)}
+                    >
+                      <option value="name-asc">Tên: A-Z</option>
+                      <option value="name-desc">Tên: Z-A</option>
+                      <option value="price-low-to-high">Giá: Tăng dần</option>
+                      <option value="price-high-to-low">Giá: Giảm dần</option>
+                      <option value="newest">Mới nhất</option>
+                      <option value="oldest">Cũ nhất</option>
                     </select>
                   </div>
                 </div>

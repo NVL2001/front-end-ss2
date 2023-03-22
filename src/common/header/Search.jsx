@@ -1,14 +1,18 @@
 import React from "react";
 import logo from "../../components/assets/images/logoweb.webp";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
 const Search = ({ CartItem }) => {
   // fixed Header
   window.addEventListener("scroll", function () {
     const search = document.querySelector(".search");
     search.classList.toggle("active", window.scrollY > 100);
   });
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <>
       <section className="search">
@@ -20,18 +24,20 @@ const Search = ({ CartItem }) => {
             </a>
           </div>
 
-          <div className="search-box f_flex">
+          <div className="search-box f_flex" aria-label="search">
+            <a href="" target="_blank" hidden></a>
+
             <i className="fa fa-search"></i>
-            <input type="text" placeholder="Nhập từ tìm kiếm..." />
+            <input id="search" type="text" placeholder="Nhập từ tìm kiếm..." />
             {/* <span>All Category</span> */}
+            <div className="autocom-box"></div>
           </div>
 
           <div className="icon f_flex width">
-            <Link to="/user">
-              <i className="fa fa-user icon-circle"> </i>
-            </Link>
+            <div className="user">
+              <i className="fa fa-user icon-circle"></i>
+            </div>
 
-            {/* <LoginSignup /> */}
             <div className="cart">
               <Link to="/cart">
                 <i className="fa fa-shopping-bag icon-circle"></i>
