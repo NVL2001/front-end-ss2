@@ -9,49 +9,64 @@
 }
 
 .cart-items .cart-total {
+  position: sticky;
+  top: 20%;
+  bottom: 30%;
+
   width: 30%;
   margin-top: 30px;
   margin-left: 30px;
   height: 130px;
+  /* top: 20%; */
+  /* right: 0; */
 }
+
 .cart-list {
   background: white;
   margin-top: 30px;
 }
+
 .cart-items .img {
   width: 150px;
   height: 150px;
 }
+
 .cart-items img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
 .cart-items .cart-details h3 {
   font-size: 20px;
   font-weight: 500;
   margin-top: 20px;
 }
+
 .cart-items .cart-details h4 {
   font-size: 15px;
   font-weight: 400;
   margin-top: 50px;
   color: grey;
 }
+
 .cart-items h4 span {
   color: #e94560;
   margin-left: 20px;
   font-weight: 500;
 }
+
 .removeCart {
   background: none;
   font-size: 25px;
   text-align: right;
   margin-right: 10px;
 }
+
 .cartControl {
   margin-top: 50px;
 }
+
 .cartControl button {
   width: 40px;
   height: 40px;
@@ -59,28 +74,33 @@
   border-radius: 5px;
   font-size: 20px;
 }
-.cartControl button:hover
-{
+
+.cartControl button:hover {
   background-color: #e94560;
   color: white;
 }
+
 .incCart {
   background: none;
   border: 1px solid rgb(3 0 71 / 9%);
   color: #e94560;
 }
+
 .desCart {
   background: #f6f9fc;
 }
+
 .cart-total h4 {
   font-size: 15px;
   font-weight: 400;
 }
+
 .cart-total h3 {
   font-size: 20px;
   font-weight: 500;
   color: #e94560;
 }
+
 .cart-total h2 {
   font-size: 18px;
   margin-bottom: 20px;
@@ -88,13 +108,15 @@
   padding-bottom: 10px;
   color: #e94560;
 }
+
 .no-items {
   color: #e94560;
   font-size: 18px;
   margin-top: 30px;
   height: 130px;
 }
-.checkout--button{
+
+.checkout--button {
   background: #e94560;
   font-weight: 500;
   color: white;
@@ -102,16 +124,18 @@
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  margin-top: 30px;
+  margin: 30px;
   text-align: center;
 }
-.checkout--button:hover{
+
+.checkout--button:hover {
   background: salmon;
   transform: scale(1.1);
 }
+
 .checkout--button button {
   text-align: center;
   color: rgb(255, 255, 255);
-background-color: transparent;
-font-size: 25px;
+  background-color: transparent;
+  font-size: 25px;
 }
