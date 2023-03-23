@@ -48,17 +48,13 @@
 
 .shop .contentWidth {
   /* margin-left: 30px; */
-
 }
 
 .grid1 {
-  /* display: grid;
-  grid-template-columns: repeat(3, 2fr);
-  grid-gap: 20px; */
+
 
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
   justify-content: center;
   gap: 30px;
   align-items: center;

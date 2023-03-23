@@ -78,7 +78,7 @@ button {
   width: 50px;
   height: 50px;
   line-height: 50px;
-  background: #f3f5f9;
+  background: sandybrown;
   margin-left: 20px;
   text-align: center;
   border-radius: 50%;
@@ -135,7 +135,7 @@ button {
 }
 
 .top {
-  margin-top: 80px;
+  height: 50vh;
 }
 
 .mtop {

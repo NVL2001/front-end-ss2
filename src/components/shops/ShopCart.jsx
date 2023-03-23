@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import defaultImage from "../assets/images/logoweb.webp";
 
 // const ShopCart = ({ shopItems, addToCart }) => {
-const ShopCart = ({ addToCart, src }) => {
+const ShopCart = ({ addToCart }) => {
   //LIKE
   const [count, setCount] = useState(0);
   const increment = () => {

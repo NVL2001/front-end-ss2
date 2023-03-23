@@ -135,24 +135,25 @@
 /*------header-----------*/
 
 header {
-  height: 8vh;
-  box-shadow: -1px 15px 17px -8px rgba(0, 0, 0, 0.1);
+  height: 50px;
+  box-shadow: -1px 15px 17px -8px rgba(34, 0, 0, 0.1);
 }
 
 header ul {
-  line-height: 8vh;
+  line-height: 50px;
 }
 
 header ul li {
-  margin-left: 30px;
+  /* margin-left: 30px; */
 }
 
 header ul li a {
+  display: inline-block;
   transition: 0.2s;
   font-size: 15px;
   font-weight: 400;
-  padding: 10px;
-  border-radius: 10px;
+  /* border-radius: 30px; */
+  padding: 0 30px;
 }
 
 header ul li a:hover {
@@ -166,13 +167,13 @@ header ul li a:hover {
 
 
 .navlink ul {
-
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   list-style: none;
   margin: auto;
+  background-color: #fcf2f2;
 
 
 }

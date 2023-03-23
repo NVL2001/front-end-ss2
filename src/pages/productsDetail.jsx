@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProductDetail.css";
-function ProductDetail(props) {
+const ProductDetail = (props) => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -15,7 +15,14 @@ function ProductDetail(props) {
     };
     fetchData();
   }, [props.match.params.id]);
-  const handleAddToCart = () => {};
+
+  const [sliderData, setSliderData] = useState(
+    product ? product.productImages[0] : null
+  );
+  const handleClick = (index) => {
+    setSliderData(product.productImages[index]);
+  };
+
   const handleIncrement = () => {
     setQuantity(quantity + 1);
   };
@@ -33,11 +40,30 @@ function ProductDetail(props) {
   return (
     <>
       <div className="product-detail">
-        <img
-          src={`http://${product.productImages[0]}`}
-          alt={product.name}
-          className="product-image"
-        />
+        <div className="leftside">
+          <div className="slider">
+            <img
+              src={`http://${
+                sliderData ? sliderData : product.productImages[0]
+              }`}
+              alt="..."
+              className="product-image"
+            />
+          </div>
+          <div className="slider-nav">
+            {product.productImages.map((image, index) => {
+              return (
+                <img
+                  src={`http://${image}`}
+                  alt="..."
+                  key={index}
+                  onClick={() => handleClick(index)}
+                />
+              );
+            })}
+          </div>
+        </div>
+
         <div className="rightside">
           <h2 className="product-name">{product.name}</h2>
           <p className="product-description">{product.description}</p>
@@ -46,14 +72,12 @@ function ProductDetail(props) {
             <button onClick={handleDecrement}>-</button>
             <span>{quantity}</span>
             <button onClick={handleIncrement}>+</button>
-            <button className="add" onClick={handleAddToCart}>
-              Add to Cart
-            </button>
+            <button className="add">Add to Cart</button>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default ProductDetail;
