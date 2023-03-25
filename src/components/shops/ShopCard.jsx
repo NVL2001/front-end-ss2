@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // const ShopCard = ({ shopItems, addToCart }) => {
 const ShopCard = ({ addToCart }) => {
@@ -33,7 +33,6 @@ const ShopCard = ({ addToCart }) => {
 
     fetchData();
   }, []);
-  console.log("products");
 
   return (
     <>

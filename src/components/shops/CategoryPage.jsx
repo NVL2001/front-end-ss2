@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-// import Catg from "./Catg";
-import ShopCard from "./ShopCard";
-import "./style.css";
-// import { useHistory, useParams } from "react-router-dom";
-// import { getAllProduct } from "../../api/apiAllProduct";
+// CategoryPage.jsx
+import { useLocation } from "react-router-dom";
+import ProductList from "./productsByCategory";
+import React, { useState } from "react";
 
-// const Shop = ({ addToCart, shopItems }) => {
-const Shop = ({ addToCart }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+function CategoryPage({ addToCart }) {
+  const location = useLocation();
+  const products = location.state?.products || [];
 
-  const [sortOption, setSortOption] = useState("");
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/product/products"
-      );
-      setProducts(response.data);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, []);
   const [sortCriteria, setSortCriteria] = useState("name");
 
   const handleSortChange = (event) => {
@@ -63,8 +47,8 @@ const Shop = ({ addToCart }) => {
             <div className="heading d_flex">
               <div className="heading-left row  f_flex">
                 {/* <h1>
-                  Danh mục<i className="fa-solid fa-down"></i>
-                </h1> */}
+                Danh mục<i className="fa-solid fa-down"></i>
+              </h1> */}
               </div>
               <div className="heading-right row ">
                 <div className="collection-sorting-wrapper">
@@ -89,13 +73,13 @@ const Shop = ({ addToCart }) => {
 
             <div className="product-content  grid1">
               {/* <ShopCard addToCart={addToCart} shopItems={shopItems} /> */}
-              <ShopCard addToCart={addToCart} />
+              <ProductList addToCart={addToCart} products={products} />
             </div>
           </div>
         </div>
       </section>
     </>
   );
-};
+}
 
-export default Shop;
+export default CategoryPage;

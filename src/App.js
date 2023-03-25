@@ -8,8 +8,8 @@ import ProductDetail from "./pages/productsDetail"
 import User from "./pages/User";
 import Cart from "./common/Cart/Cart"
 import Footer from "./common/footer/Footer"
-import axios from "axios"
-import { useEffect } from "react"
+
+import CategoryPage from "./components/shops/CategoryPage"
 
 
 function App() {
@@ -58,11 +58,12 @@ function App() {
 
 
 
-  console.log("products");
   return (
     <>
       <Router>
+        {/* head */}
         <Header CartItem={CartItem} />
+        {/* body */}
         <Switch>
           <Route path='/' exact>
             <Pages addToCart={addToCart} />
@@ -76,6 +77,9 @@ function App() {
             <ProductPage addToCart={addToCart} />
           </Route>
           <Route path="/products/:id" component={ProductDetail} CartItem={CartItem} addToCart={addToCart} decreaseQty={decreaseQty} />
+
+          <Route path="/category/:id" component={CategoryPage} CartItem={CartItem} addToCart={addToCart} decreaseQty={decreaseQty} />
+
 
           <Route path='/user' exact>
             <User />

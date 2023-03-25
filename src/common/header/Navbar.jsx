@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation();
-
   // fixed Header
   window.addEventListener("scroll", function () {
     const header = document.querySelector(".header");
@@ -13,21 +12,36 @@ const Navbar = () => {
 
   // Toogle Menu
   const [MobileMenu, setMobileMenu] = useState(false);
-  // fetch '/api/category/get-categories'
 
+  // fetch '/api/category/get-categories'
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
         "http://localhost:8080/api/category/get-categories"
-        // "https://b581-125-212-128-186.ap.ngrok.io/api/category/get-categories"
-        // "https://bd8e-125-212-128-186.ap.ngrok.io/api/category/get-categories"
       );
       setCategories(response.data);
     };
     fetchData();
   }, []);
-  console.log(categories);
+  // console.log(categories);
+
+  //product by cate
+  const history = useHistory();
+
+  const handleCategoryClick = (category) => {
+    fetch(
+      `http://localhost:8080/api/product/get-product-by-category/${category.name}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        history.push({
+          pathname: `/category/${category.name}`,
+          state: { products: data },
+        });
+      });
+  };
 
   return (
     <>
@@ -65,7 +79,13 @@ const Navbar = () => {
 
               <div className="dropdown-content">
                 {categories.map((category) => (
-                  <Link key={category.id} to={`/category/${category.id}`}>
+                  // ​/api​/product​/get-product-by-category​/{categoryName}
+                  // getProductByCategory
+                  <Link
+                    key={category.id}
+                    to={`/category/${category.id}`}
+                    onClick={() => handleCategoryClick(category)}
+                  >
                     {category.name}
                   </Link>
                 ))}
