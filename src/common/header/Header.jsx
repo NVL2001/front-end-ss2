@@ -7,8 +7,10 @@ const Header = ({ CartItem }) => {
   return (
     <>
       <Head />
-      <Search CartItem={CartItem} />
-      <Navbar />
+      <div className="headerAll">
+        <Search CartItem={CartItem} />
+        <Navbar />
+      </div>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import logo from "../../components/assets/images/logo.png";
 
 const Footer = () => {
   return (
@@ -7,11 +8,8 @@ const Footer = () => {
       <footer>
         <div className="container grid2">
           <div className="box">
-            <h1>Rose Secret</h1>
-            <p>
-              Sản phẩm authentic<br />
-              Make you beautiful
-            </p>
+            {/* <h1>Rose Secret</h1> */}
+
             {/* <div className="icon d_flex">
               <div className="img d_flex">
                 <i class="fa-brands fa-google-play"></i>
@@ -22,6 +20,17 @@ const Footer = () => {
                 <span>App Store</span>
               </div>
             </div> */}
+            <div className="logo width ">
+              <a href="/">
+                {""}
+                <img src={logo} alt="" />
+              </a>
+            </div>
+            <p>
+              Sản phẩm authentic
+              <br />
+              Make you beautiful
+            </p>
           </div>
 
           <div className="box">
@@ -47,9 +56,7 @@ const Footer = () => {
           <div className="box">
             <h2>Liên hệ</h2>
             <ul>
-              <li>
-                Số nhà 59, ngõ 63-Trần Quốc Vượng{" "}
-              </li>
+              <li>Số nhà 59, ngõ 63-Trần Quốc Vượng </li>
               <li>Email: thanhxuannguyenpr@gmail.com</li>
               <li>Phone: 0968809488</li>
             </ul>

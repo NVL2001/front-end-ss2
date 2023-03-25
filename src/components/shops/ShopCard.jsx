@@ -1,12 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import defaultImage from "../assets/images/logoweb.webp";
+import { Link, useHistory } from "react-router-dom";
 
-// const ShopCart = ({ shopItems, addToCart }) => {
-const ShopCart = ({ addToCart }) => {
+// const ShopCard = ({ shopItems, addToCart }) => {
+const ShopCard = ({ addToCart }) => {
   //LIKE
   const [count, setCount] = useState(0);
   const increment = () => {
@@ -22,6 +20,7 @@ const ShopCart = ({ addToCart }) => {
   };
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+
   //fetch
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +76,13 @@ const ShopCart = ({ addToCart }) => {
                     </Link>
 
                     <div className="price">
-                      <h4>{pageItem.price} VND </h4>
+                      <h4>
+                        {pageItem.price
+
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                        VND
+                      </h4>
 
                       <button onClick={() => addToCart(pageItem)}>
                         <i className="fa fa-plus"></i>
@@ -94,4 +99,4 @@ const ShopCart = ({ addToCart }) => {
   );
 };
 
-export default ShopCart;
+export default ShopCard;

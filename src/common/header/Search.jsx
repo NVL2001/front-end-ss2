@@ -1,5 +1,7 @@
 import React from "react";
-import logo from "../../components/assets/images/logoweb.webp";
+// import logo from "../../components/assets/images/logoweb.webp";
+import logo from "../../components/assets/images/logo.png";
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Search = ({ CartItem }) => {

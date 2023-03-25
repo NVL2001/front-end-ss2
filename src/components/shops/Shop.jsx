@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 // import Catg from "./Catg";
-import ShopCart from "./ShopCart";
+import ShopCard from "./ShopCard";
 import "./style.css";
 // import { useHistory, useParams } from "react-router-dom";
 // import { getAllProduct } from "../../api/apiAllProduct";
@@ -9,45 +10,51 @@ import "./style.css";
 // const Shop = ({ addToCart, shopItems }) => {
 const Shop = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [sortOption, setSortOption] = useState("");
-  const handleSortByPriceHighToLow = () => {
-    // Sort products by price in descending order
-    setProducts([...products].sort((a, b) => b.price - a.price));
-    setSortOption("price-high-to-low");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        "http://localhost:8080/api/product/products"
+      );
+      setProducts(response.data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+  console.log("products");
+  const [sortCriteria, setSortCriteria] = useState("name");
+
+  const handleSortChange = (event) => {
+    setSortCriteria(event.target.value);
   };
-  const handleSortByPriceLowToHigh = () => {
-    // Sort products by price in ascending order
-    setProducts([...products].sort((a, b) => a.price - b.price));
-    setSortOption("price-low-to-high");
-  };
-  const handleSortByNameAsc = () => {
-    // Sort products by name in ascending order
-    setProducts([...products].sort((a, b) => a.name.localeCompare(b.name)));
-    setSortOption("name-asc");
-  };
-  const handleSortByNameDesc = () => {
-    // Sort products by name in descending order
-    setProducts([...products].sort((a, b) => b.name.localeCompare(a.name)));
-    setSortOption("name-desc");
-  };
-  const handleSortByNewest = () => {
-    // Sort products by date added in descending order
-    setProducts(
-      [...products].sort(
-        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
-      )
-    );
-    setSortOption("newest");
-  };
-  const handleSortByOldest = () => {
-    // Sort products by date added in ascending order
-    setProducts(
-      [...products].sort(
-        (a, b) => new Date(a.dateAdded) - new Date(b.dateAdded)
-      )
-    );
-    setSortOption("oldest");
-  };
+  let sortedProducts = [];
+
+  if (Array.isArray(products)) {
+    sortedProducts = [...products].sort((a, b) => {
+      if (sortCriteria === "name-asc") {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortCriteria === "name-desc") {
+        return b.name.localeCompare(a.name);
+      }
+      if (sortCriteria === "price-low-to-high") {
+        return a.price - b.price;
+      }
+      if (sortCriteria === "price-high-to-low") {
+        return b.price - a.price;
+      }
+      if (sortCriteria === "newest") {
+        return new Date(b.dateAdded) - new Date(a.dateAdded);
+      }
+      if (sortCriteria === "oldest") {
+        return new Date(a.dateAdded) - new Date(b.dateAdded);
+      }
+      return 0;
+    });
+  }
   return (
     <>
       <section id="shop" className="shop background">
@@ -67,8 +74,8 @@ const Shop = ({ addToCart }) => {
                     <select
                       name="SortBy"
                       id="SortBy"
-                      value={sortOption}
-                      onChange={(event) => setSortOption(event.target.value)}
+                      value={sortCriteria}
+                      onChange={handleSortChange}
                     >
                       <option value="name-asc">Tên: A-Z</option>
                       <option value="name-desc">Tên: Z-A</option>
@@ -81,9 +88,17 @@ const Shop = ({ addToCart }) => {
                 </div>
               </div>
             </div>
+
             <div className="product-content  grid1">
-              {/* <ShopCart addToCart={addToCart} shopItems={shopItems} /> */}
-              <ShopCart addToCart={addToCart} />
+              {/* <ShopCard addToCart={addToCart} shopItems={shopItems} /> */}
+              <ShopCard addToCart={addToCart} />
+              {/* {sortedProducts.map((product) => (
+                <ShopCard
+                  key={product.id}
+                  product={product}
+                  addToCart={addToCart}
+                />
+              ))} */}
             </div>
           </div>
         </div>

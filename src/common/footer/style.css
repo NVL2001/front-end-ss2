@@ -1,6 +1,7 @@
 footer {
-  /* background-color: salmon; gradient */
-  background: linear-gradient(90deg, #e4809a 0%, #802982 100%);
+  background-color: dimgray;
+  /* background: linear-gradient(90deg, #e4809a 0%, #802982 100%); */
+
   padding: 20px 0;
   color: #fff;
   bottom: 0;
@@ -11,7 +12,7 @@ footer {
 
 footer h1 {
   margin-bottom: 30px;
-  color: #e94560;
+  color: #f1f1f1;
   font-weight: 800;
   font-style: italic;
 }
@@ -45,4 +46,14 @@ footer h2 {
 footer li {
   margin-bottom: 10px;
   opacity: 0.5;
+}
+
+.logo,
+.box {
+  text-align: center;
+}
+
+.logo img {
+  width: 200px;
+  height: auto;
 }

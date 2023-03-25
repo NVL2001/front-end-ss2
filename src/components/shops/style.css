@@ -3,6 +3,10 @@
   height: 90vh;
 }
 
+.shop {
+  margin-top: 50px;
+}
+
 .chead h1 {
   font-size: 20px;
   margin-bottom: 20px;
@@ -34,7 +38,7 @@
 }
 
 .shop .box2 {
-  margin-top: 100px !important;
+  margin-top: 200px !important;
   text-align: center;
 }
 
@@ -161,17 +165,17 @@
   margin-right: 10px;
   padding: 0px 50px 0px 10px;
   border-radius: 25px;
-  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+  background: linear-gradient(145deg, #fff1f1, salmon);
   border: none;
 }
 
 
 .collection-sorting-wrapper .form-horizontal {
-  border: 1px solid #9ea3ff;
   float: right;
+  right: 0;
   border-radius: 25px;
   position: relative;
-  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+  background: linear-gradient(145deg, #fff1f1, salmon);
 
 }
 
@@ -189,5 +193,5 @@
 }
 
 select {
-  background: linear-gradient(to right, #9ea3ff, #ffb0f8);
+  background: linear-gradient(145deg, #fff1f1, salmon);
 }

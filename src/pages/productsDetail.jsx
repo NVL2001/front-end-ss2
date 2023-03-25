@@ -67,7 +67,12 @@ const ProductDetail = (props) => {
         <div className="rightside">
           <h2 className="product-name">{product.name}</h2>
           <p className="product-description">{product.description}</p>
-          <p className="product-price">Price: {product.price} vnd</p>
+          <p className="product-price">
+            Price:{" "}
+            {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+            {""}
+            VND
+          </p>
           <div className="quantity-controls">
             <button onClick={handleDecrement}>-</button>
             <span>{quantity}</span>

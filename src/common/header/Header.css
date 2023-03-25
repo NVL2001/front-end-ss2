@@ -1,13 +1,17 @@
 /*------head-----------*/
 .head {
-  /* background-color: salmon; gradient*/
-  background: linear-gradient(145deg, #8b3585, #fb8181);
-  padding: 10px 0;
+  background-color: steelblue;
+  padding: 5px 0;
   color: #fff;
 }
 
 .head i {
   margin-right: 10px;
+}
+
+.head i:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 .head label {
@@ -24,6 +28,8 @@
 /*------search-----------*/
 .search {
   padding: 10px 0;
+  background-color: darksalmon !important;
+
 }
 
 
@@ -54,6 +60,7 @@
   border: 2px solid rgba(0, 0, 0, 0.1);
   /*padding: 10px;*/
   border-radius: 50px;
+  background-color: #ffffff;
 }
 
 .search-box i {
@@ -121,15 +128,31 @@
   position: relative;
 }
 
-.search.active {
-  height: fit-content;
-  position: fixed;
+.headerAll {
+  position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
   background-color: #fff;
   box-shadow: -1px 11px 24px -11px rgba(0, 0, 0, 0.2);
-  transition: 0.5s;
+  transition: 0.3s;
+  padding: 0;
+}
+
+.search.active {
+  height: fit-content;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+  /* transition: all ease-in-out 0.01s; */
+  padding: 5px;
+  overflow: hidden;
+}
+
+.search.active img {
+  max-width: 40%;
 }
 
 /*------header-----------*/
@@ -153,12 +176,29 @@ header ul li a {
   font-size: 15px;
   font-weight: 400;
   /* border-radius: 30px; */
-  padding: 0 30px;
+  padding: 0 50px;
+  border-collapse: collapse;
+
 }
 
 header ul li a:hover {
   color: #ffffff;
-  background-color: #e94560;
+  background-color: salmon;
+  transition: linear;
+
+}
+
+/* li a active */
+header ul li a.active {
+  color: #000000;
+  /* border-bottom: 5px solid salmon; */
+  /* outline*/
+  box-shadow: 0 0.2rem 0 0 rgba(239, 2, 2, 0.753);
+
+  /* animate
+   */
+  animation: animate 0.5s;
+
 }
 
 .open {
@@ -173,10 +213,19 @@ header ul li a:hover {
   text-align: center;
   list-style: none;
   margin: auto;
-  background-color: #fcf2f2;
-
+  background-color: #fff;
 
 }
+
+/* .header.active {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  transition: 0.5s;
+
+
+} */
 
 /* ... */
 
@@ -253,4 +302,52 @@ header ul li a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Dropdown menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+}
+
+.dropdown-content {
+
+
+  display: none;
+  position: absolute;
+  /* background: linear-gradient(180deg, #ce2222, rgb(227, 206, 204)); */
+  background: linear-gradient(180deg, hsla(0, 78%, 55%, 0.522), rgba(254, 254, 254, 0.867));
+  z-index: 1;
+  /* SHADOW */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+  min-width: 172px;
+
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ee7a7a;
+  color: rgb(255, 255, 255);
+  transform: scale(1.1);
+  text-transform: uppercase;
+  border-radius: 5px;
+
+}
+
+.dropdown:hover .dropdown-content {
+  padding-top: 2px solid salmon;
+  border-radius: 5px;
+  width: fit-content;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
