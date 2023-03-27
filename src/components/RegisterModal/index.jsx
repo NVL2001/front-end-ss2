@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import {
   Box,
   Modal,
@@ -11,13 +12,12 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Field } from 'react-final-form';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { register } from '../../api/auth';
 
 export function RegisterModal({ open, onClose }) {
   const onSubmit = useCallback(async (value) => {
     try {
-      await axios.post('/auth/register', value);
+      await register(value);
       toast.success('Register successful');
       onClose();
     } catch (err) {
@@ -71,7 +71,7 @@ export function RegisterModal({ open, onClose }) {
           <Form
             onSubmit={onSubmit}
             validate={validate}
-            render={({ handleSubmit, errors }) => (
+            render={({ handleSubmit, errors, hasValidationErrors }) => (
               <>
                 <Grid container spacing={2}>
                   <Field
@@ -173,6 +173,7 @@ export function RegisterModal({ open, onClose }) {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   onClick={handleSubmit}
+                  disabled={hasValidationErrors}
                 >
                   Sign Up
                 </Button>

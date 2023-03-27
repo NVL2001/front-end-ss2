@@ -32,7 +32,6 @@ function Cart() {
                   <Link to={`/products/${item.id}`}>
                     <img
                       src={`http://${item.productImages[0]}`}
-                      alt="image"
                     />
                   </Link>
                 </div>

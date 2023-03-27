@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 import './ProductDetail.css';
+import { APIRoutes } from '../constants/APIRoutes';
 
 function ProductDetail(props) {
   const [product, setProduct] = useState(null);
@@ -10,9 +12,8 @@ function ProductDetail(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:8080/api/product/get-product/${id}`,
-      );
+      const url = `${APIRoutes.GET_PRODUCT_BY_ID}/${id}`;
+      const response = await axios.get(url);
       setProduct(response.data);
     };
     fetchData();

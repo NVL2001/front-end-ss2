@@ -4,6 +4,8 @@ import Sdata from './Sdata';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+const renderDots = (dots) => <ul style={{ margin: '0px' }}>{dots}</ul>;
+
 function SlideCard() {
   const settings = {
     dots: true,
@@ -11,12 +13,12 @@ function SlideCard() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    appendDots: (dots) => <ul style={{ margin: '0px' }}>{dots}</ul>,
+    appendDots: (dots) => renderDots(dots),
   };
   return (
     <Slider {...settings}>
-      {Sdata.map((value, index) => (
-        <div className="box d_flex top" key={index}>
+      {Sdata.map((value) => (
+        <div className="box d_flex top" key={value.title}>
           <div className="left">
             <h1>{value.title}</h1>
             <p>{value.desc}</p>

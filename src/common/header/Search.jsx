@@ -58,7 +58,7 @@ function Search({ CartItem }) {
         </div>
 
         <div className="search-box f_flex" aria-label="search">
-          <a href="" target="_blank" hidden />
+          {/* <a href="*" target="_blank" hidden /> */}
 
           <i className="fa fa-search" />
           <input id="search" type="text" placeholder="Nhập từ tìm kiếm..." />

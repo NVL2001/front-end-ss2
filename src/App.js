@@ -1,4 +1,5 @@
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
@@ -13,10 +14,13 @@ import CategoryPage from './components/shops/CategoryPage';
 import { ProductContextProvider } from './context/ProductContext';
 import { theme } from './styles/theme';
 import { AuthContextProvider } from './context/AuthContext';
+import './infra/http';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <AuthContextProvider>
         <ProductContextProvider>
           <Router>

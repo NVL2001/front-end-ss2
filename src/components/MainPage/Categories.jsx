@@ -50,8 +50,8 @@ function Categories() {
 
   return (
     <div className="category">
-      {data.map((value, index) => (
-        <div className="box f_flex" key={index}>
+      {data.map((value) => (
+        <div className="box f_flex" key={value.cateName}>
           <img src={value.cateImg} alt="" />
           <span>{value.cateName}</span>
         </div>

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import axios from 'axios';
+
+import { getCategories } from '../../api/categories';
+import { getProductsByCategory } from '../../api/products';
 
 function Navbar() {
   const location = useLocation();
@@ -17,9 +20,7 @@ function Navbar() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        'http://localhost:8080/api/category/get-categories',
-      );
+      const response = await getCategories();
       setCategories(response.data);
     };
     fetchData();
@@ -29,18 +30,16 @@ function Navbar() {
   // product by cate
   const history = useHistory();
 
-  const handleCategoryClick = (category) => {
-    fetch(
-      `http://localhost:8080/api/product/get-product-by-category/${category.name}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        history.push({
-          pathname: `/category/${category.name}`,
-          state: { products: data },
-        });
+  const handleCategoryClick = async (category) => {
+    try {
+      const response = await getProductsByCategory(category.name);
+      history.push({
+        pathname: `/category/${category.name}`,
+        state: { products: response.data },
       });
+    } catch (err) {
+      toast.error('Something went wrong, try again later');
+    }
   };
 
   return (
@@ -78,8 +77,6 @@ function Navbar() {
 
             <div className="dropdown-content">
               {categories.map((category) => (
-                // ​/api​/product​/get-product-by-category​/{categoryName}
-                // getProductByCategory
                 <Link
                   key={category.id}
                   to={`/category/${category.id}`}

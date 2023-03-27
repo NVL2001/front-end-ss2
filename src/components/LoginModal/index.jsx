@@ -12,18 +12,25 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Field } from 'react-final-form';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+import { login } from '../../api/auth';
 
 export function LoginModal({ open, onClose }) {
   const { setUser } = useAuth();
   const onSubmit = useCallback(async (value) => {
     try {
-      const response = await axios.post('/auth/login', value);
+      const response = await login(value);
       toast.success('Login successful');
+      setUser({
+        name: response.data.username,
+        email: 'johndoe@example.com',
+        phone: '555-555-5555',
+        address: '123 Main St.',
+        shoppingHistory: [],
+        vouchers: [],
+      });
       onClose();
-      setUser(response.data);
     } catch (err) {
       toast.error('Something went wrong, try again later');
     }
@@ -60,7 +67,7 @@ export function LoginModal({ open, onClose }) {
           <Form
             onSubmit={onSubmit}
             validate={validate}
-            render={({ handleSubmit, errors }) => (
+            render={({ handleSubmit, errors, hasValidationErrors }) => (
               <>
                 <Grid container spacing={2}>
                   <Field
@@ -115,6 +122,7 @@ export function LoginModal({ open, onClose }) {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   onClick={handleSubmit}
+                  disabled={hasValidationErrors}
                 >
                   Sign In
                 </Button>

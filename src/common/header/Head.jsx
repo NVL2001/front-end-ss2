@@ -7,9 +7,9 @@ function Head() {
       <div className="container d_flex ">
         <div className="left row">
           <i className="fa fa-phone" />
-          <label> 0968809488</label>
+          <p> 0968809488</p>
           <i className="fa fa-envelope" />
-          <label> nvl@gmail.com</label>
+          <p> nvl@gmail.com</p>
           {/* MAIL TO */}
         </div>
         <div className="center row">
