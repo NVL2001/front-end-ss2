@@ -1,6 +1,6 @@
 const Sdata = {
   shopItems: [
 
-  ]
-}
-export default Sdata
+  ],
+};
+export default Sdata;

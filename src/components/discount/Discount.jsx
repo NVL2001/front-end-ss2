@@ -1,25 +1,26 @@
-import React from "react"
-import Dcard from "./Dcard"
+import React from 'react';
+import Dcard from './Dcard';
 
-const Discount = () => {
+function Discount() {
   return (
-    <>
-      <section className='Discount background NewArrivals'>
-        <div className='container'>
-          <div className='heading d_flex'>
-            <div className='heading-left row  f_flex'>
-              <img src='https://img.icons8.com/windows/32/fa314a/gift.png' />
-              <h2>Big Discounts</h2>
-            </div>
-            <div className='heading-right row '>
-              <span>View all</span>
-              <i class="fas fa-arrow-right"></i>            </div>
+    <section className="Discount background NewArrivals">
+      <div className="container">
+        <div className="heading d_flex">
+          <div className="heading-left row  f_flex">
+            <img src="https://img.icons8.com/windows/32/fa314a/gift.png" />
+            <h2>Big Discounts</h2>
           </div>
-          <Dcard />
+          <div className="heading-right row ">
+            <span>View all</span>
+            <i className="fas fa-arrow-right" />
+            {' '}
+
+          </div>
         </div>
-      </section>
-    </>
-  )
+        <Dcard />
+      </div>
+    </section>
+  );
 }
 
-export default Discount
+export default Discount;

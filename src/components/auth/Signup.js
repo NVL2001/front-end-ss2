@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from "react";
-import { signupReq } from "./fetchApi";
+import React, { Fragment, useState } from 'react';
+import { signupReq } from './fetchApi';
 
-const Signup = (props) => {
+function Signup(props) {
   const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    cPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    cPassword: '',
     error: false,
     loading: false,
     success: false,
@@ -28,7 +28,7 @@ const Signup = (props) => {
       });
     }
     try {
-      let responseData = await signupReq({
+      const responseData = await signupReq({
         name: data.name,
         email: data.email,
         password: data.password,
@@ -39,16 +39,16 @@ const Signup = (props) => {
           ...data,
           loading: false,
           error: responseData.error,
-          password: "",
-          cPassword: "",
+          password: '',
+          cPassword: '',
         });
       } else if (responseData.success) {
         setData({
           success: responseData.success,
-          name: "",
-          email: "",
-          password: "",
-          cPassword: "",
+          name: '',
+          email: '',
+          password: '',
+          cPassword: '',
           loading: false,
           error: false,
         });
@@ -59,75 +59,72 @@ const Signup = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <div className="text-center text-2xl mb-6">Register</div>
       <form className="space-y-4">
-        {data.success ? alert(data.success, "green") : ""}
+        {data.success ? alert(data.success, 'green') : ''}
         <div className="flex flex-col">
           <label htmlFor="name">
-            Name<span className="text-sm text-gray-600 ml-1">*</span>
+            Name
+            <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
-            onChange={(e) =>
-              setData({
-                ...data,
-                success: false,
-                error: {},
-                name: e.target.value,
-              })
-            }
+            onChange={(e) => setData({
+              ...data,
+              success: false,
+              error: {},
+              name: e.target.value,
+            })}
             value={data.name}
             type="text"
             id="name"
             className={`${
-              data.error.name ? "border-red-500" : ""
+              data.error.name ? 'border-red-500' : ''
             } px-4 py-2 focus:outline-none border`}
           />
-          {!data.error ? "" : alert(data.error.name, "red")}
+          {!data.error ? '' : alert(data.error.name, 'red')}
         </div>
         <div className="flex flex-col">
           <label htmlFor="email">
-            Email address<span className="text-sm text-gray-600 ml-1">*</span>
+            Email address
+            <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
-            onChange={(e) =>
-              setData({
-                ...data,
-                success: false,
-                error: {},
-                email: e.target.value,
-              })
-            }
+            onChange={(e) => setData({
+              ...data,
+              success: false,
+              error: {},
+              email: e.target.value,
+            })}
             value={data.email}
             type="email"
             id="email"
             className={`${
-              data.error.email ? "border-red-500" : ""
+              data.error.email ? 'border-red-500' : ''
             } px-4 py-2 focus:outline-none border`}
           />
-          {!data.error ? "" : alert(data.error.email, "red")}
+          {!data.error ? '' : alert(data.error.email, 'red')}
         </div>
         <div className="flex flex-col">
           <label htmlFor="password">
-            Password<span className="text-sm text-gray-600 ml-1">*</span>
+            Password
+            <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
-            onChange={(e) =>
-              setData({
-                ...data,
-                success: false,
-                error: {},
-                password: e.target.value,
-              })
-            }
+            onChange={(e) => setData({
+              ...data,
+              success: false,
+              error: {},
+              password: e.target.value,
+            })}
             value={data.password}
             type="password"
             id="password"
             className={`${
-              data.error.password ? "border-red-500" : ""
+              data.error.password ? 'border-red-500' : ''
             } px-4 py-2 focus:outline-none border`}
           />
-          {!data.error ? "" : alert(data.error.password, "red")}
+          {!data.error ? '' : alert(data.error.password, 'red')}
         </div>
         <div className="flex flex-col">
           <label htmlFor="cPassword">
@@ -135,22 +132,20 @@ const Signup = (props) => {
             <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
-            onChange={(e) =>
-              setData({
-                ...data,
-                success: false,
-                error: {},
-                cPassword: e.target.value,
-              })
-            }
+            onChange={(e) => setData({
+              ...data,
+              success: false,
+              error: {},
+              cPassword: e.target.value,
+            })}
             value={data.cPassword}
             type="password"
             id="cPassword"
             className={`${
-              data.error.cPassword ? "border-red-500" : ""
+              data.error.cPassword ? 'border-red-500' : ''
             } px-4 py-2 focus:outline-none border`}
           />
-          {!data.error ? "" : alert(data.error.cPassword, "red")}
+          {!data.error ? '' : alert(data.error.cPassword, 'red')}
         </div>
         <div className="flex flex-col space-y-2 md:flex-row md:justify-between md:items-center">
           <div>
@@ -160,7 +155,8 @@ const Signup = (props) => {
               className="px-4 py-2 focus:outline-none border mr-1"
             />
             <label htmlFor="rememberMe">
-              Remember me<span className="text-sm text-gray-600">*</span>
+              Remember me
+              <span className="text-sm text-gray-600">*</span>
             </label>
           </div>
           <a className="block text-gray-600" href="/">
@@ -169,14 +165,14 @@ const Signup = (props) => {
         </div>
         <div
           onClick={(e) => formSubmit()}
-          style={{ background: "#303031" }}
+          style={{ background: '#303031' }}
           className="px-4 py-2 text-white text-center cursor-pointer font-medium"
         >
           Create an account
         </div>
       </form>
-    </Fragment>
+    </>
   );
-};
+}
 
 export default Signup;

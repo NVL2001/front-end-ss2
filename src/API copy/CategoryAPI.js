@@ -1,8 +1,6 @@
-import { api } from "./api";
+import { api } from './api';
 
-const getListCategoryAPI = () => {
-  return api("GET", "category/get-categories", null);
-};
+const getListCategoryAPI = () => api('GET', 'category/get-categories', null);
 
 // export
 export { getListCategoryAPI };

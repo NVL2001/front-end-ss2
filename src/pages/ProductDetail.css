@@ -71,7 +71,7 @@
     width: fit-content;
 }
 
-button:hover {
+.product-detail-page button:hover {
     background-color: #e94560;
     color: #fff;
     border: #e94560 1px solid;

@@ -13,52 +13,52 @@ export const layoutState = {
 
 export const layoutReducer = (state, action) => {
   switch (action.type) {
-    case "hamburgerToggle":
+    case 'hamburgerToggle':
       return {
         ...state,
         navberHamburger: action.payload,
       };
-    case "loginSignupModalToggle":
+    case 'loginSignupModalToggle':
       return {
         ...state,
         loginSignupModal: action.payload,
       };
-    case "cartModalToggle":
+    case 'cartModalToggle':
       return {
         ...state,
         cartModal: action.payload,
       };
-    case "cartProduct":
+    case 'cartProduct':
       return {
         ...state,
         cartProduct: action.payload,
       };
-    case "singleProductDetail":
+    case 'singleProductDetail':
       return {
         ...state,
         singleProductDetail: action.payload,
       };
-    case "inCart":
+    case 'inCart':
       return {
         ...state,
         inCart: action.payload,
       };
-    case "cartTotalCost":
+    case 'cartTotalCost':
       return {
         ...state,
         cartTotalCost: action.payload,
       };
-    case "loginSignupError":
+    case 'loginSignupError':
       return {
         ...state,
         loginSignupError: action.payload,
       };
-    case "orderSuccess":
+    case 'orderSuccess':
       return {
         ...state,
         orderSuccess: action.payload,
       };
-    case "loading":
+    case 'loading':
       return {
         ...state,
         loading: action.payload,
