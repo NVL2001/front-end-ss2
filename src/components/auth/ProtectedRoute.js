@@ -1,23 +1,23 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { isAuthenticate, isAdmin } from "./fetchApi";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { isAuthenticate, isAdmin } from './fetchApi';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      isAuthenticate() && !isAdmin() ? (
+function ProtectedRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => (isAuthenticate() && !isAdmin() ? (
         <Component {...props} />
       ) : (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: '/',
             state: { from: props.location },
           }}
         />
-      )
-    }
-  />
-);
+      ))}
+    />
+  );
+}
 
 export default ProtectedRoute;

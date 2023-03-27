@@ -1,96 +1,107 @@
-import React from "react";
-import "./style.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './style.css';
+import { Link } from 'react-router-dom';
+import { useProduct } from '../../context/ProductContext';
 
-const Cart = ({ CartItem, addToCart, decreaseQty }) => {
+function Cart() {
   // Stpe: 7   calucate total of items
+  const { CartItem, addToCart, decreaseQty } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
-    0
+    0,
   );
 
   // prodcut qty total
   return (
-    <>
-      <section className="cart-items">
-        <div className="container d_flex">
-          {/* if hamro cart ma kunai pani item xaina bhane no diplay */}
+    <section className="cart-items">
+      <div className="container d_flex">
+        {/* if hamro cart ma kunai pani item xaina bhane no diplay */}
 
-          <div className="cart-details">
-            {CartItem.length === 0 && (
-              <h1 className="no-items product">No Items are add in Cart</h1>
-            )}
+        <div className="cart-details">
+          {CartItem.length === 0 && (
+          <h1 className="no-items product">No Items are add in Cart</h1>
+          )}
 
-            {/* yasma hami le cart item lai display garaaxa */}
-            {CartItem.map((item) => {
-              const productQty = item.price * item.qty;
+          {/* yasma hami le cart item lai display garaaxa */}
+          {CartItem.map((item) => {
+            const productQty = item.price * item.qty;
 
-              return (
-                <div className="cart-list product d_flex" key={item.id}>
-                  <div className="img">
-                    <Link to={`/products/${item.id}`}>
-                      <img
-                        src={`http://${item.productImages[0]}`}
-                        alt="image"
-                      />
-                    </Link>
+            return (
+              <div className="cart-list product d_flex" key={item.id}>
+                <div className="img">
+                  <Link to={`/products/${item.id}`}>
+                    <img
+                      src={`http://${item.productImages[0]}`}
+                      alt="image"
+                    />
+                  </Link>
+                </div>
+
+                <div className="cart-details">
+                  <h3>{item.name}</h3>
+                  <h4>
+                    {item.price}
+                    {' '}
+                    vnd *
+                    {item.qty}
+                    <span>
+                      {productQty}
+                      {' '}
+                      vnd
+                    </span>
+                  </h4>
+                </div>
+                <div className="cart-items-function">
+                  <div className="removeCart">
+                    <button className="removeCart">
+                      <i className="fa-solid fa-xmark" />
+                    </button>
                   </div>
-
-                  <div className="cart-details">
-                    <h3>{item.name}</h3>
-                    <h4>
-                      {item.price} vnd * {item.qty}
-                      <span>{productQty} vnd</span>
-                    </h4>
-                  </div>
-                  <div className="cart-items-function">
-                    <div className="removeCart">
-                      <button className="removeCart">
-                        <i className="fa-solid fa-xmark"></i>
-                      </button>
-                    </div>
-                    {/* stpe: 5 
+                  {/* stpe: 5
                     product ko qty lai inc ra des garne
                     */}
-                    <div className="cartControl d_flex">
-                      <button
-                        className="incCart"
-                        onClick={() => addToCart(item)}
-                      >
-                        <i class="fas fa-plus"></i>
-                      </button>
-                      <button
-                        className="desCart"
-                        onClick={() => decreaseQty(item)}
-                      >
-                        <i class="fas fa-minus"></i>
-                      </button>
-                    </div>
+                  <div className="cartControl d_flex">
+                    <button
+                      className="incCart"
+                      onClick={() => addToCart(item)}
+                    >
+                      <i className="fas fa-plus" />
+                    </button>
+                    <button
+                      className="desCart"
+                      onClick={() => decreaseQty(item)}
+                    >
+                      <i className="fas fa-minus" />
+                    </button>
                   </div>
-
-                  <div className="cart-item-price"></div>
                 </div>
-              );
-            })}
+
+                <div className="cart-item-price" />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="cart-total product">
+          <h2>Giỏ hàng</h2>
+          <div className=" d_flex">
+            <h4>Tổng cộng :</h4>
+            <h3>
+              {totalPrice}
+              {' '}
+              VND
+            </h3>
           </div>
 
-          <div className="cart-total product">
-            <h2>Giỏ hàng</h2>
-            <div className=" d_flex">
-              <h4>Tổng cộng :</h4>
-              <h3>{totalPrice} VND</h3>
-            </div>
-
-            {/* checkout */}
-            <div className="checkout--button">
-              <button>Thanh toán </button>
-              {/* <i class="fas fa-arrow-right"> </i> */}
-            </div>
+          {/* checkout */}
+          <div className="checkout--button">
+            <button>Thanh toán </button>
+            {/* <i class="fas fa-arrow-right"> </i> */}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
-};
+}
 
 export default Cart;

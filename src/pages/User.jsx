@@ -1,10 +1,11 @@
-import React from "react";
-import  UserProfile from "./UserDetail";
-const User =()=>{
-    return(
+import React from 'react';
+import UserProfile from './UserDetail';
 
-        <UserProfile/>
-    )
+function User() {
+  return (
+
+    <UserProfile />
+  );
 }
 
 export default User;

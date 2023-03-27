@@ -1,7 +1,7 @@
-import React from "react";
-import Layout from "./index";
+import React from 'react';
+import Layout from './index';
 
-const PageNotFoundComponent = (props) => {
+function PageNotFoundComponent(props) {
   return (
     <div className="flex flex-col items-center justify-center my-32">
       <span>
@@ -25,10 +25,14 @@ const PageNotFoundComponent = (props) => {
       </span>
     </div>
   );
-};
+}
 
-const PageNotFound = (props) => {
-  return <Layout children={<PageNotFoundComponent />} />;
-};
+function PageNotFound(props) {
+  return (
+    <Layout>
+      <PageNotFoundComponent />
+    </Layout>
+  );
+}
 
 export default PageNotFound;

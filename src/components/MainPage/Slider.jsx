@@ -1,16 +1,14 @@
-import React from "react"
-import SlideCard from "./SlideCard"
+import React from 'react';
+import SlideCard from './SlideCard';
 
-const SliderHome = () => {
+function SliderHome() {
   return (
-    <>
-      <section className='homeSlide contentWidth'>
-        <div className='container'>
-          <SlideCard />
-        </div>
-      </section>
-    </>
-  )
+    <section className="homeSlide contentWidth">
+      <div className="container">
+        <SlideCard />
+      </div>
+    </section>
+  );
 }
 
-export default SliderHome
+export default SliderHome;

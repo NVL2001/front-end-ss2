@@ -1,6 +1,6 @@
 const Data = {
   productItems: [
 
-  ]
-}
-export default Data
+  ],
+};
+export default Data;

@@ -1,48 +1,44 @@
-import React from "react"
-import "./style.css"
+import React from 'react';
+import './style.css';
 
-const Wrapper = () => {
+function Wrapper() {
   const data = [
     {
-      cover: <i class="fas fa-shipping-fast"></i>,
-      title: "Ship toan quoc",
-      decs: "We offer competitive prices on our 100 million plus product any range.",
+      cover: <i className="fas fa-shipping-fast" />,
+      title: 'Ship toan quoc',
+      decs: 'We offer competitive prices on our 100 million plus product any range.',
     },
     {
-      cover: <i class="fas fa-thumbs-up"></i>,
-      title: "Uy tin",
-      decs: "We offer competitive prices on our 100 million plus product any range.",
+      cover: <i className="fas fa-thumbs-up" />,
+      title: 'Uy tin',
+      decs: 'We offer competitive prices on our 100 million plus product any range.',
     },
     {
-      cover: <i class="fas fa-shield-alt"></i>,
-      title: "Si le gia tot",
-      decs: "We offer competitive prices on our 100 million plus product any range.",
+      cover: <i className="fas fa-shield-alt" />,
+      title: 'Si le gia tot',
+      decs: 'We offer competitive prices on our 100 million plus product any range.',
     },
     {
-      cover: <i class="fas fa-headset"></i>,
-      title: "Ho tro 24/7  ",
-      decs: "We offer competitive prices on our 100 million plus product any range.",
+      cover: <i className="fas fa-headset" />,
+      title: 'Ho tro 24/7  ',
+      decs: 'We offer competitive prices on our 100 million plus product any range.',
     },
-  ]
+  ];
   return (
-    <>
-      <section className='wrapper background'>
-        <div className='container grid2'>
-          {data.map((val, index) => {
-            return (
-              <div className='product' key={index}>
-                <div className='img icon-circle'>
-                  <i>{val.cover}</i>
-                </div>
-                <h3>{val.title}</h3>
-                <p>{val.decs}</p>
-              </div>
-            )
-          })}
-        </div>
-      </section>
-    </>
-  )
+    <section className="wrapper background">
+      <div className="container grid2">
+        {data.map((val) => (
+          <div className="product" key={val.title}>
+            <div className="img icon-circle">
+              <i>{val.cover}</i>
+            </div>
+            <h3>{val.title}</h3>
+            <p>{val.decs}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
 
-export default Wrapper
+export default Wrapper;
