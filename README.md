@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-### `npm install`
+### `npm install` admin
 
 npm i yup@0.32.11
 npm i formik@2.2.9
