@@ -32,6 +32,12 @@
     "import/no-extraneous-dependencies": "off",
     "react/destructuring-assignment": "off",
     "no-unused-vars": "warn",
-    "jsx-a11y/img-redundant-alt": "warn"
+    "jsx-a11y/img-redundant-alt": "warn",
+    "linebreak-style": 0,
+    "quotes": "off",
+    "comma-dangle": "off",
+    "react/jsx-indent": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }

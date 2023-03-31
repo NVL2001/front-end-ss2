@@ -11,13 +11,14 @@ import User from './pages/User';
 import Cart from './common/Cart/Cart';
 import Footer from './common/footer/Footer';
 import CategoryPage from './components/shops/CategoryPage';
-import { ProductContextProvider } from './context/ProductContext';
+import { ProductContextProvider, useProduct } from './context/ProductContext';
 import { theme } from './styles/theme';
 import { AuthContextProvider } from './context/AuthContext';
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const { addToCart } = useProduct();
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer />
@@ -39,9 +40,9 @@ function App() {
               <Route path="/product" exact>
                 <ProductPage />
               </Route>
-              <Route path="/products/:id" component={ProductDetail} />
+              <Route path="/products/:id" component={ProductDetail} addToCart={addToCart} />
 
-              <Route path="/category/:id" component={CategoryPage} />
+              <Route path="/category/:id" component={CategoryPage} addToCart={addToCart} />
 
               <Route path="/user" exact>
                 <User />

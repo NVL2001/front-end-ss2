@@ -4,6 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+### `npm install`
+
+npm i yup@0.32.11
+npm i formik@2.2.9
+npm i react-pro-sidebar@0.7.1
+npm i @mui/x-data-grid@5.17.2
+
+---
+
 In the project directory, you can run:
 
 ### `npm start`

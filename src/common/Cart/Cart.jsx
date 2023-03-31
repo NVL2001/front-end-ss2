@@ -1,52 +1,47 @@
-import React from 'react';
-import './style.css';
-import { Link } from 'react-router-dom';
-import { useProduct } from '../../context/ProductContext';
-
+import React from "react";
+import "./style.css";
+import { Link } from "react-router-dom";
+import { useProduct } from "../../context/ProductContext";
+/* eslint-disable react/jsx-one-expression-per-line */
 function Cart() {
-  // Stpe: 7   calucate total of items
   const { CartItem, addToCart, decreaseQty } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
-    0,
+    0
   );
 
-  // prodcut qty total
   return (
     <section className="cart-items">
       <div className="container d_flex">
-        {/* if hamro cart ma kunai pani item xaina bhane no diplay */}
-
         <div className="cart-details">
           {CartItem.length === 0 && (
-          <h1 className="no-items product">No Items are add in Cart</h1>
+            <h1 className="no-items product">No Items are add in Cart</h1>
           )}
 
-          {/* yasma hami le cart item lai display garaaxa */}
           {CartItem.map((item) => {
-            const productQty = item.price * item.qty;
+            const subPriceTotal = item.price * item.qty;
 
             return (
               <div className="cart-list product d_flex" key={item.id}>
                 <div className="img">
                   <Link to={`/products/${item.id}`}>
-                    <img
-                      src={`http://${item.productImages[0]}`}
-                    />
+                    <img src={`http://${item.productImages[0]}`} />
                   </Link>
                 </div>
 
                 <div className="cart-details">
                   <h3>{item.name}</h3>
                   <h4>
-                    {item.price}
-                    {' '}
-                    vnd *
-                    {item.qty}
+                    {item.price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                    * {item.qty}
+                    <span>:</span>
                     <span>
-                      {productQty}
-                      {' '}
-                      vnd
+                      {subPriceTotal
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                      VND
                     </span>
                   </h4>
                 </div>
@@ -56,14 +51,9 @@ function Cart() {
                       <i className="fa-solid fa-xmark" />
                     </button>
                   </div>
-                  {/* stpe: 5
-                    product ko qty lai inc ra des garne
-                    */}
+
                   <div className="cartControl d_flex">
-                    <button
-                      className="incCart"
-                      onClick={() => addToCart(item)}
-                    >
+                    <button className="incCart" onClick={() => addToCart(item)}>
                       <i className="fas fa-plus" />
                     </button>
                     <button
@@ -86,8 +76,7 @@ function Cart() {
           <div className=" d_flex">
             <h4>Tổng cộng :</h4>
             <h3>
-              {totalPrice}
-              {' '}
+              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
               VND
             </h3>
           </div>

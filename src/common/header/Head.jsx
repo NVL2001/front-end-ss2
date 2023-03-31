@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Head() {
   return (
@@ -7,26 +7,25 @@ function Head() {
       <div className="container d_flex ">
         <div className="left row">
           <i className="fa fa-phone" />
-          <p> 0968809488</p>
+          <label> 0968809488</label>
           <i className="fa fa-envelope" />
-          <p> nvl@gmail.com</p>
-          {/* MAIL TO */}
+          <label> nvl@gmail.com</label>
         </div>
         <div className="center row">
-          <h1>
+          <p>
             <Link
               to="/"
               style={{
-                textDecoration: 'none',
-                color: 'white',
+                textDecoration: "none",
+                color: "white",
               }}
             >
               Rose Secret
             </Link>
-          </h1>
+          </p>
         </div>
         <div className="right row RText">
-          {/* <label>Theme FAQ"s</label>
+          {/* <label>Theme FAQ's</label>
             <label>Need Help?</label>
 
             <label>EN</label>

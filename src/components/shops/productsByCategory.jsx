@@ -1,23 +1,22 @@
 // ProductList.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useProduct } from "../../context/ProductContext/index";
+import Sorting from "../../common/sort/sorting";
+/* eslint-disable*/
+function ProductList({ products }) {
+  const { addToCart } = useProduct();
 
-function ProductList({ products, addToCart }) {
   return (
     <>
+      <Sorting />
       {products.map((product) => (
-        <div
-          className="box"
-          key={product.id}
-        >
+        <div className="box" key={product.id}>
           <div className="product mtop">
             <Link to={`/products/${product.id}`}>
-              {' '}
+              {" "}
               <div className="img">
-                <span className="discount">
-                  {product.discount}
-                  % Off
-                </span>
+                <span className="discount">{product.discount}% Off</span>
 
                 <img src={`http://${product.productImages[0]}`} alt="..." />
 
@@ -41,8 +40,7 @@ function ProductList({ products, addToCart }) {
                   {product.price
 
                     .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                  {' '}
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
                   VND
                 </h4>
 

@@ -62,16 +62,3 @@
 // };
 
 // export default Sorting;
-
-// // Path: src\components\shops\sorting.jsx
-// // Compare this snippet from src\components\shops\Shop.jsx:
-// // import React, { useState } from "react";
-// //
-// // // import Catg from "./Catg";
-// // import ShopCart from "./ShopCart";
-// // import "./style.css";
-// // // import { useHistory, useParams } from "react-router-dom";
-// // // import { getAllProduct } from "../../api/apiAllProduct";
-// //
-// // // const Shop = ({ addToCart, shopItems }) => {
-// // const

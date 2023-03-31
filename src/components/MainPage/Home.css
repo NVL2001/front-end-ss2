@@ -1,12 +1,27 @@
 .home {
-  background-color: #ffecec;
-  background-image: url("../../../public//images/SlideCard/wallpaperflare.com_wallpaper\ \(2\).jpg");
+  /* background-color: #ababab; */
+  background-image: url("../../../public/images/SlideCard/wallpaperflare.com_wallpaper\ \(3\).jpg");
+  /* filter background darker */
+
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
 }
 
+
 .homeSlide {
-  position: relative;
-  margin: 50px 0;
+  /* position: relative;
+  margin: 50px 0; */
+  color: whitesmoke;
+  display: flex;
+  align-items: center;
+  text-align: center;
 
 }
 
@@ -14,6 +29,7 @@
   font-size: 45px;
   line-height: 55px;
   margin: 50px 0 20px 0;
+
 
 }
 
@@ -41,7 +57,7 @@
 .homeSlide ul li button::before {
 
   font-size: 15px !important;
-  color: #cc6b6b;
+  color: salmon;
   position: absolute;
   top: 2px;
   left: 0;
@@ -56,6 +72,45 @@
   object-fit: cover;
 }
 
-.left {
-  text-align: start;
+.slide--left {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
+  color: whitesmoke;
+
+}
+
+/* button ease in out infinite scale 1.1 */
+.btn-primary {
+  animation: scale 1s ease-in-out infinite, blink 1s infinite;
+
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.92);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+  }
 }

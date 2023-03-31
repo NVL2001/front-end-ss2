@@ -5,6 +5,15 @@
   color: #fff;
 }
 
+
+
+.container .left.row {
+  display: flex;
+  align-items: center;
+
+}
+
+
 .head i {
   margin-right: 10px;
 }
@@ -19,10 +28,10 @@
   margin-right: 30px;
 }
 
-/* .head span{
-    font-size: 13px;
-    margin-left: 20px;
-  } */
+/* .head span {
+  font-size: 13px;
+  margin-left: 20px;
+} */
 
 /*------head-----------*/
 /*------search-----------*/
@@ -153,6 +162,7 @@
 
 .search.active img {
   max-width: 40%;
+  height: auto;
 }
 
 /*------header-----------*/
@@ -317,7 +327,7 @@ header ul li a.active {
   display: none;
   position: absolute;
   /* background: linear-gradient(180deg, #ce2222, rgb(227, 206, 204)); */
-  background: linear-gradient(180deg, hsla(0, 78%, 55%, 0.522), rgba(254, 254, 254, 0.867));
+  background: linear-gradient(180deg, hsl(0, 78%, 55%), rgb(254, 254, 254));
   z-index: 1;
   /* SHADOW */
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);

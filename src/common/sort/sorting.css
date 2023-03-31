@@ -1,0 +1,21 @@
+.sortbar {
+    background-color: transparent;
+    border-radius: 4px;
+    /* padding-bottom: 50px; */
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: bisque;
+
+
+}
+
+.topshop.active {
+    position: absolute;
+    top: 120px;
+    z-index: 10;
+    width: 100%;
+    background-color: #fff;
+    padding: 5px;
+}
