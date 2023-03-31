@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "../../common/sort/sorting.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../../common/sort/sorting.css';
 
-import Catg from "./Catg";
-import ShopCard from "./ShopCard";
-import Sorting from "../../common/sort/sorting";
-import "./style.css";
+import Catg from './Catg';
+import ShopCard from './ShopCard';
+import Sorting from '../../common/sort/sorting';
+import './style.css';
 // const Shop = ({ addToCart, shopItems }) => {
 function Shop({ addToCart }) {
   const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ function Shop({ addToCart }) {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        "http://localhost:8080/api/product/products"
+        'http://localhost:8080/api/product/products'
       );
       setProducts(response.data);
       setLoading(false);

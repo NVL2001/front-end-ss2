@@ -19,8 +19,9 @@ import StatBox from '../../components/StatBox';
 import ProgressCircle from '../../components/ProgressCircle';
 import { mockTransactions } from '../../data/mockData';
 import { tokens } from '../../theme';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Dashboard() {
+function DashboardComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -95,4 +96,10 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default function Dashboard() {
+  return (
+    <AdminLayout>
+      <DashboardComponent />
+    </AdminLayout>
+  );
+}

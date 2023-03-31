@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./ProductDetail.css";
-import { APIRoutes } from "../constants/APIRoutes";
-import { useProduct } from "../context/ProductContext";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './ProductDetail.css';
+import { APIRoutes } from '../constants/APIRoutes';
+import { useProduct } from '../context/ProductContext';
+import { PublicLayout } from "../layout/PublicLayout";
 
-function ProductDetail(props) {
+function ProductDetailComponent(props) {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { decreaseQty, addToCart } = useProduct();
@@ -68,7 +69,7 @@ function ProductDetail(props) {
         <p className="product-description">{product.description}</p>
         <p className="product-price">
           {`Giá:
-          ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+          ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
           VND`}
         </p>
         {/* quantity */}
@@ -84,6 +85,14 @@ function ProductDetail(props) {
         </div>
       </div>
     </div>
+  );
+}
+
+function ProductDetail() {
+  return (
+    <PublicLayout>
+      <ProductDetailComponent />
+    </PublicLayout>
   );
 }
 

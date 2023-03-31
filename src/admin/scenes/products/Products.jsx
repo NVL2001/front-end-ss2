@@ -17,8 +17,9 @@ import Header from '../../components/Header';
 import { tokens } from '../../theme';
 import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
 import AddProductModal from './AddProductModal';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Products() {
+function ProductsComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [products, setProducts] = useState([]);
@@ -238,6 +239,14 @@ function Products() {
         />
       </Box>
     </Box>
+  );
+}
+
+function Products() {
+  return (
+    <AdminLayout>
+      <ProductsComponent />
+    </AdminLayout>
   );
 }
 

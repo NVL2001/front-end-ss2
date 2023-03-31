@@ -2,8 +2,11 @@
 import { useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
 import ProductList from './productsByCategory';
+import { useProduct } from '../../context/ProductContext';
+import { PublicLayout } from "../../layout/PublicLayout";
 
-function CategoryPage({ addToCart }) {
+function CategoryPageComponent() {
+  const { addToCart } = useProduct();
   const location = useLocation();
   const products = location.state?.products || [];
 
@@ -77,6 +80,14 @@ function CategoryPage({ addToCart }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function CategoryPage() {
+  return (
+    <PublicLayout>
+      <CategoryPageComponent />
+    </PublicLayout>
   );
 }
 

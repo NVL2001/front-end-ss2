@@ -1,7 +1,7 @@
-import { integerPropType } from "@mui/utils";
+import { integerPropType } from '@mui/utils';
 import React, {
   useContext, useEffect, useMemo, useState
-} from "react";
+} from 'react';
 /* eslint-disable */
 
 export const ProductContext = React.createContext({});

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Products from '../products/Products'
-import { Stack } from '@mui/material/Stack';
+import Stack from '@mui/material/Stack';
 import { Button } from 'antd';
 import { useState } from 'react';
       const columns = [

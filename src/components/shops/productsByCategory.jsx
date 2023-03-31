@@ -1,8 +1,8 @@
 // ProductList.jsx
-import React from "react";
-import { Link } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext/index";
-import Sorting from "../../common/sort/sorting";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useProduct } from '../../context/ProductContext/index';
+import Sorting from '../../common/sort/sorting';
 /* eslint-disable*/
 function ProductList({ products }) {
   const { addToCart } = useProduct();

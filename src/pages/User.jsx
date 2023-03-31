@@ -1,10 +1,12 @@
 import React from 'react';
 import UserProfile from './UserDetail';
+import { PublicLayout } from "../layout/PublicLayout";
 
 function User() {
   return (
-
-    <UserProfile />
+    <PublicLayout>
+      <UserProfile />
+    </PublicLayout>
   );
 }
 

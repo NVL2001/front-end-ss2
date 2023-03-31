@@ -67,22 +67,22 @@ function Search({ CartItem }) {
         </div>
 
         <Stack direction="row" alignItems="center" className="icon f_flex width" columnGap={1}>
-          {user ? (
-            <Link to="/user">
-              <div className="user">
-                <i className="fa fa-user icon-circle" />
-              </div>
-            </Link>
-          ) : (
-            <>
-              <Button onClick={handleOpenLoginModal}>
-                <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Login</Typography>
-              </Button>
-              <Button onClick={handleOpenRegisterModal}>
-                <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Sign Up</Typography>
-              </Button>
-            </>
-          )}
+          {/* {user ? ( */}
+          {/*  <Link to="/user"> */}
+          {/*    <div className="user"> */}
+          {/*      <i className="fa fa-user icon-circle" /> */}
+          {/*    </div> */}
+          {/*  </Link> */}
+          {/* ) : ( */}
+          <>
+            <Button onClick={handleOpenLoginModal}>
+              <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Login</Typography>
+            </Button>
+            <Button onClick={handleOpenRegisterModal}>
+              <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Sign Up</Typography>
+            </Button>
+          </>
+          {/* )} */}
           <Link to="/cart">
             <div className="cart">
               <i className="fa fa-shopping-bag icon-circle" />

@@ -1,9 +1,10 @@
-import React from "react";
-import "./style.css";
-import { Link } from "react-router-dom";
-import { useProduct } from "../../context/ProductContext";
+import React from 'react';
+import './style.css';
+import { Link } from 'react-router-dom';
+import { useProduct } from '../../context/ProductContext';
+import { PublicLayout } from "../../layout/PublicLayout";
 /* eslint-disable react/jsx-one-expression-per-line */
-function Cart() {
+function CartComponent() {
   const { CartItem, addToCart, decreaseQty } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
@@ -34,13 +35,13 @@ function Cart() {
                   <h4>
                     {item.price
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}{' '}
                     * {item.qty}
                     <span>:</span>
                     <span>
                       {subPriceTotal
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
                       VND
                     </span>
                   </h4>
@@ -76,7 +77,7 @@ function Cart() {
           <div className=" d_flex">
             <h4>Tổng cộng :</h4>
             <h3>
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
               VND
             </h3>
           </div>
@@ -89,6 +90,14 @@ function Cart() {
         </div>
       </div>
     </section>
+  );
+}
+
+function Cart() {
+  return (
+    <PublicLayout>
+      <CartComponent />
+    </PublicLayout>
   );
 }
 

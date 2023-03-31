@@ -1,58 +1,54 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material';
-import Header from './common/header/Header';
 import Pages from './pages/Pages';
 import ProductPage from './pages/ProductPage';
 import ProductDetail from './pages/productsDetail';
 import User from './pages/User';
 import Cart from './common/Cart/Cart';
-import Footer from './common/footer/Footer';
 import CategoryPage from './components/shops/CategoryPage';
-import { ProductContextProvider, useProduct } from './context/ProductContext';
-import { theme } from './styles/theme';
-import { AuthContextProvider } from './context/AuthContext';
+
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Dashboard from "./admin/scenes/dashboard/DashBoard";
+import Categories from "./admin/scenes/categories/Categories";
+import Products from "./admin/scenes/products/Products";
+import InputProduct from "./admin/scenes/products/InputProduct";
+import Orders from "./admin/scenes/orders";
+import Team from "./admin/scenes/team/Team";
+import Form from "./admin/scenes/form";
+import Bar from "./admin/scenes/bar";
+import Pie from "./admin/scenes/pie";
+import Line from "./admin/scenes/line";
+import FAQ from "./admin/scenes/faq";
+import Calendar from "./admin/scenes/calendar/calendar";
+
 function App() {
-  const { addToCart } = useProduct();
   return (
-    <ThemeProvider theme={theme}>
-      <ToastContainer />
-      <AuthContextProvider>
-        <ProductContextProvider>
-          <Router>
-            {/* head */}
-            <Header />
-            {/* body */}
-            <Switch>
-              <Route path="/" exact>
-                <Pages />
-              </Route>
-
-              <Route path="/cart" exact>
-                <Cart />
-              </Route>
-
-              <Route path="/product" exact>
-                <ProductPage />
-              </Route>
-              <Route path="/products/:id" component={ProductDetail} addToCart={addToCart} />
-
-              <Route path="/category/:id" component={CategoryPage} addToCart={addToCart} />
-
-              <Route path="/user" exact>
-                <User />
-              </Route>
-            </Switch>
-            <Footer />
-          </Router>
-        </ProductContextProvider>
-      </AuthContextProvider>
-    </ThemeProvider>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Pages} />
+        <Route path="/cart" exact component={Cart} />
+        <Route path="/product" exact component={ProductPage} />
+        <Route path="/products/:id" component={ProductDetail} />
+        <Route path="/category/:id" component={CategoryPage} />
+        <Route path="/user" exact component={User} />
+        <Route path="/admin/dashboard" component={Dashboard} />
+        <Route path="/admin/categories" component={Categories} />
+        <Route path="/admin/products" component={Products} />
+        <Route path="/admin/products/add" component={InputProduct} />
+        <Route path="/admin/orders" component={Orders} />
+        <Route path="/admin/team" component={Team} />
+        <Route path="/admin/form" component={Form} />
+        <Route path="/admin/bar" component={Bar} />
+        <Route path="/admin/pie" component={Pie} />
+        <Route path="/admin/line" component={Line} />
+        <Route path="/admin/faq" component={FAQ} />
+        <Route path="/admin/calendar" component={Calendar} />
+        <Route path="/admin/geography" component={Calendar} />
+      </Switch>
+    </Router>
   );
 }
 

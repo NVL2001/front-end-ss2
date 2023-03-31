@@ -36,7 +36,6 @@
     "linebreak-style": 0,
     "quotes": "off",
     "comma-dangle": "off",
-    "react/jsx-indent": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "react/jsx-one-expression-per-line": "off"
   }

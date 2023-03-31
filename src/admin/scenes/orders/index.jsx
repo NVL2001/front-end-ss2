@@ -8,8 +8,9 @@ import Button from '@mui/material/Button';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Orders() {
+function OrdersComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -109,6 +110,14 @@ function Orders() {
         <DataGrid rows={rows} columns={columns} />
       </Box>
     </Box>
+  );
+}
+
+function Orders() {
+  return (
+    <AdminLayout>
+      <OrdersComponent />
+    </AdminLayout>
   );
 }
 

@@ -11,8 +11,9 @@ import { getListCategoryAPI } from '../../API/CategoryAPI';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 import { tokens } from '../../theme';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Categories() {
+function CategoriesComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [categories, setCategories] = useState([]);
@@ -112,6 +113,14 @@ function Categories() {
         <DataGrid rows={categories} columns={columns} />
       </Box>
     </Box>
+  );
+}
+
+function Categories() {
+  return (
+    <AdminLayout>
+      <CategoriesComponent />
+    </AdminLayout>
   );
 }
 

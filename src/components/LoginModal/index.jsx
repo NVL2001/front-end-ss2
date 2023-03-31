@@ -13,17 +13,25 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Field } from 'react-final-form';
 import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext';
 import { login } from '../../api/auth';
+import { AdminRoles } from "../../constants/UserRoles";
 
 export function LoginModal({ open, onClose }) {
   const { setUser } = useAuth();
+  const history = useHistory();
   const onSubmit = useCallback(async (value) => {
     try {
-      const response = await login(value);
+      const { data } = await login(value);
       toast.success('Login successful');
+
+      if (AdminRoles.includes(data.role)) {
+        history.replace("/admin/dashboard");
+      }
+
       setUser({
-        name: response.data.username,
+        name: data.username,
         email: 'johndoe@example.com',
         phone: '555-555-5555',
         address: '123 Main St.',

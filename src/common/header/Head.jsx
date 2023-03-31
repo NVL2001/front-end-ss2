@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Head() {
   return (
@@ -16,8 +16,8 @@ function Head() {
             <Link
               to="/"
               style={{
-                textDecoration: "none",
-                color: "white",
+                textDecoration: 'none',
+                color: 'white',
               }}
             >
               Rose Secret

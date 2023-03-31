@@ -5,8 +5,9 @@ import TopCate from '../components/top/TopCate';
 import NewArrivals from '../components/newarrivals/NewArrivals';
 import Discount from '../components/discount/Discount';
 import { useProduct } from '../context/ProductContext';
+import { PublicLayout } from "../layout/PublicLayout";
 
-function Pages() {
+function PagesComponent() {
   const { CartItem } = useProduct();
   return (
     <>
@@ -19,6 +20,14 @@ function Pages() {
       {/* <Annocument /> */}
       <Wrapper />
     </>
+  );
+}
+
+function Pages() {
+  return (
+    <PublicLayout>
+      <PagesComponent />
+    </PublicLayout>
   );
 }
 
