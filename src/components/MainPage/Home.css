@@ -3,7 +3,6 @@
   background-image: url("../../../public/images/SlideCard/wallpaperflare.com_wallpaper\ \(3\).jpg");
   /* filter background darker */
 
-
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -74,8 +73,8 @@
 
 .slide--left {
   display: flex;
-  justify-content: left;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   color: whitesmoke;
 
