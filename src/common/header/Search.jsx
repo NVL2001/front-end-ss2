@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // import logo from "../../components/assets/images/logoweb.webp";
-import { Link } from 'react-router-dom';
-import { Button, Stack, Typography } from '@mui/material';
-import logo from '../../components/assets/images/logo.png';
-import { LoginModal } from '../../components/LoginModal';
-import { RegisterModal } from '../../components/RegisterModal';
-import { useAuth } from '../../context/AuthContext';
+import { Link } from "react-router-dom";
+import { Button, Stack, Typography } from "@mui/material";
+import logo from "../../components/assets/images/logo.png";
+import { LoginModal } from "../../components/LoginModal";
+import { RegisterModal } from "../../components/RegisterModal";
+import { useAuth } from "../../context/AuthContext";
+import { useProduct } from "../../context/ProductContext";
 
-function Search({ CartItem }) {
+function Search() {
+  const { CartItem } = useProduct();
+
   const { user } = useAuth();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const search = document.querySelector('.search');
-      search.classList.toggle('active', window.scrollY > 100);
+    window.addEventListener("scroll", () => {
+      const search = document.querySelector(".search");
+      search.classList.toggle("active", window.scrollY > 100);
     });
 
     return () => {
-      window.removeEventListener('scroll', () => {
-        const search = document.querySelector('.search');
-        search.classList.toggle('active', window.scrollY > 100);
+      window.removeEventListener("scroll", () => {
+        const search = document.querySelector(".search");
+        search.classList.toggle("active", window.scrollY > 100);
       });
     };
   }, []);
@@ -52,7 +55,6 @@ function Search({ CartItem }) {
       <div className="container c_flex">
         <div className="logo width ">
           <a href="/">
-
             <img src={logo} alt="" />
           </a>
         </div>
@@ -66,7 +68,12 @@ function Search({ CartItem }) {
           <div className="autocom-box" />
         </div>
 
-        <Stack direction="row" alignItems="center" className="icon f_flex width" columnGap={1}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          className="icon f_flex width"
+          columnGap={1}
+        >
           {/* {user ? ( */}
           {/*  <Link to="/user"> */}
           {/*    <div className="user"> */}
@@ -76,23 +83,30 @@ function Search({ CartItem }) {
           {/* ) : ( */}
           <>
             <Button onClick={handleOpenLoginModal}>
-              <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Login</Typography>
+              <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+                Login
+              </Typography>
             </Button>
             <Button onClick={handleOpenRegisterModal}>
-              <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Sign Up</Typography>
+              <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+                Sign Up
+              </Typography>
             </Button>
           </>
           {/* )} */}
           <Link to="/cart">
             <div className="cart">
               <i className="fa fa-shopping-bag icon-circle" />
-              <span>{CartItem.length === 0 ? '' : CartItem.length}</span>
+              <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
             </div>
           </Link>
         </Stack>
       </div>
       <LoginModal open={openLoginModal} onClose={handleCloseLoginModal} />
-      <RegisterModal open={openRegisterModal} onClose={handleCloseRegisterModal} />
+      <RegisterModal
+        open={openRegisterModal}
+        onClose={handleCloseRegisterModal}
+      />
     </section>
   );
 }

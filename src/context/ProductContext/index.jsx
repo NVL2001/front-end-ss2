@@ -1,8 +1,6 @@
-import { integerPropType } from '@mui/utils';
-import React, {
-  useContext, useEffect, useMemo, useState
-} from 'react';
 /* eslint-disable */
+import { integerPropType } from "@mui/utils";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 export const ProductContext = React.createContext({});
 
@@ -48,16 +46,16 @@ export function ProductContextProvider({ children }) {
 
   useEffect(() => {
     if (CartItem.length > 0) {
-      localStorage.setItem("cartItem", JSON.stringify(CartItem));
+      localStorage.setItem("CartItem", JSON.stringify(CartItem));
     } else {
-      localStorage.setItem("cartItem", JSON.stringify([]));
+      localStorage.setItem("CartItem", JSON.stringify([]));
     }
   }, [CartItem]);
 
   useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cartItem"));
-    if (cartItems) {
-      setCartItem(cartItems);
+    const CartItems = JSON.parse(localStorage.getItem("CartItem"));
+    if (CartItems) {
+      setCartItem(CartItems);
     }
   }, []);
 

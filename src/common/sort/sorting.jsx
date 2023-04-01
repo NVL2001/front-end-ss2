@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './sorting.css';
-// import { toast } from "react-toastify";
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+// import './sorting.css';
+import { Link, useLocation, useHistory } from "react-router-dom";
 /* eslint-disable */
 function Sorting() {
   const location = useLocation();

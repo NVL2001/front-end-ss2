@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
-import { getCategories } from '../../api/categories';
-import { getProductsByCategory } from '../../api/products';
+import { getCategories } from "../../api/categories";
+import { getProductsByCategory } from "../../api/products";
 
 function Navbar() {
   const location = useLocation();
@@ -38,36 +38,28 @@ function Navbar() {
         state: { products: response.data },
       });
     } catch (err) {
-      toast.error('Something went wrong, try again later');
+      toast.error("Something went wrong, try again later");
     }
   };
 
   return (
     <header className="header">
-      {/* <div className="container d_flex"> */}
-      {/* <div className="categories d_flex">
-            <span class="fa-solid fa-border-all"></span>
-            <h4>
-              Categories <i className="fa fa-chevron-down"></i>
-            </h4>
-          </div> */}
-
       <div className="navlink">
         <ul
           className={
-            MobileMenu ? 'nav-links-MobileMenu' : 'link f_flex capitalize'
+            MobileMenu ? "nav-links-MobileMenu" : "link f_flex capitalize"
           }
           onClick={() => setMobileMenu(false)}
         >
           <li>
-            <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+            <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Trang chủ
             </Link>
           </li>
           <li className="dropdown">
             <Link
               to="/product"
-              className={location.pathname === '/product' ? 'active' : ''}
+              className={location.pathname === "/product" ? "active" : ""}
             >
               Sản phẩm
             </Link>
@@ -88,16 +80,16 @@ function Navbar() {
 
           <li>
             <Link
-              to="/track"
-              className={location.pathname === '/track' ? 'active' : ''}
+              to="/"
+              className={location.pathname === "/track" ? "active" : ""}
             >
               Đơn đặt hàng
             </Link>
           </li>
           <li>
             <Link
-              to="/contact"
-              className={location.pathname === '/contact' ? 'active' : ''}
+              to="/"
+              className={location.pathname === "/contact" ? "active" : ""}
             >
               Liên hệ
             </Link>
