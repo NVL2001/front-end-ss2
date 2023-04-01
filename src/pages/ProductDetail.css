@@ -5,6 +5,10 @@
     justify-content: center;
 }
 
+#blank {
+    min-height: 100vh;
+}
+
 .rightside {
     display: flex;
     flex-direction: column;
@@ -131,4 +135,32 @@
 .slider-nav img:hover {
     border: 3px solid #e94560;
     transform: scale(1.1);
+}
+
+.loading-spinner {
+
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner-icon {
+    width: 40px;
+    height: 40px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

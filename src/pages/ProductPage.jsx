@@ -1,13 +1,13 @@
-import React from 'react';
-import Shop from '../components/shops/Shop';
-import { useProduct } from '../context/ProductContext';
+import React from "react";
+import Shop from "../components/shops/Shop";
+import { useProduct } from "../context/ProductContext";
 import { PublicLayout } from "../layout/PublicLayout";
 
 function ProductPageComponent() {
-  const { addToCart } = useProduct();
+  const { CartItem, addToCart } = useProduct();
 
   return (
-    <Shop addToCart={addToCart} />
+    <Shop CartItem={CartItem} addToCart={addToCart} />
   );
 }
 

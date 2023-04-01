@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './ProductDetail.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
-import { APIRoutes } from '../constants/APIRoutes';
-import { useProduct } from '../context/ProductContext';
-import { PublicLayout } from "../layout/PublicLayout";
+import "./ProductDetail.css";
+import { FaSpinner } from "react-icons/fa";
 
-function ProductDetailComponent() {
+import { APIRoutes } from "../constants/APIRoutes";
+import { useProduct } from "../context/ProductContext";
+import { PublicLayout } from "../layout/PublicLayout";
+// spinner
+function LoadingSpinner() {
+  return (
+    <div className="loading-spinner">
+      <FaSpinner className="spinner-icon" />
+    </div>
+  );
+}
+function ProductDetailComponent(props) {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { decreaseQty, addToCart } = useProduct();
+  const { cartItem, decreaseQty, addToCart } = useProduct();
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
 
@@ -18,6 +28,7 @@ function ProductDetailComponent() {
       const url = `${APIRoutes.GET_PRODUCT_BY_ID}/${id}`;
       const response = await axios.get(url);
       setProduct(response.data);
+      setLoading(false);
     };
     fetchData();
   }, [id]);
@@ -40,7 +51,12 @@ function ProductDetailComponent() {
   };
 
   if (!product) {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <LoadingSpinner />
+        <div id="blank"> </div>
+      </>
+    );
   }
 
   return (
@@ -70,7 +86,7 @@ function ProductDetailComponent() {
         <p className="product-description">{product.description}</p>
         <p className="product-price">
           {`Giá:
-          ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+          ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
           VND`}
         </p>
         {/* quantity */}

@@ -1,21 +1,22 @@
-.sortbar {
-    background-color: transparent;
-    border-radius: 4px;
-    /* padding-bottom: 50px; */
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: bisque;
-
+.topshop {
+    position: absolute;
+    right: 10%;
+    top: 0;
 
 }
 
-.topshop.active {
-    position: absolute;
-    top: 120px;
-    z-index: 10;
-    width: 100%;
-    background-color: #fff;
+.sortbar {
+    background-color: transparent;
+    border-radius: 4px;
+    padding-bottom: 50px;
+    text-align: center;
+    display: flex;
+    gap: 50px;
+
+}
+
+.sortbar>div select {
+    border: 0;
+    border-radius: 5px;
     padding: 5px;
 }

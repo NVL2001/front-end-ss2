@@ -5,7 +5,13 @@
 
 .shop {
   margin-top: 50px;
+  position: relative;
+  min-height: 100vh;
+
+
 }
+
+#shop {}
 
 .chead h1 {
   font-size: 20px;
@@ -141,6 +147,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .spinner-icon {
@@ -195,4 +205,10 @@
 
 select {
   background: linear-gradient(145deg, #fff1f1, salmon);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  margin-right: 50px;
 }
