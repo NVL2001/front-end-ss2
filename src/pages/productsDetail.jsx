@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import "./ProductDetail.css";
 import { FaSpinner } from "react-icons/fa";
 
 import { APIRoutes } from "../constants/APIRoutes";
 import { useProduct } from "../context/ProductContext";
 import { PublicLayout } from "../layout/PublicLayout";
+
 // spinner
 function LoadingSpinner() {
   return (
@@ -15,13 +15,16 @@ function LoadingSpinner() {
     </div>
   );
 }
-function ProductDetailComponent() {
+function ProductDetailComponent(props) {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { CartItem, decreaseQty, addToCart } = useProduct();
   const [loading, setLoading] = useState(true);
+  const { id } = props.match.params;
 
-  const { id } = useParams();
+  // const { id } = props.match.params;
+  // const { id } = props?.match?.params || {};
+  // const { id } = props.match?.params || {};
 
   useEffect(() => {
     const fetchData = async () => {

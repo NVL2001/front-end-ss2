@@ -9,3 +9,18 @@ export {
   login,
   register,
 };
+// export const isAuthenticate = () => {
+//   const token = localStorage.getItem('token');
+//   if (token) {
+//     return true;
+//   }
+//   return false;
+// };
+
+// export const isAdmin = () => {
+//   const user = JSON.parse(localStorage.getItem('user'));
+//   if (user && user.role === 'admin') {
+//     return true;
+//   }
+//   return false;
+// }
