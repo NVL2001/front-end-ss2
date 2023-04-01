@@ -15,10 +15,10 @@ function LoadingSpinner() {
     </div>
   );
 }
-function ProductDetailComponent(props) {
+function ProductDetailComponent() {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { cartItem, decreaseQty, addToCart } = useProduct();
+  const { CartItem, decreaseQty, addToCart } = useProduct();
   const [loading, setLoading] = useState(true);
 
   const { id } = useParams();

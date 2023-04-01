@@ -31,7 +31,7 @@ function App() {
         <Route path="/" exact component={Pages} />
         <Route path="/cart" exact component={Cart} />
         <Route path="/product" exact component={ProductPage} />
-        <Route path="/products/:id" component={ProductDetail} />
+        <Route path="/product/:id" component={ProductDetail} />
         <Route path="/category/:id" component={CategoryPage} />
         <Route path="/user" exact component={User} />
         <Route path="/admin/dashboard" component={Dashboard} />
