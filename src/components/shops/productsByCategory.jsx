@@ -13,7 +13,7 @@ function ProductList({ products }) {
       {products.map((product) => (
         <div className="box" key={product.id}>
           <div className="product mtop">
-            <Link to={`/${product.id}`}>
+            <Link to={`/product/${product.id}`}>
               {" "}
               <div className="img">
                 <span className="discount">{product.discount}% Off</span>
@@ -27,7 +27,7 @@ function ProductList({ products }) {
             </Link>
             <hr />
             <div className="product-details">
-              <Link to={`/${product.id}`}>
+              <Link to={`/product/${product.id}`}>
                 <h3>
                   {product.name.length > 65
                     ? `${product.name.slice(0, 65)}...`
