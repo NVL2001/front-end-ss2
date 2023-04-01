@@ -49,8 +49,6 @@ export function ProductContextProvider({ children }) {
   useEffect(() => {
     if (CartItem.length > 0) {
       localStorage.setItem("cartItem", JSON.stringify(CartItem));
-    } else {
-      localStorage.setItem("cartItem", JSON.stringify([]));
     }
   }, [CartItem]);
 

@@ -3,12 +3,18 @@ import Shop from '../components/shops/Shop';
 import { useProduct } from '../context/ProductContext';
 import { PublicLayout } from "../layout/PublicLayout";
 
-function ProductPage() {
+function ProductPageComponent() {
   const { addToCart } = useProduct();
+
+  return (
+    <Shop addToCart={addToCart} />
+  );
+}
+
+function ProductPage() {
   return (
     <PublicLayout>
-      {/* <Home CartItem={CartItem} /> */}
-      <Shop addToCart={addToCart} />
+      <ProductPageComponent />
     </PublicLayout>
   );
 }

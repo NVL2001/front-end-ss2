@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ProductDetail.css';
+import { useParams } from "react-router-dom";
 import { APIRoutes } from '../constants/APIRoutes';
 import { useProduct } from '../context/ProductContext';
 import { PublicLayout } from "../layout/PublicLayout";
 
-function ProductDetailComponent(props) {
+function ProductDetailComponent() {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { decreaseQty, addToCart } = useProduct();
 
-  const { id } = props.match.params;
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
