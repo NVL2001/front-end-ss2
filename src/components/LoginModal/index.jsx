@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext';
 import { login } from '../../api/auth';
-import { AdminRoles } from "../../constants/UserRoles";
+import { UserRoles } from "../../constants/UserRoles";
 
 export function LoginModal({ open, onClose }) {
   const { setUser } = useAuth();
@@ -25,15 +25,16 @@ export function LoginModal({ open, onClose }) {
     try {
       const { data } = await login(value);
       toast.success('Login successful');
+      const userRoles = data.roles.map((role) => role.name);
 
-      if (AdminRoles.includes(data.role)) {
+      if (userRoles.includes(UserRoles.ADMIN) || userRoles.includes(UserRoles.STAFF)) {
         history.replace("/admin/dashboard");
       }
 
       setUser({
-        name: data.username,
+        name: data.userName,
         email: 'johndoe@example.com',
-        phone: '555-555-5555',
+        phone: data.phoneNumber || "",
         address: '123 Main St.',
         shoppingHistory: [],
         vouchers: [],

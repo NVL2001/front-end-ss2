@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './user.css';
+import { useHistory } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 
 function UserProfile() {
@@ -9,8 +10,18 @@ function UserProfile() {
   // const [address, setAddress] = useState('123 Main St.');
   // const [shoppingHistory, setShoppingHistory] = useState([]);
   // const [vouchers, setVouchers] = useState([]);
-
+  const history = useHistory();
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user]);
+
+  if (!user) {
+    return <div />;
+  }
 
   return (
     <div className="user-profile">
