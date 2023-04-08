@@ -19,18 +19,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Form, Field } from "react-final-form";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-<<<<<<< HEAD
 import { useAuth } from "../../context/AuthContext";
 import { login } from "../../api/auth";
-import { AdminRoles } from "../../constants/UserRoles";
-=======
-import { useAuth } from '../../context/AuthContext';
-import { login } from '../../api/auth';
 import { UserRoles } from "../../constants/UserRoles";
-<<<<<<< Updated upstream
-=======
->>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
->>>>>>> Stashed changes
+/* eslint-disable*/
 
 export function LoginModal({ open, onClose }) {
   const { setUser } = useAuth();
@@ -38,35 +30,20 @@ export function LoginModal({ open, onClose }) {
   const onSubmit = useCallback(async (value) => {
     try {
       const { data } = await login(value);
-<<<<<<< HEAD
-      toast.success("Đăng nhập thành công!");
-=======
-      toast.success('Login successful');
-      const userRoles = data.roles.map((role) => role.name);
-<<<<<<< Updated upstream
-=======
->>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
->>>>>>> Stashed changes
+      toast.success("Login successful");
 
-      if (userRoles.includes(UserRoles.ADMIN) || userRoles.includes(UserRoles.STAFF)) {
+      if (
+        userRoles.includes(UserRoles.ADMIN) ||
+        userRoles.includes(UserRoles.STAFF)
+      ) {
         history.replace("/admin/dashboard");
       }
 
       setUser({
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
         name: data.username,
         email: "johndoe@example.com",
         phone: "555-555-5555",
         address: "123 Main St.",
-=======
->>>>>>> Stashed changes
-        name: data.userName,
-        email: 'johndoe@example.com',
-        phone: data.phoneNumber || "",
-        address: '123 Main St.',
->>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
         shoppingHistory: [],
         vouchers: [],
       });

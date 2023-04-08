@@ -1,9 +1,8 @@
+/* eslint-disable*/
+
 import React, { useState, useEffect } from "react";
-// import logo from "../../components/assets/images/logoweb.webp";
 import { Link } from "react-router-dom";
-import {
-  Button, Menu, MenuItem, Stack, Typography
-} from "@mui/material";
+import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import logo from "../../components/assets/images/logo.png";
 import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
@@ -54,12 +53,12 @@ function Search() {
     setIsOpen(!isOpen);
   };
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-  //
-=======
->>>>>>> Stashed changes
+  // <<<<<<< Updated upstream
+  // =======
+  // <<<<<<< HEAD
+  //   //
+  // =======
+  // >>>>>>> Stashed changes
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -71,10 +70,10 @@ function Search() {
     setUser(null);
     localStorage.removeItem("user");
   };
-<<<<<<< Updated upstream
-=======
->>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
->>>>>>> Stashed changes
+  // <<<<<<< Updated upstream
+  // =======
+  // >>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
+  // >>>>>>> Stashed changes
 
   return (
     <section className="search">
@@ -101,9 +100,9 @@ function Search() {
           className="icon f_flex width"
           columnGap={1}
         >
-<<<<<<< Updated upstream
+          {/* <<<<<<< Updated upstream
 =======
-<<<<<<< HEAD
+<<<<<<< HEAD */}
           {/* {user ? ( */}
           {/*  <Link to="/user"> */}
           {/*    <div className="user"> */}
@@ -124,8 +123,8 @@ function Search() {
           </Button>
           {/* </> */}
           {/* )} */}
-=======
->>>>>>> Stashed changes
+          {/* =======
+>>>>>>> Stashed changes */}
           {user ? (
             <div>
               <div className="user" onClick={handleClick}>
@@ -137,7 +136,7 @@ function Search() {
                 open={!!anchorEl}
                 onClose={handleClose}
                 MenuListProps={{
-                  'aria-labelledby': 'basic-button',
+                  "aria-labelledby": "basic-button",
                 }}
               >
                 <Link to="/user">
@@ -166,7 +165,7 @@ function Search() {
               <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
             </div>
           </Link>
->>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
+          {/* >>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368 */}
         </Stack>
         {/* </div> */}
         <Link to="/cart">
