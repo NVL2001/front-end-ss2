@@ -8,6 +8,7 @@ import ProductDetail from './pages/productsDetail';
 import User from './pages/User';
 import Cart from './common/Cart/Cart';
 import CategoryPage from './components/shops/CategoryPage';
+import AboutUs from './components/about/about';
 
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,6 +30,34 @@ import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   return (
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Pages} />
+        <Route path="/cart" exact component={Cart} />
+        <Route path="/about" exact component={AboutUs} />
+        <Route path="/product" exact component={ProductPage} />
+        <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/category/:id" component={CategoryPage} />
+        <Route path="/user" exact component={User} />
+        <Route path="/admin/dashboard" component={Dashboard} />
+        <Route path="/admin/categories" component={Categories} />
+        <Route path="/admin/products" component={Products} />
+        <Route path="/admin/products/add" component={InputProduct} />
+        <Route path="/admin/orders" component={Orders} />
+        <Route path="/admin/form" component={Form} />
+        <Route path="/admin/bar" component={Bar} />
+        <Route path="/admin/pie" component={Pie} />
+        <Route path="/admin/line" component={Line} />
+        <Route path="/admin/faq" component={FAQ} />
+        <Route path="/admin/calendar" component={Calendar} />
+        <Route path="/admin/geography" component={Calendar} />
+      </Switch>
+    </Router>
+=======
+>>>>>>> Stashed changes
     <AuthContextProvider>
       <ToastContainer />
       <ProductContextProvider>
@@ -57,6 +86,10 @@ function App() {
         </Router>
       </ProductContextProvider>
     </AuthContextProvider>
+<<<<<<< Updated upstream
+=======
+>>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
+>>>>>>> Stashed changes
   );
 }
 

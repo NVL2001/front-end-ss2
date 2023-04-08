@@ -88,10 +88,10 @@ function Navbar() {
           </li>
           <li>
             <Link
-              to="/"
-              className={location.pathname === "/contact" ? "active" : ""}
+              to="/about"
+              className={location.pathname === "/about" ? "active" : ""}
             >
-              Liên hệ
+              Giới thiệu
             </Link>
           </li>
         </ul>

@@ -17,12 +17,16 @@ function ProductList({ products }) {
               {" "}
               <div className="img">
                 <span className="discount">{product.discount}% Off</span>
-
                 <img src={`http://${product.productImages[0]}`} alt="..." />
-
-                <div className="product-like">
-                  <i className="fas fa-heart" />
-                </div>
+                {/* mua ngay */}
+                <div className="buy-now">
+                  {" "}
+                  <Link to="/cart">
+                    <button onClick={() => addToCart(product)}>
+                      <i className="fa fa-shopping-cart" /> Mua ngay
+                    </button>{" "}
+                  </Link>
+                </div>{" "}
               </div>
             </Link>
             <hr />

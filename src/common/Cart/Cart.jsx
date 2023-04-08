@@ -1,11 +1,11 @@
-import React from 'react';
-import './style.css';
-import { Link } from 'react-router-dom';
-import { useProduct } from '../../context/ProductContext';
+import React from "react";
+import "./style.css";
+import { Link } from "react-router-dom";
+import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable*/
 function CartComponent() {
-  const { CartItem, addToCart, decreaseQty } = useProduct();
+  const { CartItem, addToCart, decreaseQty, clearAll } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
     0
@@ -35,13 +35,13 @@ function CartComponent() {
                   <h4>
                     {item.price
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}{' '}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
                     * {item.qty}
                     <span>:</span>
                     <span>
                       {subPriceTotal
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                       VND
                     </span>
                   </h4>
@@ -77,7 +77,7 @@ function CartComponent() {
           <div className=" d_flex">
             <h4>Tổng cộng :</h4>
             <h3>
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
               VND
             </h3>
           </div>
@@ -85,7 +85,6 @@ function CartComponent() {
           {/* checkout */}
           <div className="checkout--button">
             <button>Thanh toán </button>
-            {/* <i class="fas fa-arrow-right"> </i> */}
           </div>
         </div>
       </div>

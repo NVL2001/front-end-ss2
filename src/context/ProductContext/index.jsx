@@ -43,6 +43,10 @@ export function ProductContextProvider({ children }) {
       );
     }
   };
+  // clear all item in cart
+  const clearItem = () => {
+    setCartItem([]);
+  };
 
   useEffect(() => {
     if (CartItem.length > 0) {
@@ -63,6 +67,7 @@ export function ProductContextProvider({ children }) {
       // shopItems,
       addToCart,
       decreaseQty,
+      clearItem,
       CartItem,
     }),
     // [CartItem, shopItems, productItems]

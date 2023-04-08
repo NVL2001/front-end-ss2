@@ -50,13 +50,13 @@
 
 .homeSlide ul li button {
   background: transparent !important;
-  color: transparent !important;
+  /* color: transparent !important; */
 }
 
 .homeSlide ul li button::before {
 
   font-size: 15px !important;
-  color: salmon;
+  color: rgb(255, 255, 255);
   position: absolute;
   top: 2px;
   left: 0;

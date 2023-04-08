@@ -54,6 +54,12 @@ function Search() {
     setIsOpen(!isOpen);
   };
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+  //
+=======
+>>>>>>> Stashed changes
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -65,6 +71,10 @@ function Search() {
     setUser(null);
     localStorage.removeItem("user");
   };
+<<<<<<< Updated upstream
+=======
+>>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
+>>>>>>> Stashed changes
 
   return (
     <section className="search">
@@ -83,13 +93,39 @@ function Search() {
           {/* <span>All Category</span> */}
           <div className="autocom-box" />
         </div>
-
+        {/* <div className="user dropdown">
+          <i className="fa fa-user icon-circle " /> */}
         <Stack
           direction="row"
           alignItems="center"
           className="icon f_flex width"
           columnGap={1}
         >
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+          {/* {user ? ( */}
+          {/*  <Link to="/user"> */}
+          {/*    <div className="user"> */}
+          {/*      <i className="fa fa-user icon-circle" /> */}
+          {/*    </div> */}
+          {/*  </Link> */}
+          {/* ) : ( */}
+          {/* <> */}
+          <Button onClick={handleOpenLoginModal}>
+            <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+              Login
+            </Typography>
+          </Button>
+          <Button onClick={handleOpenRegisterModal}>
+            <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+              Sign Up
+            </Typography>
+          </Button>
+          {/* </> */}
+          {/* )} */}
+=======
+>>>>>>> Stashed changes
           {user ? (
             <div>
               <div className="user" onClick={handleClick}>
@@ -130,7 +166,15 @@ function Search() {
               <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
             </div>
           </Link>
+>>>>>>> d26fa72eb654ca9455f28d6dfaca9c889fcad368
         </Stack>
+        {/* </div> */}
+        <Link to="/cart">
+          <div className="cart">
+            <i className="fa fa-shopping-bag icon-circle" />
+            <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
+          </div>
+        </Link>
       </div>
       <LoginModal open={openLoginModal} onClose={handleCloseLoginModal} />
       <RegisterModal

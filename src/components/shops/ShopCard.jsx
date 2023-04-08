@@ -51,13 +51,21 @@ function ShopCard({ addToCart }) {
               {" "}
               <div className="img">
                 <span className="discount">{pageItem.discount}% Off</span>
-
                 <img src={`http://${pageItem.productImages[0]}`} alt="..." />
-
-                <div className="product-like">
+                {/* mua ngay */}
+                <div className="buy-now">
+                  {" "}
+                  <button onClick={() => addToCart(pageItem)}>
+                    {" "}
+                    <Link to="/cart">
+                      <i className="fa fa-shopping-cart" /> Mua ngay{" "}
+                    </Link>
+                  </button>{" "}
+                </div>{" "}
+                {/* <div className="product-like">
                   <p>{count}</p> <br />
                   <i className="fas fa-heart" onClick={increment} />
-                </div>
+                </div> */}
               </div>
             </Link>
             <hr />

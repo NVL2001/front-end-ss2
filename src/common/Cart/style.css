@@ -139,3 +139,8 @@
   background-color: transparent;
   font-size: 25px;
 }
+
+section.cart-items {
+  padding-bottom: 100px;
+
+}
