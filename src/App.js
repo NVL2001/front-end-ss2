@@ -27,34 +27,38 @@ import FAQ from "./admin/scenes/faq";
 import Calendar from "./admin/scenes/calendar/calendar";
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
-/* eslint-disable*/
-
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={Pages} />
-        <Route path="/cart" exact component={Cart} />
-        <Route path="/product" exact component={ProductPage} />
-        <Route path="/product/:id" component={ProductDetail} />
-        <Route path="/category/:id" component={CategoryPage} />
-        <Route path="/user" exact component={User} />
-        <Route path="/admin/dashboard" component={Dashboard} />
-        <Route path="/admin/categories" component={Categories} />
-        <Route path="/admin/products" component={Products} />
-        <Route path="/admin/products/add" component={InputProduct} />
-        <Route path="/admin/orders" component={Orders} />
-        <Route path="/admin/team" component={Team} />
-        <Route path="/admin/form" component={Form} />
-        <Route path="/admin/bar" component={Bar} />
-        <Route path="/admin/pie" component={Pie} />
-        <Route path="/admin/line" component={Line} />
-        <Route path="/admin/faq" component={FAQ} />
-        <Route path="/admin/calendar" component={Calendar} />
-        <Route path="/admin/geography" component={Calendar} />
-      </Switch>
-    </Router>
+    <AuthContextProvider>
+      <ToastContainer />
+      <ProductContextProvider>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Pages} />
+            <Route path="/cart" exact component={Cart} />
+            <Route path="/product" exact component={ProductPage} />
+            <Route path="/product/:id" component={ProductDetail} />
+            <Route path="/category/:id" component={CategoryPage} />
+            <Route path="/user" exact component={User} />
+            <Route path="/about" exact component={AboutUs} />
+            <Route path="/admin/dashboard" component={Dashboard} />
+            <Route path="/admin/categories" component={Categories} />
+            <Route path="/admin/products" component={Products} />
+            <Route path="/admin/products/add" component={InputProduct} />
+            <Route path="/admin/orders" component={Orders} />
+            <Route path="/admin/team" component={Team} />
+            <Route path="/admin/form" component={Form} />
+            <Route path="/admin/bar" component={Bar} />
+            <Route path="/admin/pie" component={Pie} />
+            <Route path="/admin/line" component={Line} />
+            <Route path="/admin/faq" component={FAQ} />
+            <Route path="/admin/calendar" component={Calendar} />
+            <Route path="/admin/geography" component={Calendar} />
+          </Switch>
+        </Router>
+      </ProductContextProvider>
+    </AuthContextProvider>
   );
 }
 

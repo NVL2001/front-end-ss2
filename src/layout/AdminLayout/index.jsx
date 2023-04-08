@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CssBaseline, Stack, ThemeProvider } from '@mui/material';
-import { ToastContainer } from 'react-toastify';
 import { ColorModeContext, useMode } from '../../admin/theme';
 import Sidebar from "../../admin/scenes/global/Sidebar";
 import Topbar from "../../admin/scenes/global/Topbar";
@@ -12,7 +11,6 @@ export function AdminLayout({ children }) {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ToastContainer />
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Stack direction="row">
