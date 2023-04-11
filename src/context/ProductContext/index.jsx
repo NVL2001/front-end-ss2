@@ -45,7 +45,7 @@ export function ProductContextProvider({ children }) {
   };
   // clear all item in cart
   const clearItem = () => {
-    setCartItem([]);
+    localStorage.removeItem("CartItem");
   };
 
   useEffect(() => {

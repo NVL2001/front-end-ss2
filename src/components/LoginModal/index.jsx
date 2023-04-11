@@ -15,12 +15,13 @@ import {
   OutlinedInput,
   FormHelperText,
 } from "@mui/material";
+/*eslint-disable*/
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Form, Field } from "react-final-form";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { useAuth } from '../../context/AuthContext';
-import { login } from '../../api/auth';
+import { useAuth } from "../../context/AuthContext";
+import { login } from "../../api/auth";
 import { UserRoles } from "../../constants/UserRoles";
 
 export function LoginModal({ open, onClose }) {
@@ -29,18 +30,21 @@ export function LoginModal({ open, onClose }) {
   const onSubmit = useCallback(async (value) => {
     try {
       const { data } = await login(value);
-      toast.success('Login successful');
+      toast.success("Đăng nhập thành công");
       const userRoles = data.roles.map((role) => role.name);
 
-      if (userRoles.includes(UserRoles.ADMIN) || userRoles.includes(UserRoles.STAFF)) {
+      if (
+        userRoles.includes(UserRoles.ADMIN) ||
+        userRoles.includes(UserRoles.STAFF)
+      ) {
         history.replace("/admin/dashboard");
       }
 
       setUser({
         name: data.userName,
-        email: 'johndoe@example.com',
+        email: "johndoe@example.com",
         phone: data.phoneNumber || "",
-        address: '123 Main St.',
+        address: "123 Main St.",
         shoppingHistory: [],
         vouchers: [],
       });
@@ -53,26 +57,23 @@ export function LoginModal({ open, onClose }) {
   const validate = useCallback((value) => {
     const error = {};
     if (!value.username) {
-      error.username = 'User Name is required';
+      error.username = "Tên đăng nhập là bắt buộc";
     }
     if (!value.password) {
-      error.password = 'Password is required';
+      error.password = "Mật khẩu là bắt buộc";
     }
     return error;
   }, []);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-    >
+    <Modal open={open} onClose={onClose}>
       <StyledCard>
         <Box
           sx={{
             marginTop: 2,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main', margin: '0 auto' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main", margin: "0 auto" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" align="center">
@@ -88,15 +89,17 @@ export function LoginModal({ open, onClose }) {
                     name="username"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.username && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.username && meta.touched}
+                        >
                           <FormLabel>
                             <Typography>Tên đăng nhập</Typography>
                           </FormLabel>
                           <OutlinedInput {...input} />
                           {errors.username && meta.touched && (
-                            <FormHelperText>
-                              {errors.username}
-                            </FormHelperText>
+                            <FormHelperText>{errors.username}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -106,15 +109,21 @@ export function LoginModal({ open, onClose }) {
                     name="password"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.password && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.password && meta.touched}
+                        >
                           <FormLabel>
                             <Typography>Mật khẩu</Typography>
                           </FormLabel>
-                          <OutlinedInput type="password" {...input} autoComplete="off" />
+                          <OutlinedInput
+                            type="password"
+                            {...input}
+                            autoComplete="off"
+                          />
                           {errors.password && meta.touched && (
-                            <FormHelperText>
-                              {errors.password}
-                            </FormHelperText>
+                            <FormHelperText>{errors.password}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -150,10 +159,10 @@ export function LoginModal({ open, onClose }) {
 }
 
 const StyledCard = styled(Card)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
   boxShadow: 24,
   p: 4,

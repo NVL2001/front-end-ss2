@@ -5,18 +5,21 @@ import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
 /* eslint-disable*/
 function CartComponent() {
-  const { CartItem, addToCart, decreaseQty, clearAll } = useProduct();
+  const { CartItem, addToCart, decreaseQty, clearItem } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
     0
   );
+  // clearItem();
 
   return (
     <section className="cart-items">
       <div className="container d_flex">
         <div className="cart-details">
           {CartItem.length === 0 && (
-            <h1 className="no-items product">No Items are add in Cart</h1>
+            <h1 className="no-items product">
+              Không có sản phẩm trong giỏ hàng
+            </h1>
           )}
 
           {CartItem.map((item) => {
@@ -25,7 +28,7 @@ function CartComponent() {
             return (
               <div className="cart-list product d_flex" key={item.id}>
                 <div className="img">
-                  <Link to={`/products/${item.id}`}>
+                  <Link to={`/product/${item.id}`}>
                     <img src={`http://${item.productImages[0]}`} />
                   </Link>
                 </div>
@@ -54,14 +57,14 @@ function CartComponent() {
                   </div>
 
                   <div className="cartControl d_flex">
-                    <button className="incCart" onClick={() => addToCart(item)}>
-                      <i className="fas fa-plus" />
-                    </button>
                     <button
                       className="desCart"
                       onClick={() => decreaseQty(item)}
                     >
                       <i className="fas fa-minus" />
+                    </button>
+                    <button className="incCart" onClick={() => addToCart(item)}>
+                      <i className="fas fa-plus" />
                     </button>
                   </div>
                 </div>
@@ -73,7 +76,11 @@ function CartComponent() {
         </div>
 
         <div className="cart-total product">
-          <h2>Giỏ hàng</h2>
+          <h2>
+            Giỏ hàng <button onClick={() => clearItem()}>Xóa giỏ hàng</button>
+          </h2>
+          {/* clear cart */}
+
           <div className=" d_flex">
             <h4>Tổng cộng :</h4>
             <h3>
