@@ -10,7 +10,6 @@ function CartComponent() {
     (price, item) => price + item.qty * item.price,
     0
   );
-  // clearItem();
 
   return (
     <section className="cart-items">
@@ -76,9 +75,8 @@ function CartComponent() {
         </div>
 
         <div className="cart-total product">
-          <h2>
-            Giỏ hàng <button onClick={() => clearItem()}>Xóa giỏ hàng</button>
-          </h2>
+          <h2>Giỏ hàng</h2>
+          <button onClick={() => clearItem()}>Xóa giỏ hàng</button>
           {/* clear cart */}
 
           <div className=" d_flex">
