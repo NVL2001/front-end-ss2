@@ -5,7 +5,8 @@ import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
 /* eslint-disable*/
 function CartComponent() {
-  const { CartItem, addToCart, decreaseQty, clearItem } = useProduct();
+  const { CartItem, addToCart, decreaseQty, removeItem, clearItem } =
+    useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
     0
@@ -56,6 +57,13 @@ function CartComponent() {
                   </div>
 
                   <div className="cartControl d_flex">
+                    {/* clear this item */}
+                    <button
+                      className="removeCart"
+                      onClick={() => removeItem(item)}
+                    >
+                      <i className="fas fa-trash" />
+                    </button>
                     <button
                       className="desCart"
                       onClick={() => decreaseQty(item)}
@@ -89,7 +97,7 @@ function CartComponent() {
 
           {/* checkout */}
           <div className="checkout--button">
-            <button>Thanh toán </button>
+            <button>Mua hàng </button>
           </div>
         </div>
       </div>

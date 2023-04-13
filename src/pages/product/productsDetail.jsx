@@ -4,9 +4,9 @@ import "./ProductDetail.css";
 import { FaSpinner } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
-import { APIRoutes } from "../constants/APIRoutes";
-import { useProduct } from "../context/ProductContext";
-import { PublicLayout } from "../layout/PublicLayout";
+import { APIRoutes } from "../../constants/APIRoutes";
+import { useProduct } from "../../context/ProductContext";
+import { PublicLayout } from "../../layout/PublicLayout";
 
 // spinner
 function LoadingSpinner() {

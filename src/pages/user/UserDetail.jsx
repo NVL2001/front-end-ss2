@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import './user.css';
+import React, { useEffect } from "react";
+import "./user.css";
 import { useHistory } from "react-router-dom";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../../context/AuthContext";
 
 function UserProfile() {
   // const [name, setName] = useState('John Doe');
@@ -47,10 +47,7 @@ function UserProfile() {
         <ul>
           {user.shoppingHistory.map((item) => (
             <li key={item.id}>
-              {item.name}
-              {' '}
-              -
-              {item.price}
+              {item.name} -{item.price}
             </li>
           ))}
         </ul>
@@ -62,10 +59,7 @@ function UserProfile() {
         <ul>
           {user.vouchers.map((voucher) => (
             <li key={voucher.id}>
-              {voucher.code}
-              {' '}
-              -
-              {voucher.amount}
+              {voucher.code} -{voucher.amount}
             </li>
           ))}
         </ul>

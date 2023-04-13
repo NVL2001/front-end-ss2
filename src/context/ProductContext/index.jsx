@@ -43,6 +43,10 @@ export function ProductContextProvider({ children }) {
       );
     }
   };
+  // decrease to 0 or clear this item incart
+  const removeItem = (product) => {
+    setCartItem(CartItem.filter((item) => item.id !== product.id));
+  };
   // clear all item in cart
   const clearItem = () => {
     localStorage.setItem("CartItem", JSON.stringify([]));
@@ -68,6 +72,7 @@ export function ProductContextProvider({ children }) {
       // shopItems,
       addToCart,
       decreaseQty,
+      removeItem,
       clearItem,
       CartItem,
     }),

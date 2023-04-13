@@ -1,9 +1,7 @@
+/* eslint-disable*/
 import React, { useState, useEffect } from "react";
-// import logo from "../../components/assets/images/logoweb.webp";
 import { Link } from "react-router-dom";
-import {
-  Button, Menu, MenuItem, Stack, Typography
-} from "@mui/material";
+import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import logo from "../../components/assets/images/logo.png";
 import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
@@ -21,13 +19,13 @@ function Search() {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const search = document.querySelector(".search");
-      search.classList.toggle("active", window.scrollY > 100);
+      search.classList.toggle("active", window.scrollY > 50);
     });
 
     return () => {
       window.removeEventListener("scroll", () => {
         const search = document.querySelector(".search");
-        search.classList.toggle("active", window.scrollY > 100);
+        search.classList.toggle("active", window.scrollY > 50);
       });
     };
   }, []);
@@ -101,11 +99,11 @@ function Search() {
                 open={!!anchorEl}
                 onClose={handleClose}
                 MenuListProps={{
-                  'aria-labelledby': 'basic-button',
+                  "aria-labelledby": "basic-button",
                 }}
               >
                 <Link to="/user">
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>Tài khoản của tôi</MenuItem>
                 </Link>
                 <MenuItem onClick={handleSignOut}>Logout</MenuItem>
               </Menu>
