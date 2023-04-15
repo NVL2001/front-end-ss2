@@ -28,22 +28,22 @@ function UserProfile() {
       <h2>My Information</h2>
       <p>
         Name:
-        {user.name}
+        {user.username ?? ''}
       </p>
       <p>
         Email:
-        {user.email}
+        {user.email ?? ''}
       </p>
       <p>
         Phone:
-        {user.phone}
+        {user.phone ?? ''}
       </p>
       <p>
         Address:
-        {user.address}
+        {user.address ?? ''}
       </p>
       <h3>Shopping History</h3>
-      {user.shoppingHistory.length > 0 ? (
+      {user.shoppingHistory && user.shoppingHistory.length > 0 ? (
         <ul>
           {user.shoppingHistory.map((item) => (
             <li key={item.id}>
@@ -55,7 +55,7 @@ function UserProfile() {
         <p>No shopping history available.</p>
       )}
       <h3>Vouchers</h3>
-      {user.vouchers.length > 0 ? (
+      {user.vouchers && user.vouchers.length > 0 ? (
         <ul>
           {user.vouchers.map((voucher) => (
             <li key={voucher.id}>

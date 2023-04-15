@@ -5,9 +5,12 @@ const login = (payload) => axios.post(APIRoutes.AUTH_LOGIN, payload);
 
 const register = (payload) => axios.post(APIRoutes.AUTH_REGISTER, payload);
 
+const getUserInfo = () => axios.get(APIRoutes.GET_USER_INFO);
+
 export {
   login,
   register,
+  getUserInfo
 };
 // export const isAuthenticate = () => {
 //   const token = localStorage.getItem('token');
