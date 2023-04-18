@@ -80,8 +80,8 @@ function Navbar() {
 
           <li>
             <Link
-              to="/"
-              className={location.pathname === "/track" ? "active" : ""}
+              to="/order"
+              className={location.pathname === "/order" ? "active" : ""}
             >
               Đơn đặt hàng
             </Link>

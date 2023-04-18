@@ -219,7 +219,6 @@ function MakeOrder() {
               );
             })}
           </div>
-
           {/* total quantity */}
           <div className="total-detail">
             <span>
@@ -248,8 +247,11 @@ function MakeOrder() {
               </h4>
             </span>
           </div>
-
-          <button className="btn btn-primary">Đặt hàng</button>
+          <div className="submit--btn">
+            <Link to="/order">
+              <button className="btn btn-primary">Đặt hàng</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
