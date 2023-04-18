@@ -38,8 +38,8 @@
 .user-info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
     width: 100%;
     height: 100%;
 }
@@ -60,6 +60,7 @@
     border-radius: 5px;
     margin-bottom: 20px;
     width: 90%;
+    margin: 0;
 
 }
 
@@ -88,14 +89,14 @@ label {
     border-radius: 5px;
     padding: 10px;
     font-size: 16px;
-    width: 100%;
+    width: 10%;
 
 }
 
 select {
     display: block;
     height: 90%;
-    width: 100%;
+    width: 50%;
     border: 0px solid #ccc;
     border-radius: 5px;
     padding: 10px;
