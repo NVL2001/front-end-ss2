@@ -3,6 +3,7 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
+
 /* eslint-disable*/
 function CartComponent() {
   const { CartItem, addToCart, decreaseQty, removeItem, clearItem } =

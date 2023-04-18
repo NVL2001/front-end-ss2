@@ -1,0 +1,168 @@
+/* outer-container_________________________ */
+.container.checkout {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+}
+
+.breadcrumb {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: 50px;
+    /* background-color: #f5f5f5; */
+}
+
+.breadcrumb .active {
+    color: #c10a0ac8;
+    border-bottom: 1px solid salmon;
+}
+
+/* container main___________________________ */
+.main {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* user checkout in4___________________-_-______ */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.user-info>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+
+}
+
+.form-group {
+    border: 1px solid salmon;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 90%;
+
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin-right: 10px;
+
+}
+
+.main input {
+    display: block;
+    height: 40px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    /* margin-bottom: 20px; */
+    width: 100%;
+}
+
+.form-check input {
+    display: inline-block;
+    height: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+
+}
+
+select {
+    display: block;
+    height: 90%;
+    width: 100%;
+    border: 0px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+textarea {
+    display: block;
+    height: 50px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    overflow: auto;
+}
+
+/* summary-order____________________ */
+.order-summary {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: 100%;
+    align-items: flex-start;
+
+}
+
+
+
+.order-summary h1 {
+    display: inline-block;
+    width: 100%;
+}
+
+.cart-list {
+    display: flex;
+    align-items: center;
+
+}
+
+.cart-details img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.img {
+    margin-right: 20px;
+    width: 100px;
+    height: 100px;
+}
+
+span .count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.total-detail {
+
+    margin-left: 20px;
+    margin-bottom: 30px;
+}

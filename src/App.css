@@ -12,7 +12,10 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+
+  background-color: #f5f5f5;
+
 }
 
 .background {
