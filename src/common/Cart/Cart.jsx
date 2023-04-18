@@ -97,7 +97,10 @@ function CartComponent() {
 
           {/* checkout */}
           <div className="checkout--button">
-            <button>Mua hàng </button>
+            <Link to="/checkout">
+              {" "}
+              <button>Mua hàng </button>
+            </Link>
           </div>
         </div>
       </div>

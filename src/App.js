@@ -9,6 +9,7 @@ import User from './pages/user/User';
 import Cart from './common/Cart/Cart';
 import CategoryPage from './components/shops/CategoryPage';
 import AboutUs from './components/about/about';
+import MakeOrderPage from './pages/checkout/MakeOrderPage';
 
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +38,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={Pages} />
             <Route path="/cart" exact component={Cart} />
+            <Route path="/checkout" exact component={MakeOrderPage} />
             <Route path="/product" exact component={ProductPage} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route path="/category/:id" component={CategoryPage} />
