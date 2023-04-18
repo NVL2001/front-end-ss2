@@ -1,12 +1,17 @@
 import React from "react";
-import { PublicLayout } from "../../layout/PublicLayout";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "../../styles/theme";
+import Head from "../../common/header/Head";
+import Footer from "../../common/footer/Footer";
 import MakeOrder from "./MakeOrder";
 
 function MakeOrderPage() {
   return (
-    <PublicLayout>
+    <ThemeProvider theme={theme}>
+      <Head />
       <MakeOrder />
-    </PublicLayout>
+      <Footer />
+    </ThemeProvider>
   );
 }
 export default MakeOrderPage;
