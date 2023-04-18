@@ -57,6 +57,8 @@ function MakeOrder() {
     0
   );
 
+  //
+
   return (
     <div className="container d_flex checkout">
       {/* breadcum */}
@@ -204,15 +206,13 @@ function MakeOrder() {
               const subPriceTotal = item.price * item.qty;
 
               return (
-                <div className="cart-list product d_flex" key={item.id}>
+                <div className="cart-list product" key={item.id}>
                   <span className="count">{item.qty}</span>
                   <div className="img">
-                    {/* <Link to={`/product/${item.id}`}> */}
                     <img src={`http://${item.productImages[0]}`} />
-                    {/* </Link> */}
                   </div>
 
-                  <div className="cart-details">
+                  <div className="item-name">
                     <h3>{item.name}</h3>
                   </div>
                 </div>
@@ -222,21 +222,31 @@ function MakeOrder() {
 
           {/* total quantity */}
           <div className="total-detail">
-            <h3>Tạm tính :</h3>
-            <h4>
-              <span>{CartItem.reduce((qty, item) => qty + item.qty, 0)}</span>{" "}
-              sản phẩm =
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-              VND
-            </h4>
-            <h4>Phí vận chuyển : 25000 VND</h4>
-            <h3>Tổng cộng :</h3>
-            <h4>
-              {(totalPrice + 25000)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-              VND
-            </h4>
+            <span>
+              {" "}
+              <h3>Tạm tính :</h3>
+              <h4>
+                {/* <span>{CartItem.reduce((qty, item) => qty + item.qty, 0)}</span>{" "} */}
+                {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                VND
+              </h4>
+            </span>
+
+            <span>
+              <h3>Phí vận chuyển : </h3>
+              <h4>
+                {(25000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+              </h4>
+            </span>
+            <span>
+              <h3>Tổng cộng :</h3>
+              <h4>
+                {(totalPrice + 25000)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                VND
+              </h4>
+            </span>
           </div>
 
           <button className="btn btn-primary">Đặt hàng</button>
