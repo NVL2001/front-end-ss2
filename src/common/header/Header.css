@@ -109,6 +109,52 @@
 
 }
 
+/* .cart .icon-circle
+ hiệu ứng icon rung lắc
+*/
+.icon-circle {
+  animation: swing 1s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(10deg);
+  }
+
+  30% {
+    transform: rotate(-9deg);
+  }
+
+  50% {
+    transform: rotate(7deg);
+  }
+
+  57% {
+    transform: rotate(-5deg);
+  }
+
+  64% {
+    transform: rotate(3deg);
+  }
+
+  71% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+
+
+
+
 .fa-user:hover {
   cursor: pointer;
   transform: scale(1.1);
