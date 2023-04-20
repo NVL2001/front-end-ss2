@@ -75,7 +75,7 @@ function MakeOrder() {
         <div className="user-info">
           <h1>Thông tin giao hàng</h1>
           <p>Bạn đã có tài khoản? Đăng nhập ngay</p>
-          <form>
+          <form autoComplete="off" method="post">
             <div className="form-group">
               <label htmlFor="name">Họ và tên</label>
               <input
@@ -102,53 +102,58 @@ function MakeOrder() {
                 id="address"
                 placeholder="Nhập địa chỉ"
               />
+              <div className="address">
+                <div className="form-group">
+                  <label htmlFor="province">Tỉnh/Thành phố</label>
+                  <select
+                    className="form-control"
+                    id="province"
+                    onChange={handleProvinceChange}
+                  >
+                    <option value="" selected>
+                      Chọn tỉnh{" "}
+                    </option>
+                    {provinces.map((province) => (
+                      <option key={province.code} value={province.code}>
+                        {province.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="district">Quận/Huyện</label>
+                  <select
+                    className="form-control"
+                    id="district"
+                    onChange={handleDistrictChange}
+                  >
+                    <option value="" selected>
+                      Chọn quận/huyện{" "}
+                    </option>
+                    {districts.map((district) => (
+                      <option key={district.code} value={district.code}>
+                        {district.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>{" "}
+                <div className="form-group">
+                  <label htmlFor="ward">Phường/Xã</label>
+                  <select className="form-control" id="ward">
+                    <option value="" selected>
+                      Chọn phường/xã{" "}
+                    </option>
+                    {wards.map((ward) => (
+                      <option key={ward.code} value={ward.code}>
+                        {ward.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
             {/* option choose province, district, town */}
-            <div className="form-group">
-              <label htmlFor="province">Tỉnh/Thành phố</label>
-              <select
-                className="form-control"
-                id="province"
-                onChange={handleProvinceChange}
-              >
-                <option value="" selected>
-                  Chọn tỉnh{" "}
-                </option>
-                {provinces.map((province) => (
-                  <option key={province.code} value={province.code}>
-                    {province.name}
-                  </option>
-                ))}
-              </select>
 
-              <label htmlFor="district">Quận/Huyện</label>
-              <select
-                className="form-control"
-                id="district"
-                onChange={handleDistrictChange}
-              >
-                <option value="" selected>
-                  Chọn quận/huyện{" "}
-                </option>
-                {districts.map((district) => (
-                  <option key={district.code} value={district.code}>
-                    {district.name}
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="ward">Phường/Xã</label>
-              <select className="form-control" id="ward">
-                <option value="" selected>
-                  Chọn phường/xã{" "}
-                </option>
-                {wards.map((ward) => (
-                  <option key={ward.code} value={ward.code}>
-                    {ward.name}
-                  </option>
-                ))}
-              </select>
-            </div>
             {/* result location */}
             <h2 id="result"></h2>
 
@@ -162,7 +167,6 @@ function MakeOrder() {
               ></textarea>
             </div>
             <h2>Phương thức thanh toán</h2>
-
             <div className="form-group" id="check--option">
               <div className="form-check">
                 <input
@@ -177,7 +181,6 @@ function MakeOrder() {
                   Thanh toán khi nhận hàng
                 </label>
               </div>
-
               <div className="form-check">
                 <input
                   className="form-check-input"
