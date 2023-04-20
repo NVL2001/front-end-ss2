@@ -74,7 +74,7 @@ function MakeOrder() {
         {/* user information, ship option, checkout option, location */}
         <div className="user-info">
           <h1>Thông tin giao hàng</h1>
-          <p>Bạn đã có tài khoản? Đăng nhập</p>
+          <p>Bạn đã có tài khoản? Đăng nhập ngay</p>
           <form>
             <div className="form-group">
               <label htmlFor="name">Họ và tên</label>
@@ -161,8 +161,9 @@ function MakeOrder() {
                 placeholder="Nhập ghi chú"
               ></textarea>
             </div>
-            <div className="form-group">
-              <label htmlFor="note">Phương thức thanh toán</label>
+            <h2>Phương thức thanh toán</h2>
+
+            <div className="form-group" id="check--option">
               <div className="form-check">
                 <input
                   className="form-check-input"
