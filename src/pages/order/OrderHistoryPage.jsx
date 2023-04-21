@@ -333,7 +333,7 @@ function CollapsibleTable() {
   );
 }
 
-export default function OrderPage() {
+export default function OrderHistoryPage() {
   return (
     <PublicLayout>
       <CollapsibleTable />
