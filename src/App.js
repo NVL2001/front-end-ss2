@@ -28,6 +28,7 @@ import FAQ from "./admin/scenes/faq";
 import Calendar from "./admin/scenes/calendar/calendar";
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import OrderPage from "./pages/order/OrderPage";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/product" exact component={ProductPage} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route path="/category/:id" component={CategoryPage} />
+            <Route path="/order" component={OrderPage} />
             <Route path="/user" exact component={User} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />
