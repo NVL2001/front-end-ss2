@@ -83,32 +83,47 @@ const themeOptions = {
       fontSize: '32px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
     h2: {
       fontSize: '28px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
     h3: {
       fontSize: '24px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
     h4: {
       fontSize: '22px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
     h5: {
       fontSize: '20px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
     h6: {
       fontSize: '18px',
       fontWeight: 700,
       lineHeight: '130%',
+      color: themeColors.tertiary.darkness5,
     },
+    body1: {
+      color: themeColors.grey.darkness5,
+    },
+    body2: {
+      color: themeColors.grey.darkness5,
+    },
+    p: {
+      color: themeColors.grey.darkness5,
+    }
   },
   palette: {
     text: {
