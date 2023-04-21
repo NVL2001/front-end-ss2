@@ -3,6 +3,7 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
+
 /* eslint-disable*/
 function CartComponent() {
   const { CartItem, addToCart, decreaseQty, removeItem, clearItem } =
@@ -83,12 +84,15 @@ function CartComponent() {
         </div>
 
         <div className="cart-total product">
-          <h2>Giỏ hàng</h2>
-          <button onClick={() => clearItem()}>Xóa giỏ hàng</button>
-          {/* clear cart */}
-
           <div className=" d_flex">
-            <h4>Tổng cộng :</h4>
+            <h2>Giỏ hàng</h2>
+            <button id="removeAllcart--btn" onClick={() => clearItem()}>
+              Xóa giỏ hàng <i class="fas fa-times-circle"> </i>
+            </button>
+          </div>
+          <hr />
+          <div className=" d_flex">
+            <h2>Tạm tính :</h2>
             <h3>
               {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
               VND
@@ -96,12 +100,11 @@ function CartComponent() {
           </div>
 
           {/* checkout */}
-          <div className="checkout--button">
-            <Link to="/checkout">
-              {" "}
-              <button>Mua hàng </button>
-            </Link>
-          </div>
+          {/* <div className=""> */}
+          <Link to="/checkout">
+            <button className="btn-primary checkout">Mua hàng </button>
+          </Link>
+          {/* </div> */}
         </div>
       </div>
     </section>

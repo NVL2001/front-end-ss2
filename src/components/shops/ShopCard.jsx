@@ -50,7 +50,10 @@ function ShopCard({ addToCart }) {
             <Link to={`/product/${pageItem.id}`}>
               {" "}
               <div className="img">
-                <span className="discount">{pageItem.discount}% Off</span>
+                <span className="discount">
+                  {pageItem?.discount ? pageItem.discount.discountPercent : 0}%
+                  Off
+                </span>
                 <img src={`http://${pageItem.productImages[0]}`} alt="..." />
                 {/* mua ngay */}
                 <div className="buy-now">

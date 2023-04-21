@@ -81,7 +81,7 @@ function Navbar() {
           <li>
             <Link
               to="/order"
-              className={location.pathname === "/track" ? "active" : ""}
+              className={location.pathname === "/order" ? "active" : ""}
             >
               Đơn đặt hàng
             </Link>
