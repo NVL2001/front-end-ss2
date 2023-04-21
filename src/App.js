@@ -10,7 +10,6 @@ import Cart from './common/Cart/Cart';
 import CategoryPage from './components/shops/CategoryPage';
 import AboutUs from './components/about/about';
 import MakeOrderPage from './pages/checkout/MakeOrderPage';
-import OrderPage from './pages/order/OrderPage';
 
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,6 +28,7 @@ import FAQ from "./admin/scenes/faq";
 import Calendar from "./admin/scenes/calendar/calendar";
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import OrderHistoryPage from "./pages/order/OrderHistoryPage";
 
 function App() {
   return (
@@ -40,10 +40,10 @@ function App() {
             <Route path="/" exact component={Pages} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={MakeOrderPage} />
-            <Route path="/order" exact component={OrderPage} />
             <Route path="/product" exact component={ProductPage} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route path="/category/:id" component={CategoryPage} />
+            <Route path="/order" component={OrderHistoryPage} />
             <Route path="/user" exact component={User} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />
