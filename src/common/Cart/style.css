@@ -151,10 +151,11 @@ section.cart-items {
 
 #removeAllcart--btn {
   padding: 5px 10px;
-  background-color: transparent;
+  background-color: #e9456033;
   border-radius: 5px;
   margin-bottom: 20px;
   font-size: 1rem;
+  border: 1px solid #e94560;
 
 }
 

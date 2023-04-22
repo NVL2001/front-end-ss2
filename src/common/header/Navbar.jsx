@@ -7,11 +7,6 @@ import { getProductsByCategory } from "../../api/products";
 
 function Navbar() {
   const location = useLocation();
-  // fixed Header
-  // window.addEventListener('scroll', () => {
-  //   const header = document.querySelector('.header');
-  //   header.classList.toggle('active', window.scrollY > 100);
-  // });
 
   // Toogle Menu
   const [MobileMenu, setMobileMenu] = useState(false);
@@ -25,7 +20,6 @@ function Navbar() {
     };
     fetchData();
   }, []);
-  // console.log(categories);
 
   // product by cate
   const history = useHistory();

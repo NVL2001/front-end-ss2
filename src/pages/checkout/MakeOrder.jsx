@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-// cart css
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import "./MakeOrder.css";
 import { Link } from "react-router-dom";
 import { useProduct } from "../../context/ProductContext";
-import { PublicLayout } from "../../layout/PublicLayout";
+import { makeOrder } from "../../api/order";
+
 /*eslint-disable*/
 function MakeOrder() {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   //   const host = "https://provinces.open-api.vn/api/";
-  React.useEffect(() => {
+  useEffect(() => {
     const getProvinces = async () => {
       const response = await fetch(
         "https://provinces.open-api.vn/api/?depth=1"
@@ -50,14 +51,36 @@ function MakeOrder() {
       item.classList.add("active");
     }
   });
-  const { CartItem, addToCart, decreaseQty, removeItem, clearItem } =
-    useProduct();
+  const { CartItem } = useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
     0
   );
 
-  //
+  const handleSubmit = async (e) => {
+    const address = document.getElementById("address").value;
+    const phoneNumber = document.getElementById("phone").value;
+    const items = CartItem.map((item) => {
+      return {
+        productId: item._id,
+        quantity: item.qty,
+      };
+    });
+    const data = {
+      address,
+      items,
+      phoneNumber,
+    };
+    try {
+      const request = await makeOrder(data);
+      if (request.status === 200) {
+        window.location.href = "/order";
+      }
+    } catch (error) {
+      toast.error("Đặt hàng thất bại");
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container d_flex checkout">
@@ -75,7 +98,7 @@ function MakeOrder() {
         <div className="user-info">
           <h1>Thông tin giao hàng</h1>
           <p>Bạn đã có tài khoản? Đăng nhập ngay</p>
-          <form autoComplete="off" method="post">
+          <form autoComplete="off">
             <div className="form-group">
               <label htmlFor="name">Họ và tên</label>
               <input
@@ -100,7 +123,7 @@ function MakeOrder() {
                 type="text"
                 className="form-control"
                 id="address"
-                placeholder="Nhập địa chỉ"
+                placeholder="Nhập địa chỉ chi tiết"
               />
               <div className="address">
                 <div className="form-group">
@@ -190,8 +213,9 @@ function MakeOrder() {
                   value="option3"
                 />
                 <label className="form-check-label" htmlFor="payment3">
-                  Thanh toán qua ví điện tử
+                  Chuyển khoản
                 </label>
+                
               </div>
             </div>
           </form>
@@ -253,7 +277,14 @@ function MakeOrder() {
           </div>
           <div className="submit--btn">
             <Link to="/order">
-              <button className="btn btn-primary">Đặt hàng</button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Đặt hàng
+              </button>
             </Link>
           </div>
         </div>
