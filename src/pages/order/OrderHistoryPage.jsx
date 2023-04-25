@@ -177,7 +177,7 @@ function Row(props) {
               </Typography>
               <b>
                 <Typography variant="h8" component="div">
-                  { `Địa chỉ giao hàng: ${row.address}` }
+                  { `Địa chỉ giao hàng: ${row.address}, ${row.ward}, ${row.district}, ${row.province}` }
                 </Typography>
                 <Typography variant="h8" component="div">
                   { `Số điện thoại nhận hàng: ${row.phoneNumber}` }
