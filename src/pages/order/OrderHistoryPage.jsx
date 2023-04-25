@@ -177,7 +177,7 @@ function Row(props) {
               </Typography>
               <b>
                 <Typography variant="h8" component="div">
-                  { `Địa chỉ giao hàng: ${row.address}` }
+                  { `Địa chỉ giao hàng: ${row.address}, ${row.ward}, ${row.district}, ${row.province}` }
                 </Typography>
                 <Typography variant="h8" component="div">
                   { `Số điện thoại nhận hàng: ${row.phoneNumber}` }
@@ -277,7 +277,6 @@ function CollapsibleTable() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        setAxiosAuthorizeHeader("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTOHFaZ25HSlVXIiwicm9sZSI6W3siYXV0aG9yaXR5IjoiVVNFUiJ9XSwidXNlcm5hbWUiOiJ0cnVvbmciLCJpYXQiOjE2ODE5Nzc0MjQsImV4cCI6MTY4MjU4MjIyNH0.GGCNwNWZ1TpNw49F3_8bGrHd96OUbmUHvdUIcAeLElKwztm0MVvyRnOxavjHy5KZz8EFBuF6KY-tpKRYSRhl1A");
         const response = await axios.get(APIRoutes.GET_ORDERS, {
           params: {
             page

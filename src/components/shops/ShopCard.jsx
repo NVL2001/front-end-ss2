@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { APIRoutes } from "../../constants/APIRoutes";
+import formatMoney from "../../utils/formatMoney";
 
 // spinner
 function LoadingSpinner() {
@@ -54,7 +55,7 @@ function ShopCard({ addToCart }) {
                   {pageItem?.discount ? pageItem.discount.discountPercent : 0}%
                   Off
                 </span>
-                <img src={`http://${pageItem.productImages[0]}`} alt="..." />
+                <img src={`${axios.defaults.baseURL + pageItem.productImages[0]}`} alt="..." />
                 {/* mua ngay */}
                 <div className="buy-now">
                   {" "}
@@ -83,11 +84,15 @@ function ShopCard({ addToCart }) {
 
               <div className="price">
                 <h4>
-                  {pageItem.price
-
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                  VND
+                  {(pageItem.discount
+                    ? (
+                      <div>
+                        <p style={{ textDecoration: "line-through" }}>{formatMoney(pageItem.price)}</p>
+                        <p>{formatMoney(pageItem.discountPrice)}</p>
+                      </div>
+                    )
+                    : (<p>{formatMoney(pageItem.price)}</p>)
+                  )}
                 </h4>
 
                 <button onClick={() => addToCart(pageItem)}>

@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "./MakeOrder.css";
-import { Link } from "react-router-dom";
+import {
+  Link, Redirect, useHistory, useLocation
+} from "react-router-dom";
+import axios from "axios";
 import { useProduct } from "../../context/ProductContext";
 import { makeOrder } from "../../api/order";
+import formatMoney from "../../utils/formatMoney";
+import { APIRoutes } from "../../constants/APIRoutes";
 
 /*eslint-disable*/
 function MakeOrder() {
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
+  const [province, setProvince] = useState([]);
+  const [district, setDistrict] = useState([]);
   const [wards, setWards] = useState([]);
+  const [submitData, setSubmitData] = useState({});
+  const { clearItem } = useProduct()
+  let location = useLocation();
+  const history = useHistory()
+  const price = location.state.totalPrice;
+
+
   //   const host = "https://provinces.open-api.vn/api/";
   useEffect(() => {
     const getProvinces = async () => {
@@ -17,7 +29,7 @@ function MakeOrder() {
         "https://provinces.open-api.vn/api/?depth=1"
       );
       const data = await response.json();
-      setProvinces(data);
+      setProvince(data);
     };
     getProvinces();
   }, []);
@@ -28,7 +40,7 @@ function MakeOrder() {
         `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
       );
       const data = await response.json();
-      setDistricts(data.districts);
+      setDistrict(data.districts);
     };
     getDistricts();
   };
@@ -52,33 +64,57 @@ function MakeOrder() {
     }
   });
   const { CartItem } = useProduct();
-  const totalPrice = CartItem.reduce(
-    (price, item) => price + item.qty * item.price,
-    0
-  );
+
+  function queryAddressData(id) {
+    const selectElement = document.getElementById(id);
+    const selectedValue = selectElement.value;
+    const selectedOption = selectElement.querySelector(`[value="${selectedValue}"]`);
+    const selectedContent = selectedOption.textContent;
+
+    return selectedContent
+  }
 
   const handleSubmit = async (e) => {
+    if (CartItem.length == 0) {
+      toast.error("Không có sản phẩm trong giỏ hàng")
+      return;
+    }
     const address = document.getElementById("address").value;
     const phoneNumber = document.getElementById("phone").value;
+
+    const addressArray = ["province", "district", "wards"]
+    let addressObject = {}
+    for (let i = 0; i < addressArray.length; i ++) {
+      addressObject = {
+        ...addressObject,
+        [addressArray[i]]: queryAddressData(addressArray[i])
+      }
+    }
+
     const items = CartItem.map((item) => {
       return {
-        productId: item._id,
+        productId: item.id,
         quantity: item.qty,
       };
     });
     const data = {
+      ...addressObject,
       address,
       items,
-      phoneNumber,
+      phoneNumber
     };
+
+    console.log(data)
     try {
-      const request = await makeOrder(data);
+      const request = await axios.post(APIRoutes.MAKE_ORDER, data);
       if (request.status === 200) {
-        window.location.href = "/order";
+        toast.success("Đặt hàng thành công")
+        clearItem()
+        history.push("/order")
       }
     } catch (error) {
-      toast.error("Đặt hàng thất bại");
       console.log(error);
+      toast.error("Đặt hàng thất bại");
     }
   };
 
@@ -136,7 +172,7 @@ function MakeOrder() {
                     <option value="" selected>
                       Chọn tỉnh{" "}
                     </option>
-                    {provinces.map((province) => (
+                    {province.map((province) => (
                       <option key={province.code} value={province.code}>
                         {province.name}
                       </option>
@@ -153,7 +189,7 @@ function MakeOrder() {
                     <option value="" selected>
                       Chọn quận/huyện{" "}
                     </option>
-                    {districts.map((district) => (
+                    {district.map((district) => (
                       <option key={district.code} value={district.code}>
                         {district.name}
                       </option>
@@ -162,7 +198,7 @@ function MakeOrder() {
                 </div>{" "}
                 <div className="form-group">
                   <label htmlFor="ward">Phường/Xã</label>
-                  <select className="form-control" id="ward">
+                  <select className="form-control" id="wards">
                     <option value="" selected>
                       Chọn phường/xã{" "}
                     </option>
@@ -237,7 +273,7 @@ function MakeOrder() {
                 <div className="cart-list product" key={item.id}>
                   <span className="count">{item.qty}</span>
                   <div className="img">
-                    <img src={`http://${item.productImages[0]}`} />
+                    <img src={`${axios.defaults.baseURL + item.productImages[0]}`} />
                   </div>
 
                   <div className="item-name">
@@ -254,29 +290,25 @@ function MakeOrder() {
               <h3>Tạm tính :</h3>
               <h4>
                 {/* <span>{CartItem.reduce((qty, item) => qty + item.qty, 0)}</span>{" "} */}
-                {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                VND
+                {formatMoney(price)}
               </h4>
             </span>
 
             <span>
               <h3>Phí vận chuyển : </h3>
               <h4>
-                {(25000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+                {formatMoney(25000)}
               </h4>
             </span>
             <span>
               <h3>Tổng cộng :</h3>
               <h4>
-                {(totalPrice + 25000)
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                VND
+                {formatMoney(price + 25000)}
               </h4>
             </span>
           </div>
           <div className="submit--btn">
-            <Link to="/order">
+            {/*<Link to="/order">*/}
               <button
                 className="btn btn-primary"
                 onClick={() => {
@@ -285,7 +317,7 @@ function MakeOrder() {
               >
                 Đặt hàng
               </button>
-            </Link>
+            {/*</Link>*/}
           </div>
         </div>
       </div>

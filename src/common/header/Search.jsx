@@ -7,6 +7,7 @@ import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
 import { useAuth } from "../../context/AuthContext";
 import { useProduct } from "../../context/ProductContext";
+import axios from "axios";
 
 function Search() {
   const { CartItem } = useProduct();
@@ -62,6 +63,9 @@ function Search() {
   const handleSignOut = () => {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("CartItem")
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   return (

@@ -64,7 +64,7 @@ function ProductDetailComponent() {
       <div className="leftside">
         <div className="slider">
           <img
-            src={`http://${sliderData || product.productImages[0]}`}
+            src={`${axios.defaults.baseURL + (sliderData || product.productImages[0])}`}
             alt="..."
             className="product-image"
           />
@@ -72,7 +72,7 @@ function ProductDetailComponent() {
         <div className="slider-nav">
           {product.productImages.map((image, index) => (
             <img
-              src={`http://${image}`}
+              src={`${axios.defaults.baseURL + image}`}
               alt="..."
               key={image}
               onClick={() => handleClick(index)}
