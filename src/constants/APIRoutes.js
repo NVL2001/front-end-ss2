@@ -11,6 +11,7 @@ export const APIRoutes = {
   GET_PRODUCTS: '/product/products',
   GET_PRODUCT_BY_ID: '/product/get',
   GET_PRODUCT_BY_CATEGORY: '/product/by-category',
+  GET_MANY_PRODUCTS: 'product/get-many',
   GET_BY_CATEGORY: '/product/by-category',
   GET_USER_INFO: '/user/info',
   GET_ORDER_HISTORY: '/order/view-history/'
