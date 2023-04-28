@@ -1,30 +1,31 @@
+/* eslint-disable import/order */
 import React from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import { Button, useTheme, Box } from '@mui/material';
-import { tokens } from '../../theme';
+import Button from '@mui/material/Button';
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme";
+import { useHistory } from 'react-router-dom';
 
-function AddProductButton(props) {
+function AddProductButton() {
+  const history = useHistory();
+
+  const handleAddProductClick = () => {
+    history.push('/admin/products/add');
+  };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // Gọi lại các props từ bên trên truyền xuống
-  const { onHandleAddButton } = props;
-  // Hàm xử lý khi click vào nút Thêm Sản Phẩm
-  const handleCreateNewProduct = () => {
-    onHandleAddButton();
-  };
-  //
   return (
     <Button
       sx={{
         backgroundColor: colors.blueAccent[700],
         color: colors.grey[100],
-        fontSize: '14px',
-        fontWeight: 'bold',
-        padding: '10px 20px',
+        fontSize: "14px",
+        fontWeight: "bold",
+        padding: "10px 20px",
+        borderRadius: 0
       }}
+      onClick={handleAddProductClick}
     >
-      <AddIcon sx={{ mr: '10px' }} onClick={handleCreateNewProduct} />
-      Thêm Sản Phẩm
+      Thêm sản phẩm
     </Button>
   );
 }

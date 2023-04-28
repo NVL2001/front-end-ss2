@@ -9,25 +9,29 @@ function ProductList({ products }) {
 
   return (
     <>
-      <Sorting />
+      {/* <Sorting /> */}
       {products.map((product) => (
         <div className="box" key={product.id}>
           <div className="product mtop">
-            <Link to={`/products/${product.id}`}>
+            <Link to={`/product/${product.id}`}>
               {" "}
               <div className="img">
                 <span className="discount">{product.discount}% Off</span>
-
                 <img src={`http://${product.productImages[0]}`} alt="..." />
-
-                <div className="product-like">
-                  <i className="fas fa-heart" />
-                </div>
+                {/* mua ngay */}
+                <div className="buy-now">
+                  {" "}
+                  <Link to="/cart">
+                    <button onClick={() => addToCart(product)}>
+                      <i className="fa fa-shopping-cart" /> Mua ngay
+                    </button>{" "}
+                  </Link>
+                </div>{" "}
               </div>
             </Link>
             <hr />
             <div className="product-details">
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/product/${product.id}`}>
                 <h3>
                   {product.name.length > 65
                     ? `${product.name.slice(0, 65)}...`

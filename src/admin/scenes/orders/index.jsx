@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable eol-last */
+import { React, useState, useEffect } from 'react';
 import {
   Box, MenuItem, Select, Typography, useTheme,
 } from '@mui/material';
@@ -8,8 +9,21 @@ import Button from '@mui/material/Button';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
+import { AdminLayout } from "../../../layout/AdminLayout";
+import { getListOrderAPI } from "../../API/OrderAPI";
 
-function Orders() {
+function OrdersComponent() {
+  const [orders, setOrders] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(null);
+  const fetchListOrder = function () {
+    getListOrderAPI().then((response) => {
+      setOrders(response);
+    });
+  };
+  useEffect(() => {
+    fetchListOrder();
+  }, []);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -109,6 +123,14 @@ function Orders() {
         <DataGrid rows={rows} columns={columns} />
       </Box>
     </Box>
+  );
+}
+
+function Orders() {
+  return (
+    <AdminLayout>
+      <OrdersComponent />
+    </AdminLayout>
   );
 }
 

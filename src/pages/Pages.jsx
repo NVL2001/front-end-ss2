@@ -1,16 +1,17 @@
-import React from 'react';
-import Home from '../components/MainPage/Home';
-import Wrapper from '../components/wrapper/Wrapper';
-import TopCate from '../components/top/TopCate';
-import NewArrivals from '../components/newarrivals/NewArrivals';
-import Discount from '../components/discount/Discount';
-import { useProduct } from '../context/ProductContext';
+import React from "react";
+import Home from "../components/MainPage/Home";
+import Wrapper from "../components/wrapper/Wrapper";
+import TopCate from "../components/top/TopCate";
+import NewArrivals from "../components/newarrivals/NewArrivals";
+import Discount from "../components/discount/Discount";
+import { useProduct } from "../context/ProductContext";
+import { PublicLayout } from "../layout/PublicLayout";
 
-function Pages() {
-  const { CartItem } = useProduct();
+function PagesComponent() {
+  const { CartItem, addToCart } = useProduct();
   return (
     <>
-      <Home CartItem={CartItem} />
+      <Home CartItem={CartItem} addToCart={addToCart} />
       {/* <FlashDeals productItems={productItems} addToCart={addToCart} /> */}
       <TopCate />
       <NewArrivals />
@@ -19,6 +20,14 @@ function Pages() {
       {/* <Annocument /> */}
       <Wrapper />
     </>
+  );
+}
+
+function Pages() {
+  return (
+    <PublicLayout>
+      <PagesComponent />
+    </PublicLayout>
   );
 }
 

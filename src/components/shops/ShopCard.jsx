@@ -1,7 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { FaSpinner } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import styled from "@emotion/styled";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { FaSpinner } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { APIRoutes } from "../../constants/APIRoutes";
 
 // spinner
 function LoadingSpinner() {
@@ -26,9 +28,11 @@ function ShopCard({ addToCart }) {
   // fetch
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        'http://localhost:8080/api/product/products',
-      );
+      // const response = await axios.get(
+      //   "http://localhost:8080/api/product/products"
+      // );
+      const url = `${APIRoutes.GET_PRODUCTS}`;
+      const response = await axios.get(url);
       setProducts(response.data);
       setLoading(false);
     };
@@ -36,68 +40,62 @@ function ShopCard({ addToCart }) {
     fetchData();
   }, []);
 
-  return (
-    loading ? (
-      <LoadingSpinner />
-    ) : (
-      <>
-        {products.pageItems.map((pageItem) => (
-          <div
-            className="box"
-            key={pageItem.id}
-          >
-            <div className="product mtop">
-              <Link to={`/products/${pageItem.id}`}>
-                {' '}
-                <div className="img">
-                  <span className="discount">
-                    {pageItem.discount}
-                    % Off
-                  </span>
-
-                  <img
-                    src={`http://${pageItem.productImages[0]}`}
-                    alt="..."
-                  />
-
-                  <div className="product-like">
-                    <p>{count}</p>
-                    {' '}
-                    <br />
-                    <i className="fas fa-heart" onClick={increment} />
-                  </div>
-                </div>
-              </Link>
-              <hr />
-              <div className="product-details">
-                <Link to={`/products/${pageItem.id}`}>
-                  <h3>
-                    {pageItem.name.length > 65
-                      ? `${pageItem.name.slice(0, 65)}...`
-                      : pageItem.name}
-                  </h3>
-                </Link>
-
-                <div className="price">
-                  <h4>
-                    {pageItem.price
-
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                    {' '}
-                    VND
-                  </h4>
-
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
+    <>
+      {products.pageItems.map((pageItem) => (
+        <div className="box" key={pageItem.id}>
+          <div className="product mtop">
+            <Link to={`/product/${pageItem.id}`}>
+              {" "}
+              <div className="img">
+                <span className="discount">{pageItem.discount}% Off</span>
+                <img src={`http://${pageItem.productImages[0]}`} alt="..." />
+                {/* mua ngay */}
+                <div className="buy-now">
+                  {" "}
                   <button onClick={() => addToCart(pageItem)}>
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
+                    {" "}
+                    <Link to="/cart">
+                      <i className="fa fa-shopping-cart" /> Mua ngay{" "}
+                    </Link>
+                  </button>{" "}
+                </div>{" "}
+                {/* <div className="product-like">
+                  <p>{count}</p> <br />
+                  <i className="fas fa-heart" onClick={increment} />
+                </div> */}
+              </div>
+            </Link>
+            <hr />
+            <div className="product-details">
+              <Link to={`/product/${pageItem.id}`}>
+                <h3>
+                  {pageItem.name.length > 65
+                    ? `${pageItem.name.slice(0, 65)}...`
+                    : pageItem.name}
+                </h3>
+              </Link>
+
+              <div className="price">
+                <h4>
+                  {pageItem.price
+
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                  VND
+                </h4>
+
+                <button onClick={() => addToCart(pageItem)}>
+                  <i className="fa fa-plus" />
+                </button>
               </div>
             </div>
           </div>
-        ))}
-      </>
-    )
+        </div>
+      ))}
+    </>
   );
 }
 

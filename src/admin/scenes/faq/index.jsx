@@ -7,8 +7,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function FAQ() {
+function FAQComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -81,6 +82,14 @@ function FAQ() {
         </AccordionDetails>
       </Accordion>
     </Box>
+  );
+}
+
+function FAQ() {
+  return (
+    <AdminLayout>
+      <FAQComponent />
+    </AdminLayout>
   );
 }
 

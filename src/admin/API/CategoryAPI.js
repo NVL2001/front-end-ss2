@@ -1,6 +1,16 @@
+import axios from 'axios';
 import { api } from './api';
 
 const getListCategoryAPI = () => api('GET', 'category/get-categories', null);
 
-// export
-export { getListCategoryAPI };
+const createCategoryAPI = async (name) => {
+  try {
+    const response = await axios.post(`category/create-category`, { name });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating category:', error);
+    throw error;
+  }
+};
+
+export { getListCategoryAPI, createCategoryAPI };

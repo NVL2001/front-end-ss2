@@ -2,9 +2,11 @@ import React from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useProduct } from "../../context/ProductContext";
-/* eslint-disable react/jsx-one-expression-per-line */
-function Cart() {
-  const { CartItem, addToCart, decreaseQty } = useProduct();
+import { PublicLayout } from "../../layout/PublicLayout";
+/* eslint-disable*/
+function CartComponent() {
+  const { CartItem, addToCart, decreaseQty, removeItem, clearItem } =
+    useProduct();
   const totalPrice = CartItem.reduce(
     (price, item) => price + item.qty * item.price,
     0
@@ -15,7 +17,9 @@ function Cart() {
       <div className="container d_flex">
         <div className="cart-details">
           {CartItem.length === 0 && (
-            <h1 className="no-items product">No Items are add in Cart</h1>
+            <h1 className="no-items product">
+              Không có sản phẩm trong giỏ hàng
+            </h1>
           )}
 
           {CartItem.map((item) => {
@@ -24,7 +28,7 @@ function Cart() {
             return (
               <div className="cart-list product d_flex" key={item.id}>
                 <div className="img">
-                  <Link to={`/products/${item.id}`}>
+                  <Link to={`/product/${item.id}`}>
                     <img src={`http://${item.productImages[0]}`} />
                   </Link>
                 </div>
@@ -53,14 +57,21 @@ function Cart() {
                   </div>
 
                   <div className="cartControl d_flex">
-                    <button className="incCart" onClick={() => addToCart(item)}>
-                      <i className="fas fa-plus" />
+                    {/* clear this item */}
+                    <button
+                      className="removeCart"
+                      onClick={() => removeItem(item)}
+                    >
+                      <i className="fas fa-trash" />
                     </button>
                     <button
                       className="desCart"
                       onClick={() => decreaseQty(item)}
                     >
                       <i className="fas fa-minus" />
+                    </button>
+                    <button className="incCart" onClick={() => addToCart(item)}>
+                      <i className="fas fa-plus" />
                     </button>
                   </div>
                 </div>
@@ -73,6 +84,9 @@ function Cart() {
 
         <div className="cart-total product">
           <h2>Giỏ hàng</h2>
+          <button onClick={() => clearItem()}>Xóa giỏ hàng</button>
+          {/* clear cart */}
+
           <div className=" d_flex">
             <h4>Tổng cộng :</h4>
             <h3>
@@ -83,12 +97,19 @@ function Cart() {
 
           {/* checkout */}
           <div className="checkout--button">
-            <button>Thanh toán </button>
-            {/* <i class="fas fa-arrow-right"> </i> */}
+            <button>Mua hàng </button>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function Cart() {
+  return (
+    <PublicLayout>
+      <CartComponent />
+    </PublicLayout>
   );
 }
 

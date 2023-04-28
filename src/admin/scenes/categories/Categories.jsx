@@ -11,8 +11,10 @@ import { getListCategoryAPI } from '../../API/CategoryAPI';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 import { tokens } from '../../theme';
+import AddCategoryButton from './AddCategoryButton';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Categories() {
+function CategoriesComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [categories, setCategories] = useState([]);
@@ -66,18 +68,7 @@ function Categories() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Danh Mục" subtitle="Tất Cả Danh Mục" />
         <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: '14px',
-              fontWeight: 'bold',
-              padding: '10px 20px',
-            }}
-          >
-            <AddIcon sx={{ mr: '10px' }} />
-            Thêm Danh Mục
-          </Button>
+          <AddCategoryButton />
         </Box>
       </Box>
       <Box
@@ -112,6 +103,14 @@ function Categories() {
         <DataGrid rows={categories} columns={columns} />
       </Box>
     </Box>
+  );
+}
+
+function Categories() {
+  return (
+    <AdminLayout>
+      <CategoriesComponent />
+    </AdminLayout>
   );
 }
 

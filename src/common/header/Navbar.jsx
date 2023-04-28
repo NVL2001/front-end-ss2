@@ -44,14 +44,6 @@ function Navbar() {
 
   return (
     <header className="header">
-      {/* <div className="container d_flex"> */}
-      {/* <div className="categories d_flex">
-            <span class="fa-solid fa-border-all"></span>
-            <h4>
-              Categories <i className="fa fa-chevron-down"></i>
-            </h4>
-          </div> */}
-
       <div className="navlink">
         <ul
           className={
@@ -88,7 +80,7 @@ function Navbar() {
 
           <li>
             <Link
-              to="/track"
+              to="/"
               className={location.pathname === "/track" ? "active" : ""}
             >
               Đơn đặt hàng
@@ -96,10 +88,10 @@ function Navbar() {
           </li>
           <li>
             <Link
-              to="/contact"
-              className={location.pathname === "/contact" ? "active" : ""}
+              to="/about"
+              className={location.pathname === "/about" ? "active" : ""}
             >
-              Liên hệ
+              Giới thiệu
             </Link>
           </li>
         </ul>

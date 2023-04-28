@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ProductDetail.css";
-import { APIRoutes } from "../constants/APIRoutes";
-import { useProduct } from "../context/ProductContext";
+import { FaSpinner } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
-function ProductDetail(props) {
+import { APIRoutes } from "../../constants/APIRoutes";
+import { useProduct } from "../../context/ProductContext";
+import { PublicLayout } from "../../layout/PublicLayout";
+
+// spinner
+function LoadingSpinner() {
+  return (
+    <div className="loading-spinner">
+      <FaSpinner className="spinner-icon" />
+    </div>
+  );
+}
+function ProductDetailComponent() {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { decreaseQty, addToCart } = useProduct();
-
-  const { id } = props.match.params;
+  const { CartItem, decreaseQty, addToCart } = useProduct();
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       const url = `${APIRoutes.GET_PRODUCT_BY_ID}/${id}`;
       const response = await axios.get(url);
       setProduct(response.data);
+      setLoading(false);
     };
     fetchData();
   }, [id]);
@@ -38,7 +51,12 @@ function ProductDetail(props) {
   };
 
   if (!product) {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <LoadingSpinner />
+        <div id="blank"> </div>
+      </>
+    );
   }
 
   return (
@@ -84,6 +102,14 @@ function ProductDetail(props) {
         </div>
       </div>
     </div>
+  );
+}
+
+function ProductDetail() {
+  return (
+    <PublicLayout>
+      <ProductDetailComponent />
+    </PublicLayout>
   );
 }
 

@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from 'react';
-// import logo from "../../components/assets/images/logoweb.webp";
-import { Link } from 'react-router-dom';
-import { Button, Stack, Typography } from '@mui/material';
-import logo from '../../components/assets/images/logo.png';
-import { LoginModal } from '../../components/LoginModal';
-import { RegisterModal } from '../../components/RegisterModal';
-import { useAuth } from '../../context/AuthContext';
+/* eslint-disable*/
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import logo from "../../components/assets/images/logo.png";
+import { LoginModal } from "../../components/LoginModal";
+import { RegisterModal } from "../../components/RegisterModal";
+import { useAuth } from "../../context/AuthContext";
+import { useProduct } from "../../context/ProductContext";
 
-function Search({ CartItem }) {
-  const { user } = useAuth();
+function Search() {
+  const { CartItem } = useProduct();
+
+  const { user, setUser } = useAuth();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const search = document.querySelector('.search');
-      search.classList.toggle('active', window.scrollY > 100);
+    window.addEventListener("scroll", () => {
+      const search = document.querySelector(".search");
+      search.classList.toggle("active", window.scrollY > 50);
     });
 
     return () => {
-      window.removeEventListener('scroll', () => {
-        const search = document.querySelector('.search');
-        search.classList.toggle('active', window.scrollY > 100);
+      window.removeEventListener("scroll", () => {
+        const search = document.querySelector(".search");
+        search.classList.toggle("active", window.scrollY > 50);
       });
     };
   }, []);
@@ -47,12 +51,24 @@ function Search({ CartItem }) {
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignOut = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
     <section className="search">
       <div className="container c_flex">
         <div className="logo width ">
           <a href="/">
-
             <img src={logo} alt="" />
           </a>
         </div>
@@ -66,33 +82,59 @@ function Search({ CartItem }) {
           <div className="autocom-box" />
         </div>
 
-        <Stack direction="row" alignItems="center" className="icon f_flex width" columnGap={1}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          className="icon f_flex width"
+          columnGap={1}
+        >
           {user ? (
-            <Link to="/user">
-              <div className="user">
+            <div>
+              <div className="user" onClick={handleClick}>
                 <i className="fa fa-user icon-circle" />
               </div>
-            </Link>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={!!anchorEl}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <Link to="/user">
+                  <MenuItem>Tài khoản của tôi</MenuItem>
+                </Link>
+                <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+              </Menu>
+            </div>
           ) : (
             <>
               <Button onClick={handleOpenLoginModal}>
-                <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Login</Typography>
+                <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+                  Login
+                </Typography>
               </Button>
               <Button onClick={handleOpenRegisterModal}>
-                <Typography sx={{ color: '#ffffff', textTransform: 'none' }}>Sign Up</Typography>
+                <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
+                  Sign Up
+                </Typography>
               </Button>
             </>
           )}
           <Link to="/cart">
             <div className="cart">
               <i className="fa fa-shopping-bag icon-circle" />
-              <span>{CartItem.length === 0 ? '' : CartItem.length}</span>
+              <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
             </div>
           </Link>
         </Stack>
       </div>
       <LoginModal open={openLoginModal} onClose={handleCloseLoginModal} />
-      <RegisterModal open={openRegisterModal} onClose={handleCloseRegisterModal} />
+      <RegisterModal
+        open={openRegisterModal}
+        onClose={handleCloseRegisterModal}
+      />
     </section>
   );
 }

@@ -5,7 +5,13 @@
 
 .shop {
   margin-top: 50px;
+  position: relative;
+  min-height: 100vh;
+
+
 }
+
+#shop {}
 
 .chead h1 {
   font-size: 20px;
@@ -67,6 +73,24 @@
 
 }
 
+.buy-now {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
+  z-index: 100;
+  opacity: 0;
+}
+
+.buy-now button {
+  background-color: tomato;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+
 .shop .product .img {
   width: 100%;
   display: block;
@@ -74,6 +98,14 @@
 
   border-radius: 5px;
 
+}
+
+.shop .product .img:hover .buy-now {
+  opacity: 1;
+}
+
+.shop .product .img:hover img {
+  opacity: 0.3;
 }
 
 .shop .product {
@@ -129,11 +161,14 @@
 
 .mtop img {
   display: block;
-  height: auto;
+  /* height: auto; */
+  height: 220px;
+
   width: 100%;
   object-fit: cover;
   background-position: center;
 }
+
 
 .loading-spinner {
 
@@ -141,6 +176,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .spinner-icon {
@@ -195,4 +234,10 @@
 
 select {
   background: linear-gradient(145deg, #fff1f1, salmon);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  margin-right: 50px;
 }

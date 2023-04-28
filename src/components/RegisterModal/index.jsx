@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { toast } from 'react-toastify';
+import React, { useCallback } from "react";
+import { toast } from "react-toastify";
 import {
   Box,
   Modal,
@@ -8,65 +8,66 @@ import {
   Card,
   Avatar,
   Button,
-  Grid, OutlinedInput, FormControl, FormLabel, FormHelperText,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Form, Field } from 'react-final-form';
-import { register } from '../../api/auth';
+  Grid,
+  OutlinedInput,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Form, Field } from "react-final-form";
+import { register } from "../../api/auth";
 
 export function RegisterModal({ open, onClose }) {
   const onSubmit = useCallback(async (value) => {
     try {
       await register(value);
-      toast.success('Register successful');
+      toast.success("Register successful");
       onClose();
     } catch (err) {
-      toast.error('Something went wrong, try again later');
+      toast.error("Vui lòng thử lại!");
     }
   }, []);
 
   const validate = useCallback((value) => {
     const error = {};
     if (!value.firstName) {
-      error.firstName = 'First Name is required';
+      error.firstName = "Bắt buộc";
     }
     if (!value.lastName) {
-      error.lastName = 'Last Name is required';
+      error.lastName = "Bắt buộc";
     }
     if (!value.username) {
-      error.username = 'User Name is required';
+      error.username = "Bắt buộc";
     }
     if (!value.phoneNumber) {
-      error.phoneNumber = 'Phone Number is required';
+      error.phoneNumber = "Bắt buộc";
     }
     if (!value.password) {
-      error.password = 'Password is required';
+      error.password = "Bắt buộc";
     }
     if (value.phoneNumber && value.phoneNumber.match(/^[A-Za-z]+$/)) {
-      error.phoneNumber = 'Only number is allowed';
+      error.phoneNumber = "Chỉ nhập số";
     }
     return error;
   }, []);
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-    >
+    <Modal open={open} onClose={onClose}>
       <StyledCard>
         <Box
           sx={{
             marginTop: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Đăng ký
           </Typography>
           <Form
             onSubmit={onSubmit}
@@ -78,15 +79,17 @@ export function RegisterModal({ open, onClose }) {
                     name="firstName"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.firstName && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.firstName && meta.touched}
+                        >
                           <FormLabel>
-                            <Typography>First Name</Typography>
+                            <Typography>Họ</Typography>
                           </FormLabel>
                           <OutlinedInput {...input} />
                           {errors.firstName && meta.touched && (
-                            <FormHelperText>
-                              {errors.firstName}
-                            </FormHelperText>
+                            <FormHelperText>{errors.firstName}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -96,15 +99,17 @@ export function RegisterModal({ open, onClose }) {
                     name="lastName"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.lastName && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.lastName && meta.touched}
+                        >
                           <FormLabel>
-                            <Typography>Last Name</Typography>
+                            <Typography>Tên</Typography>
                           </FormLabel>
                           <OutlinedInput {...input} />
                           {errors.lastName && meta.touched && (
-                            <FormHelperText>
-                              {errors.lastName}
-                            </FormHelperText>
+                            <FormHelperText>{errors.lastName}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -114,15 +119,17 @@ export function RegisterModal({ open, onClose }) {
                     name="username"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.username && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.username && meta.touched}
+                        >
                           <FormLabel>
-                            <Typography>User Name</Typography>
+                            <Typography>Tên đăng nhập</Typography>
                           </FormLabel>
                           <OutlinedInput {...input} />
                           {errors.username && meta.touched && (
-                            <FormHelperText>
-                              {errors.username}
-                            </FormHelperText>
+                            <FormHelperText>{errors.username}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -132,9 +139,13 @@ export function RegisterModal({ open, onClose }) {
                     name="phoneNumber"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.phoneNumber && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.phoneNumber && meta.touched}
+                        >
                           <FormLabel>
-                            <Typography>Phone Number</Typography>
+                            <Typography>Số điện thoại</Typography>
                           </FormLabel>
                           <OutlinedInput {...input} autoComplete="off" />
                           {errors.phoneNumber && meta.touched && (
@@ -150,17 +161,21 @@ export function RegisterModal({ open, onClose }) {
                     name="password"
                     render={({ input, meta }) => (
                       <Grid item xs={12}>
-                        <FormControl fullWidth required error={errors.password && meta.touched}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.password && meta.touched}
+                        >
                           <FormLabel>
-                            <Typography>
-                              Password
-                            </Typography>
+                            <Typography>Mật khẩu</Typography>
                           </FormLabel>
-                          <OutlinedInput type="password" {...input} autoComplete="off" />
+                          <OutlinedInput
+                            type="password"
+                            {...input}
+                            autoComplete="off"
+                          />
                           {errors.password && meta.touched && (
-                            <FormHelperText>
-                              {errors.password}
-                            </FormHelperText>
+                            <FormHelperText>{errors.password}</FormHelperText>
                           )}
                         </FormControl>
                       </Grid>
@@ -175,13 +190,14 @@ export function RegisterModal({ open, onClose }) {
                   onClick={handleSubmit}
                   disabled={hasValidationErrors}
                 >
-                  Sign Up
+                  Đăng ký
                 </Button>
-                <Grid container>
+                <Button>Đã có tài khoản? Đăng nhập ngay!</Button>
+                {/* <Grid container>
                   <Grid item>
-                    <Typography>Already have an account? Sign in</Typography>
+                    <Typography>Đã có tài khoản? Đăng nhập ngay!</Typography>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </>
             )}
           />
@@ -192,10 +208,10 @@ export function RegisterModal({ open, onClose }) {
 }
 
 const StyledCard = styled(Card)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
   boxShadow: 24,
   p: 4,

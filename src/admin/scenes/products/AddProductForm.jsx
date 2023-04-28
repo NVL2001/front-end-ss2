@@ -1,29 +1,92 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-use-before-define */
-import React from 'react';
-import { Box, Button, TextField } from '@mui/material';
-import { Formik } from 'formik';
-import * as yup from 'yup';
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable max-len */
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Input,
+} from '@mui/material';
+import {
+  Formik, Form, Field, formik
+} from 'formik';
+import * as Yup from 'yup';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { getListCategoryAPI } from '../../API/CategoryAPI';
 import Header from '../../components/Header';
+import { AdminLayout } from '../../../layout/AdminLayout';
+import { tokens } from '../../theme';
 
-function Form() {
+function AddProductFormComponent() {
   const isNonMobile = useMediaQuery('(min-width:600px)');
 
   const handleFormSubmit = (values) => {
     console.log(values);
   };
+  const [categories, setCategories] = useState([]);
+  const fetchListProduct = function () {
+    getListCategoryAPI().then((response) => {
+      setCategories(response);
+    });
+  };
+  // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
+  useEffect(() => {
+    fetchListProduct();
+  }, []);
+
+  const [imagePreviews, setImagePreviews] = useState('');
+  const handleImageChange = (e) => {
+    const { files } = e.target;
+    const images = Array.from(files).slice(0, 5);
+    Formik.setFieldValue('images', images);
+
+    const previewUrls = images.map((productImages) => URL.createObjectURL(productImages));
+    setImagePreviews(previewUrls);
+  };
+  // const handleSubmit = async (values) => {
+  //   if (imagePreviews.length >= 1 && imagePreviews.length <= 5) {
+  //     try {
+  //       const imageData = new FormData(); // FormData lưu dữ liệu ảnh
+  //       imagePreviews.forEach((imagePreview, index) => {
+  //         imageData.append(`image${index}`, imagePreview);
+  //       });
+
+  //       // const imageUploadResponse = await axios.post(
+  //       //   'url hình ảnh',
+  //       //   imageData
+  //       // );
+  //       // const uploadedImageUrls = imageUploadResponse.data.urls;
+
+  //       // const productData = {
+  //       //   ...values,
+  //       //   images: uploadedImageUrls,
+  //       // };
+
+  //       console.log(productData);
+  // Gửi dữ liệu đến API để thêm mới sản phẩm
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   } else {
+  //     alert('Vui lòng tải lên từ 1 đến 5 hình ảnh.');
+  //   }
+  // };
 
   return (
     <Box m="20px">
-      <Header
-        title="Cài Đặt Tài Khoản"
-        subtitle="Thay Đổi Thông Tin Tài Khoản"
-      />
+      <Header title="Thêm Sản Phẩm Mới" />
 
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={validationSchema}
       >
         {({
           values,
@@ -43,87 +106,115 @@ function Form() {
               }}
             >
               <TextField
+                label="ID Sản Phẩm"
+                name="id"
+                value={values.id}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.id && errors.id}
+                helperText={touched.id && errors.id}
+                required
                 fullWidth
                 variant="filled"
-                type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: 'span 2' }}
               />
+              <TextField
+                label="Tên sản phẩm"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.name && errors.name}
+                helperText={touched.name && errors.name}
+                required
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: 'span 2' }}
+              />
+              <TextField
+                label="Giá sản phẩm"
+                name="price"
+                value={values.price}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.price && errors.price}
+                helperText={touched.price && errors.price}
+                required
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: 'span 2' }}
+              />
+              <TextField
+                label="Số lượng sản phẩm"
+                name="quantity"
+                value={values.quantity}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.quantity && errors.quantity}
+                helperText={touched.quantity && errors.quantity}
+                required
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: 'span 2' }}
+              />
+              <FormControl
+                fullWidth
+                variant="filled"
+                sx={{ gridColumn: 'span 2' }}
+              >
+                <InputLabel>Danh mục sản phẩm</InputLabel>
+                <Field
+                  as={Select}
+                  error={touched.categoryId && !!errors.categoryId}
+                  name="categoryId"
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  ))}
+                </Field>
+              </FormControl>
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="image-upload"
+                type="file"
+                multiple
+                onChange={handleImageChange}
+              />
+              <label htmlFor="image-upload">
+                <button component="span">Tải Ảnh</button>
+              </label>
+              {imagePreviews && (
+                <div>
+                  {imagePreviews.map((preview, index) => (
+                    <img
+                      key={index}
+                      src={preview}
+                      alt={`Product Preview ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Mô tả sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: 'span 2' }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
+                value={values.description}
                 name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: 'span 4' }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: 'span 4' }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: 'span 4' }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
                 sx={{ gridColumn: 'span 4' }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Thêm Sản Phẩm Mới
               </Button>
             </Box>
           </form>
@@ -133,25 +224,40 @@ function Form() {
   );
 }
 
-const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required('required'),
-  lastName: yup.string().required('required'),
-  email: yup.string().email('invalid email').required('required'),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, 'Phone number is not valid')
-    .required('required'),
-  address1: yup.string().required('required'),
-  address2: yup.string().required('required'),
+const validationSchema = Yup.object().shape({
+  id: Yup.string().required('Vui lòng điền ID sản phẩm'),
+  name: Yup.string().required('Vui lòng điền tên sản phẩm'),
+  price: Yup.number()
+    .required('Vui lòng điền giá sản phẩm').positive().min(1)
+    .typeError('Vui lòng nhập đúng định dạng giá sản phẩm'),
+  quantity: Yup.number()
+    .required('Vui lòng điền số lượng sản phẩm')
+    .integer()
+    .typeError('Vui lòng nhập đúng định dạng giá sản phẩm')
+    .min(1),
+  categoryName: Yup.string().required('Vui lòng chọn danh mục sản phẩm'),
+  productImages: Yup.array()
+    .min(1, 'Vui lòng tải lên ít nhất 1 hình ảnh.')
+    .max(5, 'Vui lòng không tải lên quá 5 hình ảnh.')
+    .required('Hình ảnh không được bỏ trống'),
 });
+
 const initialValues = {
-  firstName: '',
-  lastName: '',
-  phoneNumber: '',
-  contact: '',
-  address1: '',
+  id: '',
+  name: '',
+  description: '',
+  price: '',
+  quantity: '',
+  categoryName: '',
+  productImages: [],
 };
 
-export default Form;
+function AddProductForm() {
+  return (
+    <AdminLayout>
+      <AddProductFormComponent />
+    </AdminLayout>
+  );
+}
+
+export default AddProductForm;

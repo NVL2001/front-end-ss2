@@ -10,8 +10,9 @@ import Button from '@mui/material/Button';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 import { tokens } from '../../theme';
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function Team() {
+function TeamComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -104,6 +105,14 @@ function Team() {
         <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
       </Box>
     </Box>
+  );
+}
+
+function Team() {
+  return (
+    <AdminLayout>
+      <TeamComponent />
+    </AdminLayout>
   );
 }
 
