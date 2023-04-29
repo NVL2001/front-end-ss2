@@ -1,6 +1,6 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import logo from "../../components/assets/images/logo.png";
 import { LoginModal } from "../../components/LoginModal";
@@ -10,25 +10,16 @@ import { useProduct } from "../../context/ProductContext";
 import axios from "axios";
 
 function Search() {
-  const { CartItem } = useProduct();
+  const { CartItem, clearItem, setCartItem } = useProduct();
 
   const { user, setUser } = useAuth();
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      const search = document.querySelector(".search");
-      search.classList.toggle("active", window.scrollY > 50);
-    });
 
-    return () => {
-      window.removeEventListener("scroll", () => {
-        const search = document.querySelector(".search");
-        search.classList.toggle("active", window.scrollY > 50);
-      });
-    };
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -61,11 +52,14 @@ function Search() {
   };
 
   const handleSignOut = () => {
+
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("jwt");
-    localStorage.removeItem("CartItem")
-    delete axios.defaults.headers.common['Authorization'];
+    clearItem();
+    setCartItem([]);
+    delete axios.defaults.headers['Authorization'];
+    history.push("/")
   };
 
   return (

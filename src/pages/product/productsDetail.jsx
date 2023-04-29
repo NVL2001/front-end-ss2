@@ -4,9 +4,14 @@ import "./ProductDetail.css";
 import { FaSpinner } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
+import {
+  Box, Card, CardContent, Typography
+} from "@mui/material";
 import { APIRoutes } from "../../constants/APIRoutes";
 import { useProduct } from "../../context/ProductContext";
 import { PublicLayout } from "../../layout/PublicLayout";
+import formatMoney from "../../utils/formatMoney";
+import formatDate from "../../utils/formatDate";
 
 // spinner
 function LoadingSpinner() {
@@ -59,6 +64,21 @@ function ProductDetailComponent() {
     );
   }
 
+  const card = (product.discount)
+    ? (
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} variant="h5" color="text.secondary" gutterBottom>
+          Giảm giá
+        </Typography>
+        <Typography variant="body1">
+          {`Mã: ${product.discount.code}`}
+        </Typography>
+        <Typography variant="body2">
+          {`Hết hạn: ${formatDate(product.discount.endDate)}`}
+        </Typography>
+      </CardContent>
+    ) : null;
+
   return (
     <div className="product-detail product-detail-page">
       <div className="leftside">
@@ -79,17 +99,35 @@ function ProductDetailComponent() {
             />
           ))}
         </div>
+        <div>
+          {
+            card
+              ? (
+                <Box sx={{ minWidth: 200 }}>
+                  <Card variant="outlined">{card}</Card>
+                </Box>
+              ) : null
+          }
+        </div>
+
       </div>
 
       <div className="rightside">
         <h2 className="product-name">{product.name}</h2>
         <p className="product-description">{product.description}</p>
         <p className="product-price">
-          {`Giá:
-          ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-          VND`}
+          {(product.discount
+            ? (
+              <div>
+                Giá:
+                <span style={{ textDecoration: "line-through" }}>{`${formatMoney(product.price)}`}</span>
+                <span>  </span>
+                <span>{formatMoney(product.discountPrice)}</span>
+              </div>
+            )
+            : (<span>{formatMoney(product.price)}</span>)
+          )}
         </p>
-        {/* quantity */}
         <p className="product-quantity">
           {`Tồn kho: 
           ${product.quantity}`}
