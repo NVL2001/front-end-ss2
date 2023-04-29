@@ -26,7 +26,7 @@ import { UserRoles } from "../../constants/UserRoles";
 import { setAxiosAuthorizeHeader } from "../../infra/http";
 
 export function LoginModal({ open, onClose }) {
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const history = useHistory();
 
   const onSubmit = useCallback(async (value) => {

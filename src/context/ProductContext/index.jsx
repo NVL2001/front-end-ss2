@@ -75,6 +75,7 @@ export function ProductContextProvider({ children }) {
       removeItem,
       clearItem,
       CartItem,
+      setCartItem
     }),
     // [CartItem, shopItems, productItems]
     [CartItem]

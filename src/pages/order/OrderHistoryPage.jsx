@@ -23,6 +23,7 @@ import { APIRoutes } from "../../constants/APIRoutes";
 import { PublicLayout } from "../../layout/PublicLayout";
 import formatMoney from "../../utils/formatMoney";
 import formatDate from "../../utils/formatDate";
+import { useAuth } from "../../context/AuthContext";
 
 const BlackTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -265,6 +266,7 @@ function CollapsibleTable() {
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const reRender = () => {
     onChange(change + 1);
@@ -292,7 +294,7 @@ function CollapsibleTable() {
       }
     };
     fetchOrders();
-  }, [change, page]);
+  }, [change, page, user]);
 
   return (
     <TableContainer component={Paper}>
