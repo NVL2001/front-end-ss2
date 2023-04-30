@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import Cart from './Cart';
 import './style.css';
+import { APIRoutes } from "../../constants/APIRoutes";
 
 function NewArrivals() {
+  const [products, setProducts] = useState([]);
+  async function fetchArrivals() {
+    const response = await axios.get(APIRoutes.GET_NEW_ARRIVALS);
+    setProducts(response.data);
+  }
+  useEffect(() => {
+    fetchArrivals();
+  }, []);
   return (
     <section className="NewArrivals background">
       <div className="container">
@@ -17,7 +27,7 @@ function NewArrivals() {
           </div>
         </div>
 
-        <Cart />
+        <Cart data={products} />
       </div>
     </section>
   );

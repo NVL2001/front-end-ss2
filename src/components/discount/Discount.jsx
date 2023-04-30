@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import Dcard from './Dcard';
+import { APIRoutes } from "../../constants/APIRoutes";
 
 function Discount() {
+  const [discountPro, setDiscountPro] = useState([]);
+  async function fetchBigDiscounts() {
+    const response = await axios.get(APIRoutes.GET_DISCOUNT_PRODUCT);
+    setDiscountPro(response.data);
+  }
+  useEffect(() => {
+    fetchBigDiscounts();
+  }, []);
   return (
     <section className="Discount background NewArrivals">
       <div className="container">
@@ -17,7 +27,7 @@ function Discount() {
 
           </div>
         </div>
-        <Dcard />
+        <Dcard data={discountPro} />
       </div>
     </section>
   );

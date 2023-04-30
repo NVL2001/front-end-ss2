@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
+import axios from "axios";
 import TopCart from './TopCart';
+import { APIRoutes } from "../../constants/APIRoutes";
 
 function TopCate() {
+  const [categories, setCategories] = useState([]);
+  async function fetchTopCategory() {
+    const response = await axios.get(APIRoutes.GET_CATEGORIES);
+    setCategories(response.data);
+  }
+  useEffect(() => {
+    fetchTopCategory();
+  }, []);
   return (
     <section className="TopCate background">
       <div className="container">
@@ -16,7 +26,7 @@ function TopCate() {
             <i className="fas fa-arrow-right" />
           </div>
         </div>
-        <TopCart />
+        <TopCart data={categories} />
       </div>
     </section>
   );
