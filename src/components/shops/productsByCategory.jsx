@@ -1,8 +1,10 @@
 // ProductList.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { useProduct } from "../../context/ProductContext/index";
 import Sorting from "../../common/sort/sorting";
+import formatMoney from "../../utils/formatMoney";
 /* eslint-disable*/
 function ProductList({ products }) {
   const { addToCart } = useProduct();
@@ -16,8 +18,8 @@ function ProductList({ products }) {
             <Link to={`/product/${product.id}`}>
               {" "}
               <div className="img">
-                <span className="discount">{product.discount}% Off</span>
-                <img src={`http://${product.productImages[0]}`} alt="..." />
+                <span className="discount">{ product?.discount ? product.discount.discountPercent : 0}% Off</span>
+                <img src={`${axios.defaults.baseURL + product.productImages[0]}`} alt="..." />
                 {/* mua ngay */}
                 <div className="buy-now">
                   {" "}
@@ -41,11 +43,17 @@ function ProductList({ products }) {
 
               <div className="price">
                 <h4>
-                  {product.price
-
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                  VND
+                  {(product.discount
+                          ? (
+                              <div>
+                                Giá:
+                                <span style={{ textDecoration: "line-through" }}>{`${formatMoney(product.price)}`}</span>
+                                <span>  </span>
+                                <span>{formatMoney(product.discountPrice)}</span>
+                              </div>
+                          )
+                          : (<span>{formatMoney(product.price)}</span>)
+                  )}
                 </h4>
 
                 <button onClick={() => addToCart(product)}>

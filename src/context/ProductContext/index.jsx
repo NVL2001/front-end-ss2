@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { integerPropType } from "@mui/utils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import {toast} from "react-toastify";
 
 export const ProductContext = React.createContext({});
 
@@ -23,7 +24,9 @@ export function ProductContextProvider({ children }) {
           return item;
         })
       );
+      toast.success(`+1 ${product.name}`)
     } else {
+      toast.success(`Đã thêm mới sản phẩm ${product.name} vào giỏ hàng`)
       setCartItem([...CartItem, { ...product, qty: 1 }]);
     }
   };

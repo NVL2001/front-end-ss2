@@ -22,9 +22,16 @@ export function AuthContextProvider({ children }) {
     }
   }, []);
 
+  const setUserAvatar = (url) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    user.avatarURL = url;
+    setUser(user);
+  };
+
   const value = useMemo(() => ({
     user,
     setUser,
+    setUserAvatar
   }), [user]);
 
   return (

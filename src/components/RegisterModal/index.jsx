@@ -12,7 +12,7 @@ import {
   OutlinedInput,
   FormControl,
   FormLabel,
-  FormHelperText,
+  FormHelperText, TextField,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Form, Field } from "react-final-form";
@@ -25,7 +25,7 @@ export function RegisterModal({ open, onClose }) {
       toast.success("Register successful");
       onClose();
     } catch (err) {
-      toast.error("Vui lòng thử lại!");
+      toast.error(err.response.data);
     }
   }, []);
 
@@ -48,6 +48,9 @@ export function RegisterModal({ open, onClose }) {
     }
     if (value.phoneNumber && value.phoneNumber.match(/^[A-Za-z]+$/)) {
       error.phoneNumber = "Chỉ nhập số";
+    }
+    if (!value.dob) {
+      error.dob = "Bắt buộc";
     }
     return error;
   }, []);
@@ -78,7 +81,7 @@ export function RegisterModal({ open, onClose }) {
                   <Field
                     name="firstName"
                     render={({ input, meta }) => (
-                      <Grid item xs={12}>
+                      <Grid item xs={6}>
                         <FormControl
                           fullWidth
                           required
@@ -98,7 +101,7 @@ export function RegisterModal({ open, onClose }) {
                   <Field
                     name="lastName"
                     render={({ input, meta }) => (
-                      <Grid item xs={12}>
+                      <Grid item xs={6}>
                         <FormControl
                           fullWidth
                           required
@@ -181,6 +184,30 @@ export function RegisterModal({ open, onClose }) {
                       </Grid>
                     )}
                   />
+                  <Field
+                    name="dob"
+                    render={({ input, meta }) => (
+                      <Grid item xs={6}>
+                        <FormControl fullWidth required>
+                          <FormLabel>
+                            <Typography>Ngày sinh</Typography>
+                          </FormLabel>
+                          <TextField
+                            type="date"
+                            variant="outlined"
+                            {...input}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                          {errors.dob && meta.touched && (
+                            <FormHelperText>{errors.dob}</FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                    )}
+                  />
+
                 </Grid>
                 <Button
                   type="submit"

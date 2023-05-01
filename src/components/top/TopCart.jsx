@@ -2,9 +2,27 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Tdata from './Tdata';
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Grid } from "@mui/material";
+import { getProductsByCategory } from "../../api/products";
+import { Item } from "../../utils/components/Item";
+import { generateColorFromString } from "../../utils/generateColor";
 
-function TopCart() {
+function TopCart(props) {
+  const history = useHistory();
+  const handleCategoryClick = async (name) => {
+    try {
+      const response = await getProductsByCategory(name);
+      history.push({
+        pathname: `/category/${name}`,
+        state: { products: response.data },
+      });
+    } catch (err) {
+      toast.error("Something went wrong, try again later");
+    }
+  };
+  const { data } = props;
   const settings = {
     dots: false,
     infinite: true,
@@ -13,19 +31,27 @@ function TopCart() {
     autoplay: true,
   };
   return (
-    <Slider {...settings}>
-      {Tdata.map((value) => (
-        <div className="box product" key={value.desc}>
-          <div className="nametop d_flex">
-            <span className="tleft">{value.para}</span>
-            <span className="tright">{value.desc}</span>
-          </div>
-          <div className="img">
-            <img src={value.cover} alt="" />
-          </div>
-        </div>
+  // <Slider {...settings}>
+    <Grid container spacing={2}>
+      {data.map((value) => (
+
+        <Grid
+          item
+          xs={2}
+          key={value.id}
+          onClick={
+            () => (handleCategoryClick(value.name))
+        }
+        >
+          <Link to>
+            <Item color={generateColorFromString(value.name)}>
+              {value.name}
+            </Item>
+          </Link>
+        </Grid>
+
       ))}
-    </Slider>
+    </Grid>
   );
 }
 
