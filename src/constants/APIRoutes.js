@@ -17,5 +17,6 @@ export const APIRoutes = {
   GET_ORDER_HISTORY: '/order/view-history/',
   SEARCH_PRODUCT_AND_CATEGORT: '/search/pro-and-cat',
   GET_NEW_ARRIVALS: '/product/arrivals',
-  GET_DISCOUNT_PRODUCT: '/product/discount-product'
+  GET_DISCOUNT_PRODUCT: '/product/discount-product',
+  EDIT_USER_AVATAR: '/user/update-image'
 };
