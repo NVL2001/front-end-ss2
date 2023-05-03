@@ -1,27 +1,24 @@
+/*eslint-disable*/
+
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "./MakeOrder.css";
-import {
-  Link, Redirect, useHistory, useLocation
-} from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useProduct } from "../../context/ProductContext";
 import { makeOrder } from "../../api/order";
 import formatMoney from "../../utils/formatMoney";
 import { APIRoutes } from "../../constants/APIRoutes";
 
-/*eslint-disable*/
 function MakeOrder() {
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
   const [wards, setWards] = useState([]);
   const [submitData, setSubmitData] = useState({});
-  const { clearItem } = useProduct()
+  const { clearItem } = useProduct();
   let location = useLocation();
-  const history = useHistory()
-  const price = location.state.totalPrice;
-
-
+  const history = useHistory();
+  const subPrice = location.state.totalPrice;
   //   const host = "https://provinces.open-api.vn/api/";
   useEffect(() => {
     const getProvinces = async () => {
@@ -68,27 +65,29 @@ function MakeOrder() {
   function queryAddressData(id) {
     const selectElement = document.getElementById(id);
     const selectedValue = selectElement.value;
-    const selectedOption = selectElement.querySelector(`[value="${selectedValue}"]`);
+    const selectedOption = selectElement.querySelector(
+      `[value="${selectedValue}"]`
+    );
     const selectedContent = selectedOption.textContent;
 
-    return selectedContent
+    return selectedContent;
   }
 
   const handleSubmit = async (e) => {
     if (CartItem.length == 0) {
-      toast.error("Không có sản phẩm trong giỏ hàng")
+      toast.error("Không có sản phẩm trong giỏ hàng");
       return;
     }
     const address = document.getElementById("address").value;
     const phoneNumber = document.getElementById("phone").value;
 
-    const addressArray = ["province", "district", "wards"]
-    let addressObject = {}
-    for (let i = 0; i < addressArray.length; i ++) {
+    const addressArray = ["province", "district", "wards"];
+    let addressObject = {};
+    for (let i = 0; i < addressArray.length; i++) {
       addressObject = {
         ...addressObject,
-        [addressArray[i]]: queryAddressData(addressArray[i])
-      }
+        [addressArray[i]]: queryAddressData(addressArray[i]),
+      };
     }
 
     const items = CartItem.map((item) => {
@@ -101,20 +100,38 @@ function MakeOrder() {
       ...addressObject,
       address,
       items,
-      phoneNumber
+      phoneNumber,
     };
 
-    console.log(data)
+    console.log(data);
     try {
       const request = await axios.post(APIRoutes.MAKE_ORDER, data);
       if (request.status === 200) {
-        toast.success("Đặt hàng thành công")
-        clearItem()
-        history.push("/order")
+        toast.success("Đặt hàng thành công");
+        clearItem();
+        history.push("/order");
       }
     } catch (error) {
       console.log(error);
       toast.error("Đặt hàng thất bại");
+    }
+  };
+
+  /**
+   * if checked payment1, show the shippingFee, plus shippingFee to totalPrice
+   * if checked payment2, set the shippingFee = 0
+   */
+  const [paymentOption, setPaymentOption] = useState("payment1");
+  const [shippingFee, setShippingFee] = useState(25000);
+  const [totalPrice, setTotalPrice] = useState(subPrice + shippingFee);
+  const handlePaymentOptionChange = (event) => {
+    setPaymentOption(event.target.value);
+    if (event.target.value === "payment1") {
+      setShippingFee(25000);
+      setTotalPrice(25000 + subPrice);
+    } else {
+      setShippingFee(0);
+      setTotalPrice(subPrice);
     }
   };
 
@@ -229,12 +246,13 @@ function MakeOrder() {
             <div className="form-group" id="check--option">
               <div className="form-check">
                 <input
+                  onChange={handlePaymentOptionChange}
                   className="form-check-input"
                   type="radio"
                   name="payment"
                   id="payment1"
-                  value="option1"
-                  checked
+                  value="payment1"
+                  checked={paymentOption === "payment1"}
                 />
                 <label className="form-check-label" htmlFor="payment1">
                   Thanh toán khi nhận hàng
@@ -242,16 +260,17 @@ function MakeOrder() {
               </div>
               <div className="form-check">
                 <input
+                  onChange={handlePaymentOptionChange}
                   className="form-check-input"
                   type="radio"
                   name="payment"
-                  id="payment3"
-                  value="option3"
+                  id="payment2"
+                  value="payment2"
+                  checked={paymentOption === "payment2"}
                 />
-                <label className="form-check-label" htmlFor="payment3">
-                  Chuyển khoản
+                <label className="form-check-label" htmlFor="payment2">
+                  Nhận tại cửa hàng
                 </label>
-                
               </div>
             </div>
           </form>
@@ -265,7 +284,6 @@ function MakeOrder() {
                 Không có sản phẩm trong giỏ hàng
               </h1>
             )}
-
             {CartItem.map((item) => {
               const subPriceTotal = item.price * item.qty;
 
@@ -273,7 +291,9 @@ function MakeOrder() {
                 <div className="cart-list product" key={item.id}>
                   <span className="count">{item.qty}</span>
                   <div className="img">
-                    <img src={`${axios.defaults.baseURL + item.productImages[0]}`} />
+                    <img
+                      src={`${axios.defaults.baseURL + item.productImages[0]}`}
+                    />
                   </div>
 
                   <div className="item-name">
@@ -288,35 +308,31 @@ function MakeOrder() {
             <span>
               {" "}
               <h3>Tạm tính :</h3>
-              <h4>
+              <h4 id="subTotal">
                 {/* <span>{CartItem.reduce((qty, item) => qty + item.qty, 0)}</span>{" "} */}
-                {formatMoney(price)}
+                {formatMoney(subPrice)}
               </h4>
             </span>
 
             <span>
               <h3>Phí vận chuyển : </h3>
-              <h4>
-                {formatMoney(25000)}
-              </h4>
+              <h4 id="shippingFee">{formatMoney(shippingFee)}</h4>
             </span>
             <span>
               <h3>Tổng cộng :</h3>
-              <h4>
-                {formatMoney(price + 25000)}
-              </h4>
+              <h4 id="totalPrice">{formatMoney(totalPrice)}</h4>
             </span>
           </div>
           <div className="submit--btn">
             {/*<Link to="/order">*/}
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                Đặt hàng
-              </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Đặt hàng
+            </button>
             {/*</Link>*/}
           </div>
         </div>
