@@ -47,15 +47,13 @@ function ShopCard({ addToCart }) {
       setProducts((prevProducts) => [...prevProducts, ...newItems]);
       setCurrentPage(nextPage);
     } catch (error) {
-      console.error('Error fetching next page:', error);
+      console.error("Error fetching next page:", error);
     } finally {
       setLoadingMore(false);
     }
   };
 
-  useEffect(() => {
-
-  }, [currentPage]);
+  useEffect(() => {}, [currentPage]);
 
   return loading ? (
     <LoadingSpinner />
@@ -68,10 +66,12 @@ function ShopCard({ addToCart }) {
               {" "}
               <div className="img">
                 <span className="discount">
-                  {item?.discount ? item.discount.discountPercent : 0}%
-                  Off
+                  {item?.discount ? item.discount.discountPercent : 0}% Off
                 </span>
-                <img src={`${axios.defaults.baseURL + item.productImages[0]}`} alt="..." />
+                <img
+                  src={`${axios.defaults.baseURL + item.productImages[0]}`}
+                  alt="..."
+                />
                 {/* mua ngay */}
                 <div className="buy-now">
                   {" "}
@@ -96,18 +96,19 @@ function ShopCard({ addToCart }) {
 
               <div className="price">
                 <h4>
-                  {(item.discount
-                    ? (
-                      <div>
-                        <p style={{ textDecoration: "line-through" }}>{formatMoney(item.price)}</p>
-                        <p>{formatMoney(item.discountPrice)}</p>
-                      </div>
-                    )
-                    : (<p>{formatMoney(item.price)}</p>)
+                  {item.discount ? (
+                    <div>
+                      <p style={{ textDecoration: "line-through" }}>
+                        {formatMoney(item.price)}
+                      </p>
+                      <p>{formatMoney(item.discountPrice)}</p>
+                    </div>
+                  ) : (
+                    <p>{formatMoney(item.price)}</p>
                   )}
                 </h4>
 
-                <button onClick={() => addToCart(item)}>
+                <button className="incCart" onClick={() => addToCart(item)}>
                   <i className="fa fa-plus" />
                 </button>
               </div>
@@ -120,13 +121,9 @@ function ShopCard({ addToCart }) {
           <CircularProgress />
         </Box>
       ) : (
-        (currentPage + 1 < maxPage) && (
+        currentPage + 1 < maxPage && (
           <Box textAlign="center" mt={3}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={fetchNextPage}
-            >
+            <Button variant="contained" color="primary" onClick={fetchNextPage}>
               Tải thêm
             </Button>
           </Box>

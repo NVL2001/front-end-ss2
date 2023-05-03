@@ -56,6 +56,20 @@
   font-weight: 500;
 }
 
+.incCart i {
+  padding: 10px;
+  font-size: 12px;
+  background-color: #fff;
+  color: #e94560;
+  border-radius: 5px;
+  border: 1px solid #e94560;
+}
+
+.incCart i:hover {
+  background-color: #e94560;
+  color: #fff;
+}
+
 .shop .contentWidth {
   position: relative;
 
@@ -150,7 +164,7 @@
 .product-details button {
   position: absolute;
   bottom: 5%;
-
+  border: none;
   right: 5%;
 }
 
