@@ -21,15 +21,30 @@ import { Form, Field } from "react-final-form";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { login } from "../../api/auth";
+import { login, getUserInfo } from "../../api/auth";
 import { UserRoles } from "../../constants/UserRoles";
+import { setAxiosAuthorizeHeader } from "../../infra/http";
 
 export function LoginModal({ open, onClose }) {
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const history = useHistory();
+
   const onSubmit = useCallback(async (value) => {
     try {
       const { data } = await login(value);
+      setAxiosAuthorizeHeader(data.jwtToken)
+      const { data: userInfo } = await getUserInfo()
+
+      setUser({
+        address: userInfo.address,
+        avatarURL: userInfo.avatarURL,
+        dob: userInfo.dob,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        phoneNumber: userInfo.phoneNumber,
+        username: userInfo.username
+      })
+
       toast.success("Đăng nhập thành công");
       const userRoles = data.roles.map((role) => role.name);
 
@@ -40,14 +55,6 @@ export function LoginModal({ open, onClose }) {
         history.replace("/admin/dashboard");
       }
 
-      setUser({
-        name: data.userName,
-        email: "johndoe@example.com",
-        phone: data.phoneNumber || "",
-        address: "123 Main St.",
-        shoppingHistory: [],
-        vouchers: [],
-      });
       onClose();
     } catch (err) {
       toast.error("Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại!");

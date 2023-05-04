@@ -56,6 +56,20 @@
   font-weight: 500;
 }
 
+.incCart i {
+  padding: 10px;
+  font-size: 12px;
+  background-color: #fff;
+  color: #e94560;
+  border-radius: 5px;
+  border: 1px solid #e94560;
+}
+
+.incCart i:hover {
+  background-color: #e94560;
+  color: #fff;
+}
+
 .shop .contentWidth {
   position: relative;
 
@@ -150,7 +164,7 @@
 .product-details button {
   position: absolute;
   bottom: 5%;
-
+  border: none;
   right: 5%;
 }
 
@@ -205,7 +219,7 @@
   margin-right: 10px;
   padding: 0px 50px 0px 10px;
   border-radius: 25px;
-  background: linear-gradient(145deg, #fff1f1, salmon);
+  background: linear-gradient(145deg, salmon, #fff1f1);
   border: none;
 }
 
@@ -215,7 +229,7 @@
   right: 0;
   border-radius: 25px;
   position: relative;
-  background: linear-gradient(145deg, #fff1f1, salmon);
+  background: linear-gradient(145deg, salmon, #fff1f1);
 
 }
 
@@ -233,7 +247,7 @@
 }
 
 select {
-  background: linear-gradient(145deg, #fff1f1, salmon);
+  background: linear-gradient(145deg, salmon, #fff1f1);
 }
 
 .panel {

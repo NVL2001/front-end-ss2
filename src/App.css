@@ -12,7 +12,10 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+
+  background-color: #f5f5f5;
+
 }
 
 .background {
@@ -84,6 +87,11 @@ button {
   border-radius: 50%;
 }
 
+.icon-circle:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
 .boxShadow {
   box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
 }
@@ -127,11 +135,17 @@ button {
 
 /*---------category----------*/
 .btn-primary {
-  background: #e94560;
+  background: #338dbc;
   padding: 13px 40px;
   font-weight: bold;
   color: #fff;
   border-radius: 5px;
+}
+
+.btn-primary:hover {
+  /* animation: none; */
+  background-color: #3ba5df;
+  color: rgb(255, 255, 255);
 }
 
 .top {
@@ -186,6 +200,7 @@ button {
   color: #e94560;
 }
 
+/* 
 .price button {
   background: none;
   color: #e94560;
@@ -201,7 +216,7 @@ button {
   cursor: pointer;
   background-color: #e94560;
   color: #fff;
-}
+} */
 
 .product-like {
   position: absolute;
@@ -295,4 +310,38 @@ button {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
+}
+
+/* button ease in out infinite scale 1.1 */
+.btn-primary {
+  animation: scale 1s ease-in-out infinite, blink 1s infinite;
+
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+  0% {
+    box-shadow: 0 0 0 rgba(232, 193, 154, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(232, 194, 104, 0.92);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(207, 171, 27, 0.7);
+  }
 }

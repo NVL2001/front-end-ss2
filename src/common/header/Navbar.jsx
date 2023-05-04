@@ -7,11 +7,6 @@ import { getProductsByCategory } from "../../api/products";
 
 function Navbar() {
   const location = useLocation();
-  // fixed Header
-  // window.addEventListener('scroll', () => {
-  //   const header = document.querySelector('.header');
-  //   header.classList.toggle('active', window.scrollY > 100);
-  // });
 
   // Toogle Menu
   const [MobileMenu, setMobileMenu] = useState(false);
@@ -25,7 +20,6 @@ function Navbar() {
     };
     fetchData();
   }, []);
-  // console.log(categories);
 
   // product by cate
   const history = useHistory();
@@ -68,7 +62,7 @@ function Navbar() {
               {categories.map((category) => (
                 <Link
                   key={category.id}
-                  to={`/category/${category.id}`}
+                  to={`/category/${category.name}`}
                   onClick={() => handleCategoryClick(category)}
                 >
                   {category.name}
@@ -80,8 +74,8 @@ function Navbar() {
 
           <li>
             <Link
-              to="/"
-              className={location.pathname === "/track" ? "active" : ""}
+              to="/order"
+              className={location.pathname === "/order" ? "active" : ""}
             >
               Đơn đặt hàng
             </Link>
