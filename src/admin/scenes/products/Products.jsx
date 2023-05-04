@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Header from '../../components/Header';
@@ -88,7 +89,7 @@ function ProductsComponent() {
             {params.value.slice(0, 1).map((image) => (
               <img
                 key={image}
-                src={`http://${image}`}
+                src={`${axios.defaults.baseURL}${image}`}
                 alt="123"
                 width={100}
                 height="auto"
