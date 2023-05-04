@@ -20,12 +20,8 @@ import * as Yup from 'yup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< Updated upstream
-import { createCategoryAPI } from '../../API/CategoryAPI';
-=======
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
->>>>>>> Stashed changes
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from '../../theme';
@@ -34,24 +30,7 @@ function AddCategoryFormComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery('(min-width:600px)');
-<<<<<<< Updated upstream
 
-  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    setSubmitting(true);
-    const { name } = values;
-    const data = {
-      name,
-    };
-    const response = await createCategoryAPI(data);
-    console.log(response);
-    if (response.status === 201) {
-      alert('Thêm danh mục thành công');
-    } else {
-      alert('Thêm danh mục thất bại');
-    }
-    setSubmitting(false);
-    resetForm();
-=======
   const history = useHistory();
 
   const handleFormSubmit = async (values, { setSubmitting }) => {
@@ -73,7 +52,6 @@ function AddCategoryFormComponent() {
     } finally {
       setSubmitting(false);
     }
->>>>>>> Stashed changes
   };
 
   return (
