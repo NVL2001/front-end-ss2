@@ -1,10 +1,25 @@
+/* eslint-disable import/order */
+/* eslint-disable max-len */
 import { api } from './api';
+import FormData from 'form-data';
 
 // get listProduct API
 const getListProductAPI = () => api('GET', 'product/products', null);
 
 // Add New Product
-const addProductNewAPI = (ProductNew) => api('POST', 'product/create-product', ProductNew);
+const addProductNewAPI = (ProductNew) => {
+  const body = new FormData();
+  // eslint-disable-next-line no-plusplus, no-restricted-syntax
+  if (ProductNew.images && ProductNew.images instanceof File) {
+    body.append('images', ProductNew.images);
+  }
+  body.append("name", ProductNew.name);
+  body.append("description", ProductNew.description);
+  body.append("price", ProductNew.price);
+  body.append("quantity", ProductNew.quantity);
+  body.append("categoryName", ProductNew.categoryName);
+  return api('POST', 'product/create-product', body);
+};
 
 // Delete Product
 const deleteProductAPI = (id) => {

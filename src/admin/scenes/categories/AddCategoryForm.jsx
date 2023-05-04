@@ -20,7 +20,12 @@ import * as Yup from 'yup';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< Updated upstream
 import { createCategoryAPI } from '../../API/CategoryAPI';
+=======
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+>>>>>>> Stashed changes
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from '../../theme';
@@ -29,6 +34,7 @@ function AddCategoryFormComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery('(min-width:600px)');
+<<<<<<< Updated upstream
 
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
@@ -45,6 +51,29 @@ function AddCategoryFormComponent() {
     }
     setSubmitting(false);
     resetForm();
+=======
+  const history = useHistory();
+
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    try {
+      const { name } = values;
+
+      const apiUrl = `http://localhost:8080/api/category/create-category?name=${encodeURIComponent(name)}`;
+
+      const response = await axios.post(apiUrl);
+
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Thêm danh mục thành công");
+        history.replace("/admin/categories");
+      } else {
+        toast.error("Thêm danh mục thất bại");
+      }
+    } catch (error) {
+      // Xử lý lỗi mạng hoặc lỗi không liên quan đến phản hồi của API
+    } finally {
+      setSubmitting(false);
+    }
+>>>>>>> Stashed changes
   };
 
   return (

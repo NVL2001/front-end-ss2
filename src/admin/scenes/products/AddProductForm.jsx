@@ -3,6 +3,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
+<<<<<<< Updated upstream
   Box,
   Button,
   TextField,
@@ -26,9 +27,56 @@ import { tokens } from '../../theme';
 
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery('(min-width:600px)');
+=======
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar
+} from "@mui/material";
+import {
+  Formik, Form, Field, formik
+} from "formik";
+import * as Yup from "yup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { getListCategoryAPI } from "../../API/CategoryAPI";
+import Header from "../../components/Header";
+import { AdminLayout } from "../../../layout/AdminLayout";
+import { tokens } from "../../theme";
+import { addProductNewAPI } from "../../API/ProductAPI";
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+function AddProductFormComponent() {
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+>>>>>>> Stashed changes
+
+  const [categories, setCategories] = useState([]);
+  const [previewImageUrl, setPreviewImageUrl] = useState();
+  const [previewImageFile, setPreviewImageFile] = useState();
+  const [saveImages, setImages] = useState([]);
+
+  const fetchListProduct = function () {
+    getListCategoryAPI().then((response) => {
+      setCategories(response);
+    });
+  };
+  // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
+  useEffect(() => {
+    fetchListProduct();
+  }, []);
+
+  const [imagePreviews, setImagePreviews] = useState("");
+
+  const imageInputFile = useRef(null);
+  const onChangeImageInput = (e) => {
+    // Assuming only image
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = (e) => {
+      setPreviewImageUrl(reader.result);
+      setPreviewImageFile(file);
+      setImages([...saveImages, file]);
+    };
   };
   const [categories, setCategories] = useState([]);
   const fetchListProduct = function () {
@@ -84,31 +132,64 @@ function AddProductFormComponent() {
       <Header title="Thêm Sản Phẩm Mới" />
 
       <Formik
+<<<<<<< Updated upstream
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={validationSchema}
+=======
+        initialValues={{
+          id: "",
+          name: "",
+          description: "",
+          price: "",
+          quantity: "",
+          categoryName: "",
+        }}
+        validationSchema={Yup.object({
+          //
+        })}
+        onSubmit={async (values) => {
+          try {
+            const newProd = {
+              name: values.name,
+              description: values.description,
+              price: values.price,
+              quantity: values.quantity,
+              category: values.categoryName,
+              // eslint-disable-next-line global-require
+              images: previewImageFile,
+              // images: [...images, previewAvatarFile],
+            };
+            await addProductNewAPI(newProd).then((response) => {
+              // alert("Thêm sản phẩm mới thành công!");
+              // console.log("response", newProd.images);
+            });
+          } catch (error) {
+            alert(error);
+          }
+        }}
+>>>>>>> Stashed changes
       >
         {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
+          values, errors, touched, handleBlur, handleChange, handleSubmit
         }) => (
-          <form onSubmit={handleSubmit}>
+          <Form>
             <Box
               display="grid"
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
-                '& > div': { gridColumn: isNonMobile ? undefined : 'span 4' },
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
               <TextField
                 label="ID Sản Phẩm"
                 name="id"
+<<<<<<< Updated upstream
                 value={values.id}
+=======
+                // value={values.id}
+>>>>>>> Stashed changes
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.id && errors.id}
@@ -116,12 +197,20 @@ function AddProductFormComponent() {
                 required
                 fullWidth
                 variant="filled"
+<<<<<<< Updated upstream
                 sx={{ gridColumn: 'span 2' }}
+=======
+                sx={{ gridColumn: "span 2" }}
+>>>>>>> Stashed changes
               />
               <TextField
                 label="Tên sản phẩm"
                 name="name"
+<<<<<<< Updated upstream
                 value={values.name}
+=======
+                // value={values.name}
+>>>>>>> Stashed changes
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.name && errors.name}
@@ -129,12 +218,20 @@ function AddProductFormComponent() {
                 required
                 fullWidth
                 variant="filled"
+<<<<<<< Updated upstream
                 sx={{ gridColumn: 'span 2' }}
+=======
+                sx={{ gridColumn: "span 2" }}
+>>>>>>> Stashed changes
               />
               <TextField
                 label="Giá sản phẩm"
                 name="price"
+<<<<<<< Updated upstream
                 value={values.price}
+=======
+                // value={values.price}
+>>>>>>> Stashed changes
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.price && errors.price}
@@ -142,12 +239,20 @@ function AddProductFormComponent() {
                 required
                 fullWidth
                 variant="filled"
+<<<<<<< Updated upstream
                 sx={{ gridColumn: 'span 2' }}
+=======
+                sx={{ gridColumn: "span 2" }}
+>>>>>>> Stashed changes
               />
               <TextField
                 label="Số lượng sản phẩm"
                 name="quantity"
+<<<<<<< Updated upstream
                 value={values.quantity}
+=======
+                // value={values.quantity}
+>>>>>>> Stashed changes
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.quantity && errors.quantity}
@@ -155,6 +260,7 @@ function AddProductFormComponent() {
                 required
                 fullWidth
                 variant="filled"
+<<<<<<< Updated upstream
                 sx={{ gridColumn: 'span 2' }}
               />
               <FormControl
@@ -170,11 +276,22 @@ function AddProductFormComponent() {
                 >
                   {categories.map((category) => (
                     <MenuItem key={category.id} value={category.id}>
+=======
+                sx={{ gridColumn: "span 2" }}
+              />
+              <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 2" }}>
+                <InputLabel>Danh mục sản phẩm</InputLabel>
+                <Field as={Select} error={touched.categoryId && !!errors.categoryId} name="categoryId">
+                  {categories.map((category) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {/* <MenuItem key={category.id}> */}
+>>>>>>> Stashed changes
                       {category.name}
                     </MenuItem>
                   ))}
                 </Field>
               </FormControl>
+<<<<<<< Updated upstream
               <input
                 accept="image/*"
                 style={{ display: 'none' }}
@@ -187,6 +304,10 @@ function AddProductFormComponent() {
                 <button component="span">Tải Ảnh</button>
               </label>
               {imagePreviews && (
+=======
+              {/* <input accept="image/*" style={{ display: "none" }} id="image-upload" type="file" multiple onChange={handleImageChange} /> */}
+              {/* {imagePreviews && (
+>>>>>>> Stashed changes
                 <div>
                   {imagePreviews.map((preview, index) => (
                     <img
@@ -196,8 +317,31 @@ function AddProductFormComponent() {
                     />
                   ))}
                 </div>
+<<<<<<< Updated upstream
               )}
 
+=======
+              )} */}
+              <Avatar
+                alt="Remy Sharp"
+                src={
+                  // eslint-disable-next-line global-require
+                  previewImageUrl || require(`../../images/default-thumbnail.jpg`)
+                }
+                sx={{ width: 200, height: 200, marginTop: "20px" }}
+              />
+              <label htmlFor="image-upload">
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => imageInputFile.current.click()}
+                >
+                  Tải Ảnh
+                </Button>
+                <input accept="image/*" type="file" id="avatarInput" ref={imageInputFile} multiple onChange={onChangeImageInput} style={{ display: "none" }} />
+              </label>
+>>>>>>> Stashed changes
               <TextField
                 fullWidth
                 variant="filled"
@@ -205,11 +349,19 @@ function AddProductFormComponent() {
                 label="Mô tả sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
+<<<<<<< Updated upstream
                 value={values.description}
                 name="email"
                 error={!!touched.description && !!errors.description}
                 helperText={touched.description && errors.description}
                 sx={{ gridColumn: 'span 4' }}
+=======
+                // value={values.description}
+                name="email"
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
+                sx={{ gridColumn: "span 4" }}
+>>>>>>> Stashed changes
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
@@ -217,13 +369,14 @@ function AddProductFormComponent() {
                 Thêm Sản Phẩm Mới
               </Button>
             </Box>
-          </form>
+          </Form>
         )}
       </Formik>
     </Box>
   );
 }
 
+<<<<<<< Updated upstream
 const validationSchema = Yup.object().shape({
   id: Yup.string().required('Vui lòng điền ID sản phẩm'),
   name: Yup.string().required('Vui lòng điền tên sản phẩm'),
@@ -252,6 +405,8 @@ const initialValues = {
   productImages: [],
 };
 
+=======
+>>>>>>> Stashed changes
 function AddProductForm() {
   return (
     <AdminLayout>
