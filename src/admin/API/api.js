@@ -14,7 +14,6 @@ axiosClient.interceptors.request.use((config) => {
   // Lấy token từ localStorage
   const objUser = JSON.parse(localStorage.getItem('user'));
   const token = objUser.bearer_token;
-  console.log("token", token);
   // Nếu có token, thì thêm vào request header
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
