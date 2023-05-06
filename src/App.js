@@ -32,6 +32,9 @@ import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import Discounts from './admin/scenes/discounts/Discounts';
 import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
+import InputProduct from "./admin/scenes/products/InputProduct";
+import OrderHistoryPage from "./pages/order/OrderHistoryPage";
+import MakeOrderPage from "./pages/checkout/MakeOrderPage";
 
 function App() {
   return (
@@ -42,19 +45,18 @@ function App() {
           <Switch>
             <Route path="/" exact component={Pages} />
             <Route path="/cart" exact component={Cart} />
+            <Route path="/checkout" exact component={MakeOrderPage} />
             <Route path="/product" exact component={ProductPage} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route path="/category/:id" component={CategoryPage} />
+            <Route path="/order" component={OrderHistoryPage} />
             <Route path="/user" exact component={User} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />
-            <Route path="/admin/categories" exact component={Categories} />
-            <Route path="/admin/categories/add" component={AddCategoryForm} />
-            <Route path="/admin/products" exact component={Products} />
-            <Route path="/admin/products/add" component={AddProductForm} />
+            <Route path="/admin/categories" component={Categories} />
+            <Route path="/admin/products" component={Products} />
+            <Route path="/admin/products/add" component={InputProduct} />
             <Route path="/admin/orders" component={Orders} />
-            <Route path="/admin/discounts" component={Discounts} />
-            <Route path="/admin/statistics" component={Statistics} />
             <Route path="/admin/team" component={Team} />
             <Route path="/admin/form" component={Form} />
             <Route path="/admin/bar" component={Bar} />
