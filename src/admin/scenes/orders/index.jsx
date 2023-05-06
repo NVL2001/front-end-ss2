@@ -6,61 +6,85 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import axios from "axios";
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { getListOrderAPI } from "../../API/OrderAPI";
+import { APIRoutes } from "../../../constants/APIRoutes";
+import formatDate from "../../../utils/formatDate";
+import formatMoney from "../../../utils/formatMoney";
 
 function OrdersComponent() {
   const [orders, setOrders] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
-  const fetchListOrder = function () {
-    getListOrderAPI().then((response) => {
-      setOrders(response);
-    });
+  const fetchListOrder = async function () {
+    const response = await axios.post(APIRoutes.GET_ORDER_ADMIN);
+    const data = response.data.pageItems;
+    setOrders(data);
   };
   useEffect(() => {
     fetchListOrder();
   }, []);
+
+  function convertStatus(status) {
+    switch (status) {
+      case "PENDING":
+        return "Chờ xác nhận";
+      case "DELIVERING":
+        return <Box sx={{ color: 'info.main' }}>Đang Giao</Box>;
+      case "CANCEL":
+        return <Box sx={{ color: 'error.main' }}>Hủy</Box>;
+      case "COMPLETE":
+        return (
+          <Box sx={{ color: 'success.main' }}>Hoàn Thành</Box>
+        );
+      default:
+        return status;
+    }
+  }
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
     { field: 'id', headerName: 'ID Đơn Hàng', flex: 1 },
     {
-      field: 'name',
-      headerName: 'Sản Phẩm',
-      flex: 1.5,
-    },
-    {
-      field: 'quantity',
-      headerName: 'Số Lượng',
-      flex: 0.5,
-    },
-    {
-      field: 'cost',
+      field: 'totalPrice',
       headerName: 'Tổng Thanh Toán',
       renderCell: (params) => (
         <Typography color={colors.greenAccent[500]}>
-          {params.row.cost}
-          {' '}
-          VNĐ
+          {formatMoney(params.row.totalPrice)}
         </Typography>
       ),
       flex: 1,
     },
     {
-      field: 'date',
-      headerName: 'Ngày',
+      field: 'createdDate',
+      headerName: 'Ngày Tạo',
       flex: 1,
+      renderCell: (params) => (
+        <Typography>
+          {formatDate(params.row.createdDate)}
+        </Typography>
+      )
     },
     {
-      field: 'order_status',
+      field: 'status',
       headerName: 'Trạng Thái Đơn Hàng',
-      flex: 1.5,
+      flex: 1,
+      renderCell: (params) => (
+        <Typography>
+          {convertStatus(params.row.status)}
+        </Typography>
+      )
     },
-
+    {
+      field: 'phoneNumber',
+      headerName: 'Số điện thoại',
+      flex: 0.9,
+    },
     {
       field: 'action',
       headerName: 'Hành Động',
@@ -120,7 +144,7 @@ function OrdersComponent() {
           },
         }}
       >
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid rows={orders} columns={columns} />
       </Box>
     </Box>
   );

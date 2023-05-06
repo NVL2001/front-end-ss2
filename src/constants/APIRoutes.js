@@ -19,5 +19,6 @@ export const APIRoutes = {
   GET_NEW_ARRIVALS: '/product/arrivals',
   GET_DISCOUNT_PRODUCT: '/product/discount-product',
   EDIT_USER_AVATAR: '/user/update-image',
-  CREATE_PRODUCT: '/product/create-product'
+  CREATE_PRODUCT: '/product/create-product',
+  GET_ORDER_ADMIN: '/order/admin-orders'
 };

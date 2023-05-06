@@ -74,10 +74,11 @@ function AddProductFormComponent() {
             formData.append('price', values.price);
             formData.append('quantity', values.quantity);
             formData.append('categoryName', values.categoryName);
+            console.log(`${formData.get('description')} ${formData.get('categoryName')}`);
+
             Array.from(images).forEach((file) => {
               formData.append('images', file);
             }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
-            // console.log("imsize:", blob.size);
 
             const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
             if (response.status === 200) {
@@ -85,7 +86,6 @@ function AddProductFormComponent() {
             }
           } catch (error) {
             console.log(error);
-            alert(error);
           }
         }}
       >
@@ -142,9 +142,9 @@ function AddProductFormComponent() {
               />
               <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 2" }}>
                 <InputLabel>Danh mục sản phẩm</InputLabel>
-                <Field as={Select} error={touched.categoryId && !!errors.categoryId} name="categoryId">
+                <Field as={Select} error={touched.categoryId && !!errors.categoryId} name="categoryName">
                   {categories.map((category) => (
-                    <MenuItem key={category.id} value={category.id}>
+                    <MenuItem key={category.id} value={category.name}>
                       {/* <MenuItem key={category.id}> */}
                       {category.name}
                     </MenuItem>
@@ -160,7 +160,7 @@ function AddProductFormComponent() {
                 onBlur={handleBlur}
                 onChange={handleChange}
                                 // value={values.description}
-                name="email"
+                name="description"
                 error={!!touched.description && !!errors.description}
                 helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 4" }}
@@ -213,8 +213,6 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
 
       reader.readAsDataURL(file);
     }
-    console.log(newImagesForPreview);
-    console.log(newImagesForUpload);
   };
 
   const handleAddMore = (event) => {
@@ -246,9 +244,9 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
       {imageForPreview.length < 6 && (
         <div>
           <InputLabel htmlFor="upload-image">
-            <Button component="span" variant="contained">
-              Chọn ảnh
-            </Button>
+            {/* <Button component="span" variant="contained"> */}
+            {/*  Chọn ảnh */}
+            {/* </Button> */}
             {imageForPreview.length < 6 && (
             <Button variant="contained" onClick={handleAddMore}>
               Thêm mới
@@ -280,13 +278,6 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
                   handleDeleteImage(index);
                 }}
               />
-              {/* <input */}
-              {/*  type="file" */}
-              {/*  id={`change-image${index}`} */}
-              {/*  accept="image/*" */}
-              {/*  style={{ display: 'none' }} */}
-              {/*  onChange={() => handleDeleteImage(index)} */}
-              {/* /> */}
             </div>
           </Grid>
         ))}
