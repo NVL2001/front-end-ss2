@@ -23,4 +23,19 @@ const deleteCategoryAPI = (name) => {
   return api('DELETE', url, null, headers);
 };
 
-export { getListCategoryAPI, deleteCategoryAPI };
+const updateCategoryAPI = async (id, newName) => {
+  const response = await fetch(`http://localhost:8080/api/category/update-category?id=${id}&newName=${newName}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to update category');
+  }
+
+  return response.json();
+};
+
+export { getListCategoryAPI, deleteCategoryAPI, updateCategoryAPI };
