@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -9,7 +11,6 @@ import User from './pages/user/User';
 import Cart from './common/Cart/Cart';
 import CategoryPage from './components/shops/CategoryPage';
 import AboutUs from './components/about/about';
-import MakeOrderPage from './pages/checkout/MakeOrderPage';
 
 import './infra/http';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from "./admin/scenes/dashboard/DashBoard";
 import Categories from "./admin/scenes/categories/Categories";
 import Products from "./admin/scenes/products/Products";
-import InputProduct from "./admin/scenes/products/InputProduct";
+import AddProductForm from "./admin/scenes/products/AddProductForm";
 import Orders from "./admin/scenes/orders";
 import Team from "./admin/scenes/team/Team";
 import Form from "./admin/scenes/form";
@@ -25,10 +26,15 @@ import Bar from "./admin/scenes/bar";
 import Pie from "./admin/scenes/pie";
 import Line from "./admin/scenes/line";
 import FAQ from "./admin/scenes/faq";
+import Statistics from './admin/scenes/statistics/Statistics';
 import Calendar from "./admin/scenes/calendar/calendar";
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import Discounts from './admin/scenes/discounts/Discounts';
+import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
+import InputProduct from "./admin/scenes/products/InputProduct";
 import OrderHistoryPage from "./pages/order/OrderHistoryPage";
+import MakeOrderPage from "./pages/checkout/MakeOrderPage";
 
 function App() {
   return (

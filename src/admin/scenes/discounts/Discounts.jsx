@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
 import {
@@ -10,57 +11,56 @@ import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
-import { getListOrderAPI } from "../../API/OrderAPI";
+import { getListDiscountAPI } from "../../API/DiscountAPI";
 
-function OrdersComponent() {
-  const [orders, setOrders] = useState([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [idToDelete, setIdToDelete] = useState(null);
-  const fetchListOrder = function () {
-    getListOrderAPI().then((response) => {
-      setOrders(response);
+function DiscountsComponent() {
+  const [discounts, setDiscounts] = useState([]);
+  const fetchListDiscount = function () {
+    getListDiscountAPI().then((response) => {
+      setDiscounts(response);
     });
   };
+  // Khai báo useEffect khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
-    fetchListOrder();
+    fetchListDiscount();
   }, []);
+  console.log(discounts);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: 'id', headerName: 'ID Đơn Hàng', flex: 1 },
+    { field: 'code', headerName: 'Code Giảm Giá', flex: 1 },
     {
-      field: 'name',
-      headerName: 'Sản Phẩm',
+      field: 'description',
+      headerName: 'Tên Chương Trình',
       flex: 1.5,
     },
     {
-      field: 'quantity',
-      headerName: 'Số Lượng',
+      field: 'discountPercent',
+      headerName: '% Giảm Giá',
       flex: 0.5,
     },
+    // {
+    //   field: 'cost',
+    //   headerName: 'Tổng Thanh Toán',
+    //   renderCell: (params) => (
+    //     <Typography color={colors.greenAccent[500]}>
+    //       {params.row.cost}
+    //       {' '}
+    //       VNĐ
+    //     </Typography>
+    //   ),
+    //   flex: 1,
+    // },
     {
-      field: 'cost',
-      headerName: 'Tổng Thanh Toán',
-      renderCell: (params) => (
-        <Typography color={colors.greenAccent[500]}>
-          {params.row.cost}
-          {' '}
-          VNĐ
-        </Typography>
-      ),
-      flex: 1,
+      field: 'startDate',
+      headerName: 'Ngày Bắt Đầu',
+      flex: 0.75,
     },
     {
-      field: 'date',
-      headerName: 'Ngày',
-      flex: 1,
+      field: 'endDate',
+      headerName: 'Ngày Kết Thúc',
+      flex: 0.75,
     },
-    {
-      field: 'order_status',
-      headerName: 'Trạng Thái Đơn Hàng',
-      flex: 1.5,
-    },
-
     {
       field: 'action',
       headerName: 'Hành Động',
@@ -71,7 +71,7 @@ function OrdersComponent() {
             Xem Chi Tiết
           </Button>
           <Button variant="contained" color="success">
-            Thay Đổi Trạng Thái
+            Thay Đổi Chương Trình
           </Button>
         </Stack>
       ),
@@ -90,7 +90,7 @@ function OrdersComponent() {
 
   return (
     <Box m="20px">
-      <Header title="Đơn Hàng" subtitle="Danh Sách Đơn Hàng" />
+      <Header title="Chiến Dịch" subtitle="Chương Trình Giảm Giá" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -120,18 +120,22 @@ function OrdersComponent() {
           },
         }}
       >
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid
+          rows={discounts}
+          columns={columns}
+          getRowId={(row) => row.code}
+        />
       </Box>
     </Box>
   );
 }
 
-function Orders() {
+function Discounts() {
   return (
     <AdminLayout>
-      <OrdersComponent />
+      <DiscountsComponent />
     </AdminLayout>
   );
 }
 
-export default Orders;
+export default Discounts;

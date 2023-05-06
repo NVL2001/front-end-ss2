@@ -235,8 +235,8 @@ function UserProfile() {
         <StyledAvatar alt="user avatar" src={axios.defaults.baseURL + user.avatarURL ?? ""} />
         <Button onClick={handleOpen}>
           {
-          user.avatarURL ? "Sửa ảnh" : "Chọn ảnh"
-        }
+                        user.avatarURL ? "Sửa ảnh" : "Chọn ảnh"
+                    }
         </Button>
         <Modal
           open={open}

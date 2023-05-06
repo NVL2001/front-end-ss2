@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
 import { React, useEffect, useState } from 'react';
 import {
@@ -11,12 +12,13 @@ import {
   Typography,
 } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
 import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
-import AddProductModal from './AddProductModal';
+import AddProductButton from './AddProductButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
 
 function ProductsComponent() {
@@ -61,6 +63,7 @@ function ProductsComponent() {
 
   // console.log(products);
   // console.log(products.pageItems);
+  // Kiểm tra nếu products.pageItems là một mảng, nếu đúng thì gán cho biến row, nếu không thì gán một mảng rỗng cho biến row.
   const row = Array.isArray(products.pageItems) ? products.pageItems : [];
   const columns = [
     { field: 'id', headerName: 'ID Sản Phẩm', flex: 1 },
@@ -76,15 +79,17 @@ function ProductsComponent() {
       width: 120,
       editable: false,
       renderCell: (params) => {
+        // Kiểm tra nếu giá trị của ô hiện tại không phải là một mảng, render ra một thông báo lỗi
         if (!Array.isArray(params.value)) {
           return <div>Giá trị không hợp lệ</div>;
         }
+        // Nếu giá trị của ô hiện tại là một mảng, hiển thị hình ảnh đầu tiên trong mảng
         return (
           <div>
             {params.value.slice(0, 1).map((image) => (
               <img
                 key={image}
-                src={`http://${image}`}
+                src={`${axios.defaults.baseURL}${image}`}
                 alt="123"
                 width={100}
                 height="auto"
@@ -164,7 +169,7 @@ function ProductsComponent() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Sản Phẩm" subtitle="Tất Cả Sản Phẩm" />
         <Box>
-          <AddProductModal />
+          <AddProductButton />
         </Box>
       </Box>
       <Box
@@ -197,6 +202,7 @@ function ProductsComponent() {
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colors.grey[100]} !important`,
           },
+
         }}
       >
         <Dialog

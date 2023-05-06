@@ -13,9 +13,9 @@ import formatDate from "../../utils/formatDate";
 // spinner
 function LoadingSpinner() {
   return (
-    <div className="loading-spinner">
-      <FaSpinner className="spinner-icon" />
-    </div>
+      <div className="loading-spinner">
+        <FaSpinner className="spinner-icon" />
+      </div>
   );
 }
 function ProductDetailComponent() {
@@ -36,7 +36,7 @@ function ProductDetailComponent() {
   }, [id]);
 
   const [sliderData, setSliderData] = useState(
-    product ? product.productImages[0] : null
+      product ? product.productImages[0] : null
   );
   const handleClick = (index) => {
     setSliderData(product.productImages[index]);
@@ -54,98 +54,98 @@ function ProductDetailComponent() {
 
   if (!product) {
     return (
-      <>
-        <LoadingSpinner />
-        <div id="blank"> </div>
-      </>
+        <>
+          <LoadingSpinner />
+          <div id="blank"> </div>
+        </>
     );
   }
 
   const card = product.discount ? (
-    <CardContent>
-      <Typography
-        sx={{ fontSize: 14 }}
-        variant="h5"
-        color="text.secondary"
-        gutterBottom
-      >
-        Giảm giá
-      </Typography>
-      <Typography variant="body1">{`Mã: ${product.discount.code}`}</Typography>
-      <Typography variant="body2">
-        {`Hết hạn: ${formatDate(product.discount.endDate)}`}
-      </Typography>
-    </CardContent>
+      <CardContent>
+        <Typography
+            sx={{ fontSize: 14 }}
+            variant="h5"
+            color="text.secondary"
+            gutterBottom
+        >
+          Giảm giá
+        </Typography>
+        <Typography variant="body1">{`Mã: ${product.discount.code}`}</Typography>
+        <Typography variant="body2">
+          {`Hết hạn: ${formatDate(product.discount.endDate)}`}
+        </Typography>
+      </CardContent>
   ) : null;
 
   return (
-    <div className="product-detail product-detail-page">
-      <div className="leftside">
-        <div className="slider">
-          <img
-            src={`${
-              axios.defaults.baseURL + (sliderData || product.productImages[0])
-            }`}
-            alt="..."
-            className="product-image"
-          />
-        </div>
-        <div className="slider-nav">
-          {product.productImages.map((image, index) => (
+      <div className="product-detail product-detail-page">
+        <div className="leftside">
+          <div className="slider">
             <img
-              src={`${axios.defaults.baseURL + image}`}
-              alt="..."
-              key={image}
-              onClick={() => handleClick(index)}
+                src={`${
+                    axios.defaults.baseURL + (sliderData || product.productImages[0])
+                }`}
+                alt="..."
+                className="product-image"
             />
-          ))}
+          </div>
+          <div className="slider-nav">
+            {product.productImages.map((image, index) => (
+                <img
+                    src={`${axios.defaults.baseURL + image}`}
+                    alt="..."
+                    key={image}
+                    onClick={() => handleClick(index)}
+                />
+            ))}
+          </div>
+          <div>
+            {card ? (
+                <Box sx={{ minWidth: 200 }}>
+                  <Card variant="outlined">{card}</Card>
+                </Box>
+            ) : null}
+          </div>
         </div>
-        <div>
-          {card ? (
-            <Box sx={{ minWidth: 200 }}>
-              <Card variant="outlined">{card}</Card>
-            </Box>
-          ) : null}
-        </div>
-      </div>
 
-      <div className="rightside">
-        <h2 className="product-name">{product.name}</h2>
-        <p className="product-description">{product.description}</p>
-        <p className="product-price">
-          {product.discount ? (
-            <div>
-              Giá:
-              <span style={{ textDecoration: "line-through" }}>{`${formatMoney(
-                product.price
-              )}`}</span>
-              <span> </span>
-              <span>{formatMoney(product.discountPrice)}</span>
-            </div>
-          ) : (
-            <span>{formatMoney(product.price)}</span>
-          )}
-        </p>
-        <p className="product-quantity">
-          {`Tồn kho: 
+        <div className="rightside">
+          <h2 className="product-name">{product.name}</h2>
+          <p className="product-description">{product.description}</p>
+          <p className="product-price">
+            {product.discount ? (
+                <div>
+                  Giá:
+                  <span style={{ textDecoration: "line-through" }}>{`${formatMoney(
+                      product.price
+                  )}`}</span>
+                  <span> </span>
+                  <span>{formatMoney(product.discountPrice)}</span>
+                </div>
+            ) : (
+                <span>{formatMoney(product.price)}</span>
+            )}
+          </p>
+          <p className="product-quantity">
+            {`Tồn kho: 
           ${product.quantity}`}
-        </p>
+          </p>
 
-        <div className="quantity-controls">
-          <button className="add" onClick={() => addToCart(product)}>
-            Thêm vào giỏ hàng
-          </button>
+          <div className="quantity-controls">
+            <button className="add" onClick={() => addToCart(product)}>
+              Thêm vào giỏ hàng
+            </button>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 
 function ProductDetail() {
   return (
-    <PublicLayout>
-      <ProductDetailComponent />
-    </PublicLayout>
+      <PublicLayout>
+        <ProductDetailComponent />
+      </PublicLayout>
   );
 }
 

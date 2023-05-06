@@ -3,16 +3,15 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-function AddProductButton() {
-  const history = useHistory();
-
-  const handleAddProductClick = () => {
-    history.push('/admin/products/add');
+function AddCategoryButton(props) {
+  const handleAddCategoryClick = () => {
+    props.history.push('/admin/categories/add');
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <Button
       sx={{
@@ -23,11 +22,11 @@ function AddProductButton() {
         padding: "10px 20px",
         borderRadius: 0
       }}
-      onClick={handleAddProductClick}
+      onClick={handleAddCategoryClick}
     >
-      Thêm sản phẩm
+      Thêm danh mục
     </Button>
   );
 }
 
-export default AddProductButton;
+export default withRouter(AddCategoryButton);

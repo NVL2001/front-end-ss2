@@ -1,4 +1,12 @@
-import { Box, Typography, useTheme } from '@mui/material';
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-use-before-define */
+import {
+  Box, Typography, useTheme, Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 // import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 // import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
@@ -7,25 +15,61 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { React, useState, useEffect } from 'react';
-import { getListCategoryAPI } from '../../API/CategoryAPI';
+import { getListCategoryAPI, deleteCategoryAPI } from '../../API/CategoryAPI';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 import { tokens } from '../../theme';
+import AddCategoryButton from './AddCategoryButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
+import EditCategoryDialog from './EditCategoryForm';
 
 function CategoriesComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [categories, setCategories] = useState([]);
-  const fetchListProduct = function () {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [nameToDelete, setNameToDelete] = useState(null);
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+
+  const handleAddCategoryClick = () => {
+    setIsAddingCategory(true);
+  };
+  const fetchListCategory = function () {
     getListCategoryAPI().then((response) => {
       setCategories(response);
     });
   };
-  // Khai báo useEffect khi component được mount và mỗi khi State: listProduct thay đổi
+
+  const handleDeleteCategory = async () => {
+    await deleteCategoryAPI(nameToDelete);
+    fetchListCategory();
+  };
+
+  const handleConfirmDelete = () => {
+    handleDeleteCategory();
+    handleCloseDialog();
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+  // Khai báo useEffect khi component được mount và mỗi khi State: listCategory thay đổi
   useEffect(() => {
-    fetchListProduct();
+    fetchListCategory();
   }, []);
+
+  const handleOpenDialog = (name) => {
+    setNameToDelete(name);
+    setIsDialogOpen(true);
+  };
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
+
+  const handleEditCategoryClick = (id) => {
+    setCategoryIdToEdit(id);
+    setIsEditDialogOpen(true);
+  };
   console.log(categories);
   const columns = [
     { field: 'id', headerName: 'ID Danh Mục', flex: 1 },
@@ -41,24 +85,22 @@ function CategoriesComponent() {
       flex: 1,
       renderCell: ({ row }) => (
         <Stack direction="row" spacing={2}>
-          <Button variant="contained" color="success">
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleEditCategoryClick(row?.id)}
+          >
             Chỉnh Sửa
           </Button>
-          <Button variant="contained" color="error">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleOpenDialog(row?.name)}
+          >
             Xóa
           </Button>
         </Stack>
       ),
-    },
-  ];
-  const rows = [
-    {
-      id: 'srm',
-      name: 'Sữa Rửa Mặt',
-    },
-    {
-      id: 'nhh',
-      name: 'Nước Hoa Hồng',
     },
   ];
 
@@ -67,18 +109,13 @@ function CategoriesComponent() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Danh Mục" subtitle="Tất Cả Danh Mục" />
         <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: '14px',
-              fontWeight: 'bold',
-              padding: '10px 20px',
-            }}
-          >
-            <AddIcon sx={{ mr: '10px' }} />
-            Thêm Danh Mục
-          </Button>
+          <AddCategoryButton />
+          <EditCategoryDialog
+            isOpen={isEditDialogOpen}
+            onClose={() => setIsEditDialogOpen(false)}
+            id={categoryIdToEdit}
+            fetchListCategory={fetchListCategory}
+          />
         </Box>
       </Box>
       <Box
@@ -110,6 +147,37 @@ function CategoriesComponent() {
           },
         }}
       >
+        <Dialog
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          PaperProps={{
+            elevation: 8,
+            style: { backgroundColor: colors.primary[500] },
+          }}
+        >
+          <DialogTitle disableTypography>
+            <Typography variant="h6" color="error">
+              XÁC NHẬN XÓA DANH MỤC
+            </Typography>
+          </DialogTitle>
+          <DialogContent dividers>
+            <Typography variant="body1">
+              Bạn có chắc chắn muốn xóa danh mục này không?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              <Typography variant="button" style={{ color: 'white' }}>
+                HỦY
+              </Typography>
+            </Button>
+            <Button onClick={handleConfirmDelete} color="primary" autoFocus>
+              <Typography variant="button" color="error">
+                XÓA
+              </Typography>
+            </Button>
+          </DialogActions>
+        </Dialog>
         <DataGrid rows={categories} columns={columns} />
       </Box>
     </Box>
