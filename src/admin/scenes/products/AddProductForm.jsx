@@ -3,7 +3,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -18,40 +18,28 @@ import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
 import { addProductNewAPI } from "../../API/ProductAPI";
+import { APIRoutes } from "../../../constants/APIRoutes";
 
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [categories, setCategories] = useState([]);
-  const [previewAvatarUrl, setPreviewAvatarUrl] = useState();
-  const [previewAvatarFile, setPreviewAvatarFile] = useState();
-  const [saveImages, setImages] = useState([]);
+  const [images, setImages] = useState([]);
 
   const fetchListProduct = function () {
     getListCategoryAPI().then((response) => {
       setCategories(response);
     });
   };
-  // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
+
+  const handleImagesSelected = (selectedImages) => {
+    // Handle the selected images here
+    setImages(selectedImages);
+  };
+    // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
     fetchListProduct();
   }, []);
-
-  const [imagePreviews, setImagePreviews] = useState("");
-
-  const avatarInputFile = useRef(null);
-  const onChangeAvatarInput = (e) => {
-    // Assuming only image
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = (e) => {
-      setPreviewAvatarUrl(reader.result);
-      setPreviewAvatarFile(file);
-      setImages([...saveImages, file]);
-    };
-  };
 
   return (
     <Box m="20px">
@@ -59,7 +47,6 @@ function AddProductFormComponent() {
 
       <Formik
         initialValues={{
-          id: "",
           name: "",
           description: "",
           price: "",
@@ -70,28 +57,40 @@ function AddProductFormComponent() {
           //
         })}
         onSubmit={async (values) => {
+          const config = {
+            headers: {
+              ...axios.defaults.headers,
+              'Content-Type': 'multipart/form-data'
+            }
+          };
+
           try {
-            const newProd = {
-              name: values.name,
-              description: values.description,
-              price: values.price,
-              quantity: values.quantity,
-              category: values.categoryName,
-              // eslint-disable-next-line global-require
-              images: previewAvatarFile,
-              // images: [...images, previewAvatarFile],
-            };
-            await addProductNewAPI(newProd).then((response) => {
-              // alert("Thêm sản phẩm mới thành công!");
-              // console.log("response", newProd.images);
-            });
+            const formData = new FormData();
+            // const enc = new TextEncoder();
+            // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
+            // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
+            formData.append('name', values.name);
+            formData.append('description', values.description);
+            formData.append('price', values.price);
+            formData.append('quantity', values.quantity);
+            formData.append('categoryName', values.categoryName);
+            Array.from(images).forEach((file) => {
+              formData.append('images', file);
+            }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
+            // console.log("imsize:", blob.size);
+
+            const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
+            if (response.status === 200) {
+              alert("Tạo mới sản phẩm thành công");
+            }
           } catch (error) {
+            console.log(error);
             alert(error);
           }
         }}
       >
         {({
-          values, errors, touched, handleBlur, handleChange, handleSubmit
+          values, errors, touched, handleBlur, handleChange, submitForm
         }) => (
           <Form>
             <Box
@@ -103,22 +102,9 @@ function AddProductFormComponent() {
               }}
             >
               <TextField
-                label="ID Sản Phẩm"
-                name="id"
-                // value={values.id}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.id && errors.id}
-                helperText={touched.id && errors.id}
-                required
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
                 label="Tên sản phẩm"
                 name="name"
-                // value={values.name}
+                                // value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.name && errors.name}
@@ -131,7 +117,7 @@ function AddProductFormComponent() {
               <TextField
                 label="Giá sản phẩm"
                 name="price"
-                // value={values.price}
+                                // value={values.price}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.price && errors.price}
@@ -144,7 +130,7 @@ function AddProductFormComponent() {
               <TextField
                 label="Số lượng sản phẩm"
                 name="quantity"
-                // value={values.quantity}
+                                // value={values.quantity}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.quantity && errors.quantity}
@@ -165,32 +151,7 @@ function AddProductFormComponent() {
                   ))}
                 </Field>
               </FormControl>
-              {/* <input accept="image/*" style={{ display: "none" }} id="image-upload" type="file" multiple onChange={handleImageChange} /> */}
-              {/* {imagePreviews && (
-                <div>
-                  {imagePreviews.map((preview, index) => (
-                    <img
-                      key={index}
-                      src={preview}
-                      alt={`Product Preview ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )} */}
-              <Avatar
-                alt="Remy Sharp"
-                src={
-                  // eslint-disable-next-line global-require
-                  previewAvatarUrl || require(`../../images/default-thumbnail.jpg`)
-                }
-                sx={{ width: 200, height: 200, marginTop: "20px" }}
-              />
-              <label htmlFor="image-upload">
-                <button component="span" onClick={() => avatarInputFile.current.click()}>
-                  Tải Ảnh
-                </button>
-                <input accept="image/*" type="file" id="avatarInput" ref={avatarInputFile} multiple onChange={onChangeAvatarInput} style={{ display: "none" }} />
-              </label>
+              <ImageUpload imagesForUpload={images} onImagesSelected={handleImagesSelected} />
               <TextField
                 fullWidth
                 variant="filled"
@@ -198,7 +159,7 @@ function AddProductFormComponent() {
                 label="Mô tả sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                // value={values.description}
+                                // value={values.description}
                 name="email"
                 error={!!touched.description && !!errors.description}
                 helperText={touched.description && errors.description}
@@ -214,6 +175,130 @@ function AddProductFormComponent() {
         )}
       </Formik>
     </Box>
+  );
+}
+
+function ImageUpload({ onImagesSelected, imagesForUpload }) {
+  const [exceedLimit, setExceedLimit] = useState(false);
+  const [imageForPreview, setImageForPreview] = useState([]);
+
+  const chooseImageForUpload = (event) => {
+    const { files } = event.target;
+    const newImagesForPreview = [...imageForPreview];
+    const newImagesForUpload = [...imagesForUpload];
+
+    if (newImagesForUpload.length + files.length > 6) {
+      setExceedLimit(true);
+      return;
+    }
+
+    setExceedLimit(false);
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      // reader.readAsBinaryString(file);
+
+      reader.onload = (e) => {
+        newImagesForPreview.push(e.target.result);
+        // const binaryStr = reader.result;
+        newImagesForUpload.push(file);
+
+        if (newImagesForUpload.length === imagesForUpload.length + files.length) {
+          setImageForPreview(newImagesForPreview);
+          onImagesSelected(newImagesForUpload); // Invoke the callback function with the uploaded images
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+    console.log(newImagesForPreview);
+    console.log(newImagesForUpload);
+  };
+
+  const handleAddMore = (event) => {
+    event.preventDefault();
+    const uploadInput = document.getElementById('upload-image');
+    uploadInput.value = null;
+    uploadInput.click();
+  };
+
+  const handleDeleteImage = (index) => {
+    const newImagesForPreview = [...imageForPreview];
+    const newImagesForUpload = [...imagesForUpload];
+
+    newImagesForPreview.splice(index, 1);
+    newImagesForUpload.splice(index, 1);
+
+    onImagesSelected(newImagesForUpload);
+    setImageForPreview(newImagesForPreview);
+  };
+
+  return (
+    <div>
+      {exceedLimit && (
+        <Typography variant="body2" color="error">
+          Maximum of 6 images allowed.
+        </Typography>
+      )}
+
+      {imageForPreview.length < 6 && (
+        <div>
+          <InputLabel htmlFor="upload-image">
+            <Button component="span" variant="contained">
+              Chọn ảnh
+            </Button>
+            {imageForPreview.length < 6 && (
+            <Button variant="contained" onClick={handleAddMore}>
+              Thêm mới
+            </Button>
+            )}
+          </InputLabel>
+          <input
+            type="file"
+            id="upload-image"
+            accept="image/*"
+            multiple // Enable selecting multiple images
+            style={{ display: 'none' }}
+            onChange={chooseImageForUpload}
+          />
+        </div>
+      )}
+
+      <Grid container spacing={2}>
+        {imageForPreview.map((image, index) => (
+          <Grid key={index} item xs={6}>
+            <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
+              <img
+                src={image}
+                alt={`Preview ${index}`}
+                style={{
+                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'
+                }}
+                onClick={() => {
+                  handleDeleteImage(index);
+                }}
+              />
+              {/* <input */}
+              {/*  type="file" */}
+              {/*  id={`change-image${index}`} */}
+              {/*  accept="image/*" */}
+              {/*  style={{ display: 'none' }} */}
+              {/*  onChange={() => handleDeleteImage(index)} */}
+              {/* /> */}
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+
+      {imageForPreview.length > 0 && (
+        <Typography variant="subtitle1" align="center">
+          {`${imageForPreview.length} image(s) selected`}
+        </Typography>
+      )}
+
+    </div>
   );
 }
 
