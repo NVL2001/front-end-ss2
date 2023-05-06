@@ -55,7 +55,7 @@ function App() {
             <Route path="/admin/dashboard" component={Dashboard} />
             <Route path="/admin/categories" component={Categories} />
             <Route path="/admin/products" component={Products} />
-            <Route path="/admin/products/add" component={InputProduct} />
+            <Route path="/admin/products/add" component={AddProductForm} />
             <Route path="/admin/orders" component={Orders} />
             <Route path="/admin/team" component={Team} />
             <Route path="/admin/form" component={Form} />
