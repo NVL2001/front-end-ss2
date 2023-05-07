@@ -15,6 +15,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
 import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
@@ -28,6 +29,11 @@ function ProductsComponent() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const history = useHistory();
+
+  const handleEditProductClick = () => {
+    history.push('/admin/products/edit');
+  };
 
   const handleAddProductClick = () => {
     setIsAddingProduct(true);
@@ -126,7 +132,7 @@ function ProductsComponent() {
             <Button variant="contained" color="info">
               Xem
             </Button>
-            <Button variant="contained" color="success">
+            <Button variant="contained" color="success" onClick={handleEditProductClick}>
               Chỉnh Sửa
             </Button>
             <Button

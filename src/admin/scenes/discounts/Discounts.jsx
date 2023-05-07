@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
+import AddDiscountButton from './AddDiscountButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { getListDiscountAPI } from "../../API/DiscountAPI";
 
@@ -90,7 +91,12 @@ function DiscountsComponent() {
 
   return (
     <Box m="20px">
-      <Header title="Chiến Dịch" subtitle="Chương Trình Giảm Giá" />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Giảm Giá" subtitle="Chương Trình Giảm Giá" />
+        <Box>
+          <AddDiscountButton />
+        </Box>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
