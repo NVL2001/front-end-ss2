@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { tokens } from '../../theme';
+import { updateCategoryAPI } from '../../API/CategoryAPI';
 
 function EditCategoryDialog({
   isOpen, onClose, id, fetchListCategory
@@ -20,20 +21,26 @@ function EditCategoryDialog({
     newName: Yup.string().required('Tên danh mục mới là bắt buộc'),
   });
 
+  // const handleEditCategorySubmit = async (values) => {
+  //   const requestOptions = {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Access-Control-Allow-Origin': '*',
+  //     },
+  //     body: JSON.stringify({ id, newName: values.newName }),
+  //   };
+  //   const response = await fetch('http://localhost:8080/api/category/update-category', requestOptions);
+  //   if (response.ok) {
+  //     fetchListCategory();
+  //     onClose();
+  //   }
+  // };
   const handleEditCategorySubmit = async (values) => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({ id, newName: values.newName }),
-    };
-    const response = await fetch('http://localhost:8080/api/category/update-category', requestOptions);
-    if (response.ok) {
-      fetchListCategory();
-      onClose();
-    }
+    console.log("values", id);
+    updateCategoryAPI(id, values.newName);
+    fetchListCategory();
+    onClose();
   };
 
   return (
