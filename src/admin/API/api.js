@@ -5,7 +5,7 @@ import axios from 'axios';
 const axiosClient = axios.create({
   baseURL: 'http://localhost:8080/api/',
   headers: {
-    // 'content-type': 'application/json',
+    // 'content-type': 'application/json',.
     'Access-Control-Allow-Origin': '*',
   },
 });
@@ -14,7 +14,6 @@ axiosClient.interceptors.request.use((config) => {
   // Lấy token từ localStorage
   const objUser = JSON.parse(localStorage.getItem('user'));
   const token = objUser.bearer_token;
-  console.log("token", token);
   // Nếu có token, thì thêm vào request header
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -22,7 +21,8 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 }, (error) => Promise.reject(error));
 
-export const api = (method, endpoint, payload) => {
+// eslint-disable-next-line consistent-return
+export const api = async (method, endpoint, payload) => {
   const headers = {};
   if (payload instanceof FormData) {
     // Set headers for multipart form data
@@ -39,9 +39,10 @@ export const api = (method, endpoint, payload) => {
     data: payload
   };
 
-  return axiosClient(config)
-    .then((response) => response.data)
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    const response = await axiosClient(config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

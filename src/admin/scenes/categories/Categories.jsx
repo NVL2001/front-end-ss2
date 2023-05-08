@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-use-before-define */
 import {
   Box, Typography, useTheme, Dialog,
@@ -20,6 +21,7 @@ import { mockDataTeam } from '../../data/mockData';
 import { tokens } from '../../theme';
 import AddCategoryButton from './AddCategoryButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
+import EditCategoryDialog from './EditCategoryForm';
 
 function CategoriesComponent() {
   const theme = useTheme();
@@ -61,6 +63,13 @@ function CategoriesComponent() {
     setIsDialogOpen(true);
   };
 
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
+
+  const handleEditCategoryClick = (id) => {
+    setCategoryIdToEdit(id);
+    setIsEditDialogOpen(true);
+  };
   console.log(categories);
   const columns = [
     { field: 'id', headerName: 'ID Danh Mục', flex: 1 },
@@ -76,7 +85,11 @@ function CategoriesComponent() {
       flex: 1,
       renderCell: ({ row }) => (
         <Stack direction="row" spacing={2}>
-          <Button variant="contained" color="success">
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleEditCategoryClick(row?.id)}
+          >
             Chỉnh Sửa
           </Button>
           <Button
@@ -97,6 +110,12 @@ function CategoriesComponent() {
         <Header title="Danh Mục" subtitle="Tất Cả Danh Mục" />
         <Box>
           <AddCategoryButton />
+          <EditCategoryDialog
+            isOpen={isEditDialogOpen}
+            onClose={() => setIsEditDialogOpen(false)}
+            id={categoryIdToEdit}
+            fetchListCategory={fetchListCategory}
+          />
         </Box>
       </Box>
       <Box

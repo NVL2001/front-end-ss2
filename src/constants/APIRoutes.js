@@ -20,5 +20,6 @@ export const APIRoutes = {
   GET_DISCOUNT_PRODUCT: '/product/discount-product',
   EDIT_USER_AVATAR: '/user/update-image',
   CREATE_PRODUCT: '/product/create-product',
+  UPDATE_PRODUCT: '/product/update',
   GET_ORDER_ADMIN: '/order/admin-orders'
 };

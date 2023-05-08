@@ -15,9 +15,10 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
-import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
+import { getListProductAPI, deleteProductAPI, getProductByIdAPI } from '../../API/ProductAPI';
 import AddProductButton from './AddProductButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
 
@@ -28,6 +29,16 @@ function ProductsComponent() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const history = useHistory();
+  const handleEditProductClick = (id) => {
+    getProductByIdAPI(id).then((response) => {
+      window.localStorage.setItem("editProduct", JSON.stringify(response));
+      // window.localStorage.setItem("editProduct", response);
+      if (response) {
+        history.push(`/admin/products/${id}/edit`);
+      }
+    });
+  };
 
   const handleAddProductClick = () => {
     setIsAddingProduct(true);
@@ -126,7 +137,7 @@ function ProductsComponent() {
             <Button variant="contained" color="info">
               Xem
             </Button>
-            <Button variant="contained" color="success">
+            <Button variant="contained" color="success" onClick={() => handleEditProductClick(row?.id)}>
               Chỉnh Sửa
             </Button>
             <Button
