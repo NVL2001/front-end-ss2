@@ -6,6 +6,8 @@ import FormData from 'form-data';
 // get listProduct API
 const getListProductAPI = () => api('GET', 'product/products', null);
 
+const getProductByIdAPI = (id) => api('GET', `product/get/${id}`, null);
+
 // Add New Product
 const addProductNewAPI = (ProductNew) => {
   const body = new FormData();
@@ -24,7 +26,7 @@ const addProductNewAPI = (ProductNew) => {
 // Delete Product
 const deleteProductAPI = (id) => {
   const url = `product/delete-product?productId=${id}`;
-  return api('POST', url, null);
+  return api('POST', url, null, null);
 };
 
 // Update Product
@@ -33,5 +35,5 @@ const updateProductAPI = (productUpdate) => {
   return api('PUT', url, productUpdate);
 };
 export {
-  getListProductAPI, addProductNewAPI, deleteProductAPI, updateProductAPI,
+  getListProductAPI, addProductNewAPI, deleteProductAPI, updateProductAPI, getProductByIdAPI
 };

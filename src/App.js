@@ -32,7 +32,7 @@ import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import Discounts from './admin/scenes/discounts/Discounts';
 import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
-import ProductDetails from './admin/scenes/products/ProductDetails';
+// import ProductDetails from './admin/scenes/products/ProductDetails';
 import AddDiscountForm from './admin/scenes/discounts/AddDiscountForm';
 import EditProductForm from './admin/scenes/products/EditProductForm';
 
@@ -56,7 +56,7 @@ function App() {
             <Route path="/admin/products" exact component={Products} />
             <Route path="/admin/products/add" component={AddProductForm} />
             <Route path="/admin/products/view/:id" component={ProductPage} />
-            <Route path="/admin/products/edit" exact component={EditProductForm} />
+            <Route path="/admin/products/:id/edit" exact component={EditProductForm} />
             <Route path="/admin/orders" component={Orders} />
             <Route path="/admin/discounts" component={Discounts} />
             <Route path="/admin/discounts/add" component={AddDiscountForm} />

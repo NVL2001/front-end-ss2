@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
+import { useParams } from "react-router";
 import {
   Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid
 } from "@mui/material";
@@ -17,17 +18,19 @@ import { getListCategoryAPI } from "../../API/CategoryAPI";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
-import { addProductNewAPI } from "../../API/ProductAPI";
+import { addProductNewAPI, getProductByIdAPI } from "../../API/ProductAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 
 function EditProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
+  const productId = useParams();
   const [categories, setCategories] = useState([]);
+  const [product, setProduct] = useState(false);
   const [images, setImages] = useState([]);
-
-  const fetchListProduct = function () {
+  const initProd = JSON.parse(localStorage.getItem("editProduct"));
+  const fetchCategory = function () {
     getListCategoryAPI().then((response) => {
+      console.log("getListCategoryAPI", response);
       setCategories(response);
     });
   };
@@ -38,20 +41,21 @@ function EditProductFormComponent() {
   };
   // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
-    fetchListProduct();
+    fetchCategory();
   }, []);
 
+  console.log("getProductByIdAPI", initProd.id);
   return (
     <Box m="20px">
       <Header title="Chỉnh Sửa Sản Phẩm" />
 
       <Formik
         initialValues={{
-          name: "",
-          description: "",
-          price: "",
-          quantity: "",
-          categoryName: "",
+          name: initProd.name,
+          description: initProd.description,
+          price: initProd.price,
+          quantity: initProd.quantity,
+          categoryName: initProd.categoryName,
         }}
         validationSchema={Yup.object({
           //
@@ -60,29 +64,37 @@ function EditProductFormComponent() {
           const config = {
             headers: {
               ...axios.defaults.headers,
-              'Content-Type': 'multipart/form-data'
+              // 'Content-Type': 'multipart/form-data'
+              'Content-Type': 'application/json'
             }
           };
 
           try {
-            const formData = new FormData();
-            // const enc = new TextEncoder();
-            // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
-            // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
-            formData.append('name', values.name);
-            formData.append('description', values.description);
-            formData.append('price', values.price);
-            formData.append('quantity', values.quantity);
-            formData.append('categoryName', values.categoryName);
-            console.log(`${formData.get('description')} ${formData.get('categoryName')}`);
+            // const formData = new FormData();
+            // // const enc = new TextEncoder();
+            // // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
+            // // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
+            // formData.append('name', values.name);
+            // formData.append('description', values.description);
+            // formData.append('price', values.price);
+            // formData.append('quantity', values.quantity);
+            // formData.append('categoryName', values.categoryName);
+            // console.log(`${formData.get('description')} ${formData.get('categoryName')}`);
 
-            Array.from(images).forEach((file) => {
-              formData.append('images', file);
-            }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
-
-            const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
+            // Array.from(images).forEach((file) => {
+            //   formData.append('images', file);
+            // }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
+            const jsonBody = {
+              id: initProd.id,
+              name: values.name,
+              description: values.description,
+              price: values.price,
+              quantity: values.quantity,
+              newCategory: values.categoryName
+            };
+            const response = await axios.post(APIRoutes.UPDATE_PRODUCT, jsonBody, config);
             if (response.status === 200) {
-              alert("Tạo mới sản phẩm thành công");
+              alert("Chỉnh sửa sản phẩm thành công");
             }
           } catch (error) {
             console.log(error);
@@ -109,6 +121,7 @@ function EditProductFormComponent() {
                 onBlur={handleBlur}
                 error={touched.name && errors.name}
                 helperText={touched.name && errors.name}
+                defaultValue={initProd.name}
                 required
                 fullWidth
                 variant="filled"
@@ -122,6 +135,7 @@ function EditProductFormComponent() {
                 onBlur={handleBlur}
                 error={touched.price && errors.price}
                 helperText={touched.price && errors.price}
+                defaultValue={initProd.price}
                 required
                 fullWidth
                 variant="filled"
@@ -135,6 +149,7 @@ function EditProductFormComponent() {
                 onBlur={handleBlur}
                 error={touched.quantity && errors.quantity}
                 helperText={touched.quantity && errors.quantity}
+                defaultValue={initProd.quantity}
                 required
                 fullWidth
                 variant="filled"
@@ -159,7 +174,7 @@ function EditProductFormComponent() {
                 label="Mô tả sản phẩm"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                                  // value={values.description}
+                defaultValue={initProd.description}
                 name="description"
                 error={!!touched.description && !!errors.description}
                 helperText={touched.description && errors.description}

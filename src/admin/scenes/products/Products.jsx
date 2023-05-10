@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
-import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
+import { getListProductAPI, deleteProductAPI, getProductByIdAPI } from '../../API/ProductAPI';
 import AddProductButton from './AddProductButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
 
@@ -30,9 +30,14 @@ function ProductsComponent() {
   const [idToDelete, setIdToDelete] = useState(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const history = useHistory();
-
-  const handleEditProductClick = () => {
-    history.push('/admin/products/edit');
+  const handleEditProductClick = (id) => {
+    getProductByIdAPI(id).then((response) => {
+      window.localStorage.setItem("editProduct", JSON.stringify(response));
+      // window.localStorage.setItem("editProduct", response);
+      if (response) {
+        history.push(`/admin/products/${id}/edit`);
+      }
+    });
   };
 
   const handleAddProductClick = () => {
@@ -132,7 +137,7 @@ function ProductsComponent() {
             <Button variant="contained" color="info">
               Xem
             </Button>
-            <Button variant="contained" color="success" onClick={handleEditProductClick}>
+            <Button variant="contained" color="success" onClick={() => handleEditProductClick(row?.id)}>
               Chỉnh Sửa
             </Button>
             <Button
