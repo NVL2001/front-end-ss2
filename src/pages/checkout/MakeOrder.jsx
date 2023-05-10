@@ -116,24 +116,24 @@ function MakeOrder() {
       toast.error("Đặt hàng thất bại");
     }
   };
-
+  const [totalPrice, setTotalPrice] = useState(subPrice);
   /**
    * if checked payment1, show the shippingFee, plus shippingFee to totalPrice
    * if checked payment2, set the shippingFee = 0
    */
-  const [paymentOption, setPaymentOption] = useState("payment1");
-  const [shippingFee, setShippingFee] = useState(25000);
-  const [totalPrice, setTotalPrice] = useState(subPrice + shippingFee);
-  const handlePaymentOptionChange = (event) => {
-    setPaymentOption(event.target.value);
-    if (event.target.value === "payment1") {
-      setShippingFee(25000);
-      setTotalPrice(25000 + subPrice);
-    } else {
-      setShippingFee(0);
-      setTotalPrice(subPrice);
-    }
-  };
+  // const [paymentOption, setPaymentOption] = useState("payment1");
+  // const [shippingFee, setShippingFee] = useState(25000);
+  // const [totalPrice, setTotalPrice] = useState(subPrice + shippingFee);
+  // const handlePaymentOptionChange = (event) => {
+  //   setPaymentOption(event.target.value);
+  //   if (event.target.value === "payment1") {
+  //     setShippingFee(25000);
+  //     setTotalPrice(25000 + subPrice);
+  //   } else {
+  //     setShippingFee(0);
+  //     setTotalPrice(subPrice);
+  //   }
+  // };
 
   return (
     <div className="container d_flex checkout">
@@ -246,13 +246,13 @@ function MakeOrder() {
             <div className="form-group" id="check--option">
               <div className="form-check">
                 <input
-                  onChange={handlePaymentOptionChange}
+                  // onChange={handlePaymentOptionChange}
                   className="form-check-input"
                   type="radio"
                   name="payment"
                   id="payment1"
                   value="payment1"
-                  checked={paymentOption === "payment1"}
+                  checked
                 />
                 <label className="form-check-label" htmlFor="payment1">
                   Thanh toán khi nhận hàng
@@ -260,13 +260,12 @@ function MakeOrder() {
               </div>
               <div className="form-check">
                 <input
-                  onChange={handlePaymentOptionChange}
+                  // onChange={handlePaymentOptionChange}
                   className="form-check-input"
                   type="radio"
                   name="payment"
                   id="payment2"
                   value="payment2"
-                  checked={paymentOption === "payment2"}
                 />
                 <label className="form-check-label" htmlFor="payment2">
                   Nhận tại cửa hàng
@@ -305,19 +304,18 @@ function MakeOrder() {
           </div>
           {/* total quantity */}
           <div className="total-detail">
-            <span>
+            {/* <span>
               {" "}
               <h3>Tạm tính :</h3>
               <h4 id="subTotal">
-                {/* <span>{CartItem.reduce((qty, item) => qty + item.qty, 0)}</span>{" "} */}
                 {formatMoney(subPrice)}
               </h4>
-            </span>
+            </span> */}
 
-            <span>
+            {/* <span>
               <h3>Phí vận chuyển : </h3>
               <h4 id="shippingFee">{formatMoney(shippingFee)}</h4>
-            </span>
+            </span> */}
             <span>
               <h3>Tổng cộng :</h3>
               <h4 id="totalPrice">{formatMoney(totalPrice)}</h4>
