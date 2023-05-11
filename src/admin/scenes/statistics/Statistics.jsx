@@ -3,7 +3,7 @@
 import {
   Box, Button, IconButton, Typography, useTheme,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
@@ -14,6 +14,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import axios from "axios";
 import Header from '../../components/Header';
 import LineChart from '../../components/LineChart';
 import BarChart from '../../components/BarChart';
@@ -22,10 +23,33 @@ import ProgressCircle from '../../components/ProgressCircle';
 import { mockTransactions } from '../../data/mockData';
 import { tokens } from '../../theme';
 import { AdminLayout } from "../../../layout/AdminLayout";
+import formatMoney from "../../../utils/formatMoney";
 
 function DiscountsComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState({});
+
+  async function fetchStatistics() {
+    const currDate = new Date();
+    const day = currDate.getDate();
+    const month = currDate.getMonth() + 1;
+    const year = currDate.getFullYear();
+    const dayStat = (await axios.get(`${axios.defaults.baseURL}/revenue?day=${day}&month=${month}&year=${year}`)).data;
+    const monthStat = (await axios.get(`${axios.defaults.baseURL}/revenue?month=${month}&year=${year}`)).data;
+    const yearStat = (await axios.get(`${axios.defaults.baseURL}/revenue?year=${year}`)).data;
+    const result = {
+      ...data,
+      dayStat,
+      monthStat,
+      yearStat
+    };
+    return result;
+  }
+
+  useEffect(() => {
+    fetchStatistics().then((r) => setData(r));
+  }, []);
 
   return (
     <Box m="20px">
@@ -39,21 +63,21 @@ function DiscountsComponent() {
         {/* ROW 1 */}
         <Box gridColumn="span 4" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox
-            title="1,325,134"
+            title={formatMoney(data.dayStat)}
             subtitle="Doanh Thu Ngày"
             icon={<AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
           />
         </Box>
         <Box gridColumn="span 4" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox
-            title="1,325,134"
+            title={formatMoney(data.monthStat)}
             subtitle="Doanh Thu Tháng"
             icon={<AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
           />
         </Box>
         <Box gridColumn="span 4" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox
-            title="1,325,134"
+            title={formatMoney(data.yearStat)}
             subtitle="Doanh Thu Năm"
             icon={<AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
           />

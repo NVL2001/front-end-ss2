@@ -35,6 +35,7 @@ import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
 // import ProductDetails from './admin/scenes/products/ProductDetails';
 import AddDiscountForm from './admin/scenes/discounts/AddDiscountForm';
 import EditProductForm from './admin/scenes/products/EditProductForm';
+import AdminProductDetail from "./admin/scenes/products/AdminProductDetail";
 
 function App() {
   return (
@@ -55,7 +56,7 @@ function App() {
             <Route path="/admin/categories/add" component={AddCategoryForm} />
             <Route path="/admin/products" exact component={Products} />
             <Route path="/admin/products/add" component={AddProductForm} />
-            <Route path="/admin/products/view/:id" component={ProductPage} />
+            <Route path="/admin/products/view/:id" component={AdminProductDetail} />
             <Route path="/admin/products/:id/edit" exact component={EditProductForm} />
             <Route path="/admin/orders" component={Orders} />
             <Route path="/admin/discounts" component={Discounts} />

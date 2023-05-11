@@ -166,7 +166,6 @@ function EditProductFormComponent() {
                   ))}
                 </Field>
               </FormControl>
-              <ImageUpload imagesForUpload={images} onImagesSelected={handleImagesSelected} />
               <TextField
                 fullWidth
                 variant="filled"
@@ -190,121 +189,6 @@ function EditProductFormComponent() {
         )}
       </Formik>
     </Box>
-  );
-}
-
-function ImageUpload({ onImagesSelected, imagesForUpload }) {
-  const [exceedLimit, setExceedLimit] = useState(false);
-  const [imageForPreview, setImageForPreview] = useState([]);
-
-  const chooseImageForUpload = (event) => {
-    const { files } = event.target;
-    const newImagesForPreview = [...imageForPreview];
-    const newImagesForUpload = [...imagesForUpload];
-
-    if (newImagesForUpload.length + files.length > 6) {
-      setExceedLimit(true);
-      return;
-    }
-
-    setExceedLimit(false);
-
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-      // reader.readAsBinaryString(file);
-
-      reader.onload = (e) => {
-        newImagesForPreview.push(e.target.result);
-        // const binaryStr = reader.result;
-        newImagesForUpload.push(file);
-
-        if (newImagesForUpload.length === imagesForUpload.length + files.length) {
-          setImageForPreview(newImagesForPreview);
-          onImagesSelected(newImagesForUpload); // Invoke the callback function with the uploaded images
-        }
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAddMore = (event) => {
-    event.preventDefault();
-    const uploadInput = document.getElementById('upload-image');
-    uploadInput.value = null;
-    uploadInput.click();
-  };
-
-  const handleDeleteImage = (index) => {
-    const newImagesForPreview = [...imageForPreview];
-    const newImagesForUpload = [...imagesForUpload];
-
-    newImagesForPreview.splice(index, 1);
-    newImagesForUpload.splice(index, 1);
-
-    onImagesSelected(newImagesForUpload);
-    setImageForPreview(newImagesForPreview);
-  };
-
-  return (
-    <div>
-      {exceedLimit && (
-      <Typography variant="body2" color="error">
-        Maximum of 6 images allowed.
-      </Typography>
-      )}
-
-      {imageForPreview.length < 6 && (
-      <div>
-        <InputLabel htmlFor="upload-image">
-          {/* <Button component="span" variant="contained"> */}
-          {/*  Chọn ảnh */}
-          {/* </Button> */}
-          {imageForPreview.length < 6 && (
-          <Button variant="contained" onClick={handleAddMore}>
-            Thêm mới
-          </Button>
-          )}
-        </InputLabel>
-        <input
-          type="file"
-          id="upload-image"
-          accept="image/*"
-          multiple // Enable selecting multiple images
-          style={{ display: 'none' }}
-          onChange={chooseImageForUpload}
-        />
-      </div>
-      )}
-
-      <Grid container spacing={2}>
-        {imageForPreview.map((image, index) => (
-          <Grid key={index} item xs={6}>
-            <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
-              <img
-                src={image}
-                alt={`Preview ${index}`}
-                style={{
-                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'
-                }}
-                onClick={() => {
-                  handleDeleteImage(index);
-                }}
-              />
-            </div>
-          </Grid>
-        ))}
-      </Grid>
-
-      {imageForPreview.length > 0 && (
-      <Typography variant="subtitle1" align="center">
-        {`${imageForPreview.length} image(s) selected`}
-      </Typography>
-      )}
-
-    </div>
   );
 }
 
