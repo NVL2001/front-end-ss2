@@ -15,27 +15,49 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import { tokens } from '../../theme';
-import { getListProductAPI, deleteProductAPI } from '../../API/ProductAPI';
+import { getListProductAPI, deleteProductAPI, getProductByIdAPI } from '../../API/ProductAPI';
 import AddProductButton from './AddProductButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
+import { APIRoutes } from "../../../constants/APIRoutes";
 
 function ProductsComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const history = useHistory();
+
+  const handlePageSizeChange = (pageSize) => {
+    setPageSize(pageSize);
+  };
+
+  const handleEditProductClick = (id) => {
+    getProductByIdAPI(id).then((response) => {
+      window.localStorage.setItem("editProduct", JSON.stringify(response));
+      // window.localStorage.setItem("editProduct", response);
+      if (response) {
+        history.push(`/admin/products/${id}/edit`);
+      }
+    });
+  };
 
   const handleAddProductClick = () => {
     setIsAddingProduct(true);
   };
-  const fetchListProduct = function () {
-    getListProductAPI().then((response) => {
-      setProducts(response);
-    });
+  const fetchListProduct = async function (page = 0) {
+    const response = (await axios.get(`${APIRoutes.GET_PRODUCTS}?page=${page}&size=${pageSize}`)).data;
+    setData(response.pageItems);
+    setTotalRows(response.totalItems);
+    setPage(page);
+    setPageSize(pageSize);
   };
 
   const handleDeleteProduct = async () => {
@@ -54,17 +76,13 @@ function ProductsComponent() {
 
   useEffect(() => {
     fetchListProduct();
-  }, []);
+  }, [pageSize]);
 
   const handleOpenDialog = (id) => {
     setIdToDelete(id);
     setIsDialogOpen(true);
   };
 
-  // console.log(products);
-  // console.log(products.pageItems);
-  // Kiểm tra nếu products.pageItems là một mảng, nếu đúng thì gán cho biến row, nếu không thì gán một mảng rỗng cho biến row.
-  const row = Array.isArray(products.pageItems) ? products.pageItems : [];
   const columns = [
     { field: 'id', headerName: 'ID Sản Phẩm', flex: 1 },
     {
@@ -123,10 +141,12 @@ function ProductsComponent() {
 
         return (
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" color="info">
-              Xem
-            </Button>
-            <Button variant="contained" color="success">
+            <Link to={`/admin/products/view/${row?.id}`}>
+              <Button variant="contained" color="info">
+                Xem
+              </Button>
+            </Link>
+            <Button variant="contained" color="success" onClick={() => handleEditProductClick(row?.id)}>
               Chỉnh Sửa
             </Button>
             <Button
@@ -140,28 +160,6 @@ function ProductsComponent() {
         );
       },
     },
-  ];
-  const rows = [
-    // {
-    //   id: 1,
-    //   name: "ZO Skin Health Gentle Cleanser",
-    //   quantity: 100,
-    //   price: 1000000,
-    //   discount: 900000,
-    //   category: "Sữa Rửa Mặt",
-    //   image:
-    //     "https://zoskinhealth.com/dw/image/v2/BJWC_PRD/on/demandware.static/-/Sites-zoskinhealth-master/default/dwbfa94170/images/GENTLE%20CLEANSER/gencleans.full.plp.gbl.png?sw=816&q=65",
-    // },
-    // {
-    //   id: 2,
-    //   name: "ZO Skin Health Calming Toner",
-    //   category: "Nước Hoa Hồng",
-    //   quantity: 100,
-    //   price: 1000000,
-    //   discount: 900000,
-    //   image:
-    //     "https://zoskinhealth.com/dw/image/v2/BJWC_PRD/on/demandware.static/-/Sites-zoskinhealth-master/default/dwb43ac47a/images/CALMING%20TONER/calmtone.full.plp.gbl.png?sw=816&q=65",
-    // },
   ];
 
   return (
@@ -239,8 +237,18 @@ function ProductsComponent() {
 
         <DataGrid
           rowHeight={110}
-          rows={row}
+          rows={data}
+          rowCount={totalRows}
+          pageSize={pageSize}
           columns={columns}
+          paginationMode="server"
+          rowsPerPageOptions={[10, 30, 50]}
+          onPageSizeChange={(pageSize) => {
+            handlePageSizeChange(pageSize);
+          }}
+          onPageChange={(page, details) => {
+            fetchListProduct(page);
+          }}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>

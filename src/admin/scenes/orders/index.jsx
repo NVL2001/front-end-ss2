@@ -1,7 +1,7 @@
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
 import {
-  Box, MenuItem, Select, Typography, useTheme,
+  Box, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Typography, useTheme,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
@@ -11,7 +11,9 @@ import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
-import { getListOrderAPI } from "../../API/OrderAPI";
+import {
+  getListOrderAPI, setOrderDeliveringAPI, cancelOrderByAdminAPI, setOrderCompleteAPI
+} from "../../API/OrderAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 import formatDate from "../../../utils/formatDate";
 import formatMoney from "../../../utils/formatMoney";
@@ -19,15 +21,56 @@ import formatMoney from "../../../utils/formatMoney";
 function OrdersComponent() {
   const [orders, setOrders] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('');
   const [idToDelete, setIdToDelete] = useState(null);
-  const fetchListOrder = async function () {
-    const response = await axios.post(APIRoutes.GET_ORDER_ADMIN);
+  const [isStatusSaved, setIsStatusSaved] = useState(false);
+  const [statusIdToEdit, setStatusIdToEdit] = useState(null);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize,
+    page: 0,
+  });
+
+  const fetchListOrder = async function (page = 0) {
+    const response = await axios.post(`${APIRoutes.GET_ORDER_ADMIN}?page=${page}&size=${pageSize}`);
     const data = response.data.pageItems;
     setOrders(data);
+    setTotalRows(response.data.totalItems);
   };
+
+  const handlePageSizeChange = (pageSize) => {
+    setPageSize(pageSize);
+  };
+
   useEffect(() => {
     fetchListOrder();
-  }, []);
+  }, [isStatusSaved, pageSize]);
+  const handleOpenDialog = (id, status) => {
+    setStatusIdToEdit(id);
+    setSelectedStatus(status);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+  // console.log("status", statusIdToEdit);
+
+  const handleStatusChange = (event) => {
+    const status = event.target.value;
+    switch (status) {
+      case "DELIVERING":
+        return setSelectedStatus(status);
+      case "CANCEL":
+        return setSelectedStatus(status);
+      case "COMPLETE":
+        return setSelectedStatus(status);
+      default:
+        setSelectedStatus("");
+        return status;
+    }
+  };
 
   function convertStatus(status) {
     switch (status) {
@@ -45,6 +88,28 @@ function OrdersComponent() {
         return status;
     }
   }
+
+  const handleSaveStatus = async () => {
+    const jsonBody = {
+      id: statusIdToEdit,
+    };
+    switch (selectedStatus) {
+      case "DELIVERING":
+        await setOrderDeliveringAPI(jsonBody);
+        break;
+      case "CANCEL":
+        await cancelOrderByAdminAPI(jsonBody);
+        break;
+      case "COMPLETE":
+        await setOrderCompleteAPI(jsonBody);
+        break;
+      default:
+        break;
+    }
+    setIsStatusSaved(true);
+    handleCloseDialog();
+    setIsStatusSaved(false);
+  };
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -94,7 +159,7 @@ function OrdersComponent() {
           <Button variant="contained" color="info">
             Xem Chi Tiết
           </Button>
-          <Button variant="contained" color="success">
+          <Button variant="contained" onClick={() => handleOpenDialog(row?.id, row?.status)} color="success">
             Thay Đổi Trạng Thái
           </Button>
         </Stack>
@@ -144,7 +209,61 @@ function OrdersComponent() {
           },
         }}
       >
-        <DataGrid rows={orders} columns={columns} />
+        <Dialog
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          PaperProps={{
+            elevation: 8,
+            style: { backgroundColor: colors.primary[500] },
+          }}
+        >
+          <DialogTitle disableTypography>
+            <Typography variant="h6" color="warning">
+              THAY ĐỔI TRẠNG THÁI
+            </Typography>
+          </DialogTitle>
+          <DialogContent dividers>
+            <Select
+              value={selectedStatus}
+              onChange={(status) => handleStatusChange(status)}
+              fullWidth
+              variant="outlined"
+              label="Trạng thái"
+              // sx={{ marginTop: 16 }}
+            >
+              <MenuItem value="PENDING">Pending</MenuItem>
+              <MenuItem value="DELIVERING">Delivering</MenuItem>
+              <MenuItem value="COMPLETE">Complete</MenuItem>
+              <MenuItem value="CANCEL">Cancel</MenuItem>
+            </Select>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              <Typography variant="button" style={{ color: 'white' }}>
+                HỦY
+              </Typography>
+            </Button>
+            <Button onClick={handleSaveStatus} color="success" autoFocus>
+              <Typography variant="button" color="info">
+                LƯU
+              </Typography>
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <DataGrid
+          rows={orders}
+          columns={columns}
+          rowCount={totalRows}
+          pageSize={pageSize}
+          paginationMode="server"
+          onPageSizeChange={(pageSize) => {
+            handlePageSizeChange(pageSize);
+          }}
+          rowsPerPageOptions={[10, 30, 50]}
+          onPageChange={(page, details) => {
+            fetchListOrder(page);
+          }}
+        />
       </Box>
     </Box>
   );

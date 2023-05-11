@@ -34,6 +34,11 @@ import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";
 import Discounts from './admin/scenes/discounts/Discounts';
 import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
+// import ProductDetails from './admin/scenes/products/ProductDetails';
+import AddDiscountForm from './admin/scenes/discounts/AddDiscountForm';
+import EditProductForm from './admin/scenes/products/EditProductForm';
+import AdminProductDetail from "./admin/scenes/products/AdminProductDetail";
+import OrderHistoryPage from "./pages/order/OrderHistoryPage";
 
 function App() {
   return (
@@ -49,14 +54,18 @@ function App() {
             <Route path="/category/:id" component={CategoryPage} />
             <Route path="/checkout" exact component={MakeOrderPage} />
             <Route path="/user" exact component={User} />
+            <Route path="/order" component={OrderHistoryPage} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />
             <Route path="/admin/categories" exact component={Categories} />
             <Route path="/admin/categories/add" component={AddCategoryForm} />
             <Route path="/admin/products" exact component={Products} />
             <Route path="/admin/products/add" component={AddProductForm} />
+            <Route path="/admin/products/view/:id" component={AdminProductDetail} />
+            <Route path="/admin/products/:id/edit" exact component={EditProductForm} />
             <Route path="/admin/orders" component={Orders} />
             <Route path="/admin/discounts" component={Discounts} />
+            <Route path="/admin/discounts/add" component={AddDiscountForm} />
             <Route path="/admin/statistics" component={Statistics} />
             <Route path="/admin/team" component={Team} />
             <Route path="/admin/form" component={Form} />
@@ -64,7 +73,7 @@ function App() {
             <Route path="/admin/pie" component={Pie} />
             <Route path="/admin/line" component={Line} />
             <Route path="/admin/faq" component={FAQ} />
-            <Route path="/admin/calendar" component={Calendar} />
+            <Route path="/admin/calendar" exact component={Pages} />
             <Route path="/admin/geography" component={Calendar} />
           </Switch>
         </Router>

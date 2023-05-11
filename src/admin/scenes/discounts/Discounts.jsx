@@ -10,8 +10,10 @@ import Button from '@mui/material/Button';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
+import AddDiscountButton from './AddDiscountButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { getListDiscountAPI } from "../../API/DiscountAPI";
+import formatDate from "../../../utils/formatDate";
 
 function DiscountsComponent() {
   const [discounts, setDiscounts] = useState([]);
@@ -39,27 +41,21 @@ function DiscountsComponent() {
       headerName: '% Giảm Giá',
       flex: 0.5,
     },
-    // {
-    //   field: 'cost',
-    //   headerName: 'Tổng Thanh Toán',
-    //   renderCell: (params) => (
-    //     <Typography color={colors.greenAccent[500]}>
-    //       {params.row.cost}
-    //       {' '}
-    //       VNĐ
-    //     </Typography>
-    //   ),
-    //   flex: 1,
-    // },
     {
       field: 'startDate',
       headerName: 'Ngày Bắt Đầu',
       flex: 0.75,
+      renderCell: ({ row }) => (
+        <Typography>{formatDate(row.startDate)}</Typography>
+      )
     },
     {
       field: 'endDate',
       headerName: 'Ngày Kết Thúc',
       flex: 0.75,
+      renderCell: ({ row }) => (
+        <Typography>{formatDate(row.endDate)}</Typography>
+      )
     },
     {
       field: 'action',
@@ -90,7 +86,12 @@ function DiscountsComponent() {
 
   return (
     <Box m="20px">
-      <Header title="Chiến Dịch" subtitle="Chương Trình Giảm Giá" />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Giảm Giá" subtitle="Chương Trình Giảm Giá" />
+        <Box>
+          <AddDiscountButton />
+        </Box>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
