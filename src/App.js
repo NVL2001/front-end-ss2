@@ -38,6 +38,7 @@ import AddCategoryForm from './admin/scenes/categories/AddCategoryForm';
 import AddDiscountForm from './admin/scenes/discounts/AddDiscountForm';
 import EditProductForm from './admin/scenes/products/EditProductForm';
 import AdminProductDetail from "./admin/scenes/products/AdminProductDetail";
+import OrderHistoryPage from "./pages/order/OrderHistoryPage";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
             <Route path="/category/:id" component={CategoryPage} />
             <Route path="/checkout" exact component={MakeOrderPage} />
             <Route path="/user" exact component={User} />
+            <Route path="/order" component={OrderHistoryPage} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />
             <Route path="/admin/categories" exact component={Categories} />
