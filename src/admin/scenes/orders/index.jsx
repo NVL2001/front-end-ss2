@@ -25,14 +25,27 @@ function OrdersComponent() {
   const [idToDelete, setIdToDelete] = useState(null);
   const [isStatusSaved, setIsStatusSaved] = useState(false);
   const [statusIdToEdit, setStatusIdToEdit] = useState(null);
-  const fetchListOrder = async function () {
-    const response = await axios.post(APIRoutes.GET_ORDER_ADMIN);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize,
+    page: 0,
+  });
+
+  const fetchListOrder = async function (page = 0) {
+    const response = await axios.post(`${APIRoutes.GET_ORDER_ADMIN}?page=${page}&size=${pageSize}`);
     const data = response.data.pageItems;
     setOrders(data);
+    setTotalRows(response.data.totalItems);
   };
+
+  const handlePageSizeChange = (pageSize) => {
+    setPageSize(pageSize);
+  };
+
   useEffect(() => {
     fetchListOrder();
-  }, [isStatusSaved]);
+  }, [isStatusSaved, pageSize]);
   const handleOpenDialog = (id, status) => {
     setStatusIdToEdit(id);
     setSelectedStatus(status);
@@ -237,7 +250,20 @@ function OrdersComponent() {
             </Button>
           </DialogActions>
         </Dialog>
-        <DataGrid rows={orders} columns={columns} />
+        <DataGrid
+          rows={orders}
+          columns={columns}
+          rowCount={totalRows}
+          pageSize={pageSize}
+          paginationMode="server"
+          onPageSizeChange={(pageSize) => {
+            handlePageSizeChange(pageSize);
+          }}
+          rowsPerPageOptions={[10, 30, 50]}
+          onPageChange={(page, details) => {
+            fetchListOrder(page);
+          }}
+        />
       </Box>
     </Box>
   );
