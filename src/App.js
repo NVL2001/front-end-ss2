@@ -8,6 +8,7 @@ import Pages from './pages/Pages';
 import ProductPage from './pages/product/ProductPage';
 import ProductDetail from './pages/product/productsDetail';
 import User from './pages/user/User';
+import MakeOrderPage from './pages/checkout/MakeOrderPage';
 import Cart from './common/Cart/Cart';
 import CategoryPage from './components/shops/CategoryPage';
 import AboutUs from './components/about/about';
@@ -19,6 +20,7 @@ import Dashboard from "./admin/scenes/dashboard/DashBoard";
 import Categories from "./admin/scenes/categories/Categories";
 import Products from "./admin/scenes/products/Products";
 import AddProductForm from "./admin/scenes/products/AddProductForm";
+
 import Orders from "./admin/scenes/orders";
 import Team from "./admin/scenes/team/Team";
 import Form from "./admin/scenes/form";
@@ -48,6 +50,7 @@ function App() {
             <Route path="/product" exact component={ProductPage} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route path="/category/:id" component={CategoryPage} />
+            <Route path="/checkout" exact component={MakeOrderPage} />
             <Route path="/user" exact component={User} />
             <Route path="/about" exact component={AboutUs} />
             <Route path="/admin/dashboard" component={Dashboard} />

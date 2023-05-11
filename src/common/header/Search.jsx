@@ -18,9 +18,9 @@ function Search() {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, []);
+  // }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
