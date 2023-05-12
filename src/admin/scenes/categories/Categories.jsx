@@ -15,6 +15,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { React, useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { getListCategoryAPI, deleteCategoryAPI } from '../../API/CategoryAPI';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
@@ -26,6 +27,7 @@ import EditCategoryDialog from './EditCategoryForm';
 function CategoriesComponent() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [nameToDelete, setNameToDelete] = useState(null);
@@ -53,15 +55,15 @@ function CategoriesComponent() {
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
-  // Khai báo useEffect khi component được mount và mỗi khi State: listCategory thay đổi
-  useEffect(() => {
-    fetchListCategory();
-  }, []);
 
   const handleOpenDialog = (name) => {
     setNameToDelete(name);
     setIsDialogOpen(true);
   };
+  // Khai báo useEffect khi component được mount và mỗi khi State: listCategory thay đổi
+  useEffect(() => {
+    fetchListCategory();
+  }, []);
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [categoryIdToEdit, setCategoryIdToEdit] = useState(null);
@@ -76,7 +78,7 @@ function CategoriesComponent() {
     {
       field: 'name',
       headerName: 'Tên Danh Mục',
-      flex: 1.5,
+      flex: 1,
       cellClassName: 'name-column--cell',
     },
     {
@@ -87,10 +89,22 @@ function CategoriesComponent() {
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
+            color="primary"
+            onClick={() => {
+              history.push({
+                pathname: "/admin/category/related-products",
+                state: { categoryName: row.name }
+              });
+            }}
+          >
+            Sản phẩm liên quan
+          </Button>
+          <Button
+            variant="contained"
             color="success"
             onClick={() => handleEditCategoryClick(row?.id)}
           >
-            Chỉnh Sửa
+            Sửa tên
           </Button>
           <Button
             variant="contained"
@@ -178,7 +192,14 @@ function CategoriesComponent() {
             </Button>
           </DialogActions>
         </Dialog>
-        <DataGrid rows={categories} columns={columns} />
+        <DataGrid
+          rows={categories}
+          columns={columns}
+          pagination={false}
+          rowsPer
+          pageSize={categories.length} // Set the pageSize to the total number of rows
+          rowsPerPageOptions={[categories.length]}
+        />
       </Box>
     </Box>
   );

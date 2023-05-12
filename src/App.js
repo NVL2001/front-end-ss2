@@ -39,6 +39,7 @@ import AddDiscountForm from './admin/scenes/discounts/AddDiscountForm';
 import EditProductForm from './admin/scenes/products/EditProductForm';
 import AdminProductDetail from "./admin/scenes/products/AdminProductDetail";
 import OrderHistoryPage from "./pages/order/OrderHistoryPage";
+import CategoryRelatedProductsPage from "./admin/scenes/products/CategoryRelatedProducts";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
             <Route path="/admin/discounts/add" component={AddDiscountForm} />
             <Route path="/admin/statistics" component={Statistics} />
             <Route path="/admin/team" component={Team} />
+            <Route path="/admin/category/related-products" component={CategoryRelatedProductsPage} />
             <Route path="/admin/form" component={Form} />
             <Route path="/admin/bar" component={Bar} />
             <Route path="/admin/pie" component={Pie} />

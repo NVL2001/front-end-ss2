@@ -55,7 +55,7 @@ function ProductDetailComponent() {
   }, []);
 
   return (
-    <Box display="flex">
+    <Box display="flex" flexDirection="row">
       <Box flexGrow={1}>
         {/* <ImageList cols={2}> */}
         {/*  {product.productImages */}

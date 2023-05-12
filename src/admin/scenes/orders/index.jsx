@@ -1,22 +1,41 @@
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
 import {
-  Box, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Typography, useTheme,
+  Box, Dialog, DialogActions, DialogContent, DialogTitle,
+  MenuItem, Modal, Select, TextField, Typography, useTheme,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import axios from "axios";
+import TableCell from "@mui/material/TableCell";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { tokens } from '../../theme';
-import { mockDataInvoices } from '../../data/mockData';
+
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import {
-  getListOrderAPI, setOrderDeliveringAPI, cancelOrderByAdminAPI, setOrderCompleteAPI
+  setOrderDeliveringAPI, cancelOrderByAdminAPI, setOrderCompleteAPI
 } from "../../API/OrderAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 import formatDate from "../../../utils/formatDate";
 import formatMoney from "../../../utils/formatMoney";
+import OrderDetail from "./OrderDetail";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '80%',
+  height: '90%',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 function OrdersComponent() {
   const [orders, setOrders] = useState([]);
@@ -27,10 +46,7 @@ function OrdersComponent() {
   const [statusIdToEdit, setStatusIdToEdit] = useState(null);
   const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize,
-    page: 0,
-  });
+  const [comment, setComment] = useState("");
 
   const fetchListOrder = async function (page = 0) {
     const response = await axios.post(`${APIRoutes.GET_ORDER_ADMIN}?page=${page}&size=${pageSize}`);
@@ -92,23 +108,29 @@ function OrdersComponent() {
   const handleSaveStatus = async () => {
     const jsonBody = {
       id: statusIdToEdit,
+      comment
     };
-    switch (selectedStatus) {
-      case "DELIVERING":
-        await setOrderDeliveringAPI(jsonBody);
-        break;
-      case "CANCEL":
-        await cancelOrderByAdminAPI(jsonBody);
-        break;
-      case "COMPLETE":
-        await setOrderCompleteAPI(jsonBody);
-        break;
-      default:
-        break;
+    try {
+      switch (selectedStatus) {
+        case "DELIVERING":
+          await setOrderDeliveringAPI(jsonBody);
+          break;
+        case "CANCEL":
+          await cancelOrderByAdminAPI(jsonBody);
+          break;
+        case "COMPLETE":
+          await setOrderCompleteAPI(jsonBody);
+          break;
+        default:
+          break;
+      }
+      setIsStatusSaved(true);
+      handleCloseDialog();
+      setIsStatusSaved(false);
+      alert("Thay đổi trạng thái thành công!");
+    } catch (err) {
+      alert("Thay đổi trạng thái thất bại!");
     }
-    setIsStatusSaved(true);
-    handleCloseDialog();
-    setIsStatusSaved(false);
   };
 
   const theme = useTheme();
@@ -154,29 +176,41 @@ function OrdersComponent() {
       field: 'action',
       headerName: 'Hành Động',
       flex: 2.5,
-      renderCell: ({ row }) => (
-        <Stack direction="row" spacing={1}>
-          <Button variant="contained" color="info">
-            Xem Chi Tiết
-          </Button>
-          <Button variant="contained" onClick={() => handleOpenDialog(row?.id, row?.status)} color="success">
-            Thay Đổi Trạng Thái
-          </Button>
-        </Stack>
-      ),
-    },
-  ];
-  const rows = [
-    {
-      id: 'orderid1',
-      name: 'ZO Skin Health Calming Toner',
-      category: 'Nước Hoa Hồng',
-      quantity: 100,
-      cost: 100000,
-      date: '03/03/2023',
-    },
-  ];
+      renderCell: ({ row }) => {
+        const [open, setOpen] = useState(false); // Separate open state for each modal
 
+        const handleOpen = () => {
+          setOpen(true); // Open the specific modal
+        };
+
+        const handleClose = () => {
+          setOpen(false); // Close the specific modal
+        };
+
+        return (
+          <Stack direction="row" spacing={1}>
+            <Button variant="contained" color="info" onClick={handleOpen}>
+              Xem Chi Tiết
+            </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <OrderDetail order={row} />
+
+              </Box>
+            </Modal>
+            <Button variant="contained" onClick={() => handleOpenDialog(row?.id, row?.status)} color="success">
+              Thay Đổi Trạng Thái
+            </Button>
+          </Stack>
+        );
+      },
+    },
+  ];
   return (
     <Box m="20px">
       <Header title="Đơn Hàng" subtitle="Danh Sách Đơn Hàng" />
@@ -214,7 +248,9 @@ function OrdersComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: {
+              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? colors.primary[500] : colors.grey)
+            },
           }}
         >
           <DialogTitle disableTypography>
@@ -223,19 +259,34 @@ function OrdersComponent() {
             </Typography>
           </DialogTitle>
           <DialogContent dividers>
-            <Select
-              value={selectedStatus}
-              onChange={(status) => handleStatusChange(status)}
-              fullWidth
-              variant="outlined"
-              label="Trạng thái"
-              // sx={{ marginTop: 16 }}
-            >
-              <MenuItem value="PENDING">Pending</MenuItem>
-              <MenuItem value="DELIVERING">Delivering</MenuItem>
-              <MenuItem value="COMPLETE">Complete</MenuItem>
-              <MenuItem value="CANCEL">Cancel</MenuItem>
-            </Select>
+            <Box display="flex" flexDirection="column">
+              <Select
+                value={selectedStatus}
+                onChange={(status) => handleStatusChange(status)}
+                fullWidth
+                variant="outlined"
+                label="Trạng thái"
+              >
+                <MenuItem value="PENDING">Pending</MenuItem>
+                <MenuItem value="DELIVERING">Delivering</MenuItem>
+                <MenuItem value="COMPLETE">Complete</MenuItem>
+                <MenuItem value="CANCEL">Cancel</MenuItem>
+              </Select>
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Thêm thông tin"
+                multiline
+                maxRows={4}
+                sx={
+                  {
+                    marginTop: 1,
+                  }
+                }
+                onChange={(event) => {
+                  setComment(event.target.value);
+                }}
+              />
+            </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
