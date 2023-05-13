@@ -12,7 +12,8 @@ import {
   OutlinedInput,
   FormControl,
   FormLabel,
-  FormHelperText, TextField,
+  FormHelperText,
+  TextField,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Form, Field } from "react-final-form";
@@ -46,11 +47,19 @@ export function RegisterModal({ open, onClose }) {
     if (!value.password) {
       error.password = "Bắt buộc";
     }
-    if (value.phoneNumber && value.phoneNumber.match(/^[A-Za-z]+$/)) {
+    // if (value.phoneNumber && value.phoneNumber.match(/^[A-Za-z]+$/)) {
+    //   error.phoneNumber = "Chỉ nhập số";
+    // }
+    if (value.phoneNumber && !/^\d+$/.test(value.phoneNumber)) {
       error.phoneNumber = "Chỉ nhập số";
+    } else if (!/^\d{10}$/.test(value.phoneNumber)) {
+      error.phoneNumber = "Số điện thoại phải có 10 số";
     }
     if (!value.dob) {
       error.dob = "Bắt buộc";
+    }
+    if (!value.address) {
+      error.address = "Bắt buộc";
     }
     return error;
   }, []);
@@ -207,7 +216,30 @@ export function RegisterModal({ open, onClose }) {
                       </Grid>
                     )}
                   />
-
+                  {/* address */}
+                  <Field
+                    name="address"
+                    render={({ input, meta }) => (
+                      <Grid item xs={12}>
+                        <FormControl
+                          fullWidth
+                          required
+                          error={errors.address && meta.touched}
+                        >
+                          <FormLabel>
+                            <Typography>Địa chỉ nhận hàng</Typography>
+                          </FormLabel>
+                          <OutlinedInput
+                            {...input}
+                            placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                          />
+                          {errors.address && meta.touched && (
+                            <FormHelperText>{errors.address}</FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                    )}
+                  />
                 </Grid>
                 <Button
                   type="submit"

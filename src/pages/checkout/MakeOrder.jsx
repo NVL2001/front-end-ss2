@@ -14,7 +14,7 @@ function MakeOrder() {
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
   const [wards, setWards] = useState([]);
-  const [submitData, setSubmitData] = useState({});
+  const [sentData, setSentData] = useState({});
   const { clearItem } = useProduct();
   let location = useLocation();
   const history = useHistory();
@@ -120,8 +120,7 @@ function MakeOrder() {
   /**
    * if checked payment1, show the shippingFee, plus shippingFee to totalPrice
    * if checked payment2, set the shippingFee = 0
-   */
-  // const [paymentOption, setPaymentOption] = useState("payment1");
+   *  // const [paymentOption, setPaymentOption] = useState("payment1");
   // const [shippingFee, setShippingFee] = useState(25000);
   // const [totalPrice, setTotalPrice] = useState(subPrice + shippingFee);
   // const handlePaymentOptionChange = (event) => {
@@ -134,8 +133,35 @@ function MakeOrder() {
   //     setTotalPrice(subPrice);
   //   }
   // };
+   */
+  // user in4
+  const userInfor = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    if (userInfor) {
+      setSentData({
+        ...sentData,
+        address: userInfor.address,
+        phoneNumber: userInfor.phoneNumber,
+        firstName: userInfor.firstName,
+        lastName: userInfor.lastName,
+      });
+    }
+  }, []);
+  const [name, setName] = useState(
+    userInfor.firstName + " " + userInfor.lastName || ""
+  );
+  const [phone, setPhone] = useState(userInfor.phoneNumber || "");
+  const [address, setAddress] = useState(userInfor.address || "");
 
-  // select the user address from local storage
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.value);
+  };
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
 
   return (
     <div className="container d_flex checkout">
@@ -152,7 +178,6 @@ function MakeOrder() {
         {/* user information, ship option, checkout option, location */}
         <div className="user-info">
           <h1>Thông tin giao hàng</h1>
-          <p>Bạn đã có tài khoản? Đăng nhập ngay</p>
           <form autoComplete="off">
             <div className="form-group">
               <label htmlFor="name">Họ và tên</label>
@@ -161,6 +186,8 @@ function MakeOrder() {
                 className="form-control"
                 id="name"
                 placeholder="Nhập họ và tên"
+                value={name}
+                onChange={handleNameChange}
               />
             </div>
             <div className="form-group">
@@ -170,6 +197,8 @@ function MakeOrder() {
                 className="form-control"
                 id="phone"
                 placeholder="Nhập số điện thoại"
+                value={phone}
+                onChange={handlePhoneChange}
               />
             </div>
             <div className="form-group">
@@ -179,6 +208,8 @@ function MakeOrder() {
                 className="form-control"
                 id="address"
                 placeholder="Nhập địa chỉ chi tiết"
+                value={address}
+                onChange={handleAddressChange}
               />
               <div className="address">
                 <div className="form-group">
@@ -230,7 +261,6 @@ function MakeOrder() {
                 </div>
               </div>
             </div>
-            {/* option choose province, district, town */}
 
             {/* result location */}
             <h2 id="result"></h2>
@@ -274,6 +304,7 @@ function MakeOrder() {
                 </label>
               </div>
             </div>
+            <p>* Phí ship sẽ được thông báo sau khi đặt hàng!</p>
           </form>
         </div>
         {/* order summary */}
