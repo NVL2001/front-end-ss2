@@ -290,7 +290,7 @@ function OrdersComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'white' }}>
+              <Typography variant="button" style={{ color: 'black' }}>
                 HỦY
               </Typography>
             </Button>

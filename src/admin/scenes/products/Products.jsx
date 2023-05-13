@@ -208,7 +208,7 @@ function ProductsComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: { backgroundColor: '#ffffff' },
           }}
         >
           <DialogTitle disableTypography>
@@ -223,7 +223,7 @@ function ProductsComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'white' }}>
+              <Typography variant="button" style={{ color: 'black' }}>
                 HỦY
               </Typography>
             </Button>

@@ -89,7 +89,7 @@ function CategoriesComponent() {
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
-            color="primary"
+            color="info"
             onClick={() => {
               history.push({
                 pathname: "/admin/category/related-products",
@@ -166,7 +166,7 @@ function CategoriesComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: { backgroundColor: '#ffffff' },
           }}
         >
           <DialogTitle disableTypography>
@@ -181,7 +181,7 @@ function CategoriesComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'white' }}>
+              <Typography variant="button" style={{ color: 'black' }}>
                 HỦY
               </Typography>
             </Button>
