@@ -85,10 +85,14 @@
   color: white;
 }
 
-.incCart {
-  background: none;
-  border: 1px solid rgb(3 0 71 / 9%);
+.incItem {
   color: #e94560;
+  background-color: white;
+}
+
+.incItem button:hover {
+  background-color: #e94560;
+  color: white;
 }
 
 .desCart {

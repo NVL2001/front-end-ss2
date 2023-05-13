@@ -135,6 +135,8 @@ function MakeOrder() {
   //   }
   // };
 
+  // select the user address from local storage
+
   return (
     <div className="container d_flex checkout">
       {/* breadcum */}
