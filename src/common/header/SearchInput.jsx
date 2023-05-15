@@ -5,13 +5,14 @@ import {
   Avatar, Box, styled, Typography
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function SearchInput({ products, onSearchProduct }) {
-  const history = useHistory()
+  const history = useHistory();
   const renderOption = (props, product) => (
     <li {...props} onClick={() => history.push(`/product/${product.id}`)}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar src={product.productImages[0]} alt={product.name} />
+        <Avatar src={axios.defaults.baseURL + product.productImages[0]} alt={product.name} />
         <Typography variant="body1" sx={{ ml: 2 }}>{product.name}</Typography>
       </Box>
     </li>
