@@ -72,7 +72,6 @@ function CategoriesComponent() {
     setCategoryIdToEdit(id);
     setIsEditDialogOpen(true);
   };
-  console.log(categories);
   const columns = [
     { field: 'id', headerName: 'ID Danh Mục', flex: 1 },
     {
