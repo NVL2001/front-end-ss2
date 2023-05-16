@@ -1,43 +1,35 @@
-/* eslint-disable max-len */
-/* eslint-disable no-use-before-define */
-import { React, useEffect, useState } from 'react';
+import { useState, useEffect, React } from 'react';
+import { Link, useHistory, useLocation } from "react-router-dom";
+import axios from "axios";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import {
-  Box,
-  useTheme,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Typography,
-} from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import axios from 'axios';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { Link, useHistory } from 'react-router-dom';
-import Header from '../../components/Header';
-import { tokens } from '../../theme';
-import { getListProductAPI, deleteProductAPI, getProductByIdAPI } from '../../API/ProductAPI';
-import AddProductButton from './AddProductButton';
-import { AdminLayout } from "../../../layout/AdminLayout";
+  Box, Dialog, DialogActions, DialogContent, DialogTitle, Typography, useTheme
+} from "@mui/material";
 import { APIRoutes } from "../../../constants/APIRoutes";
+import { tokens } from "../../theme";
+import { deleteProductAPI, getProductByIdAPI } from "../../API/ProductAPI";
+import Header from "../../components/Header";
+import AddProductButton from "./AddProductButton";
+import { AdminLayout } from "../../../layout/AdminLayout";
 
-function ProductsComponent() {
+function CategoryRelatedProducts() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalRows, setTotalRows] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
+  const [products, setProducts] = useState([]);
+  const location = useLocation();
+  const { categoryName } = location.state;
+
+  async function fetchData() {
+    const response = await axios.get(`${APIRoutes.GET_PRODUCT_BY_CATEGORY}/${categoryName}`);
+    return response.data;
+  }
+
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const history = useHistory();
-
-  const handlePageSizeChange = (pageSize) => {
-    setPageSize(pageSize);
-  };
 
   const handleEditProductClick = (id) => {
     getProductByIdAPI(id).then((response) => {
@@ -52,17 +44,14 @@ function ProductsComponent() {
   const handleAddProductClick = () => {
     setIsAddingProduct(true);
   };
-  const fetchListProduct = async function (page = 0) {
-    const response = (await axios.get(`${APIRoutes.GET_PRODUCTS}?page=${page}&size=${pageSize}`)).data;
-    setData(response.pageItems);
-    setTotalRows(response.totalItems);
-    setPage(page);
-    setPageSize(pageSize);
-  };
 
   const handleDeleteProduct = async () => {
     await deleteProductAPI(idToDelete);
-    fetchListProduct();
+    fetchData();
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
   };
 
   const handleConfirmDelete = () => {
@@ -70,13 +59,11 @@ function ProductsComponent() {
     handleCloseDialog();
   };
 
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-  };
-
   useEffect(() => {
-    fetchListProduct();
-  }, [pageSize]);
+    fetchData().then((r) => {
+      setProducts(r);
+    });
+  }, []);
 
   const handleOpenDialog = (id) => {
     setIdToDelete(id);
@@ -165,7 +152,7 @@ function ProductsComponent() {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Sản Phẩm" subtitle="Tất Cả Sản Phẩm" />
+        <Header title="Sản phẩm" subtitle={categoryName} />
         <Box>
           <AddProductButton />
         </Box>
@@ -208,7 +195,7 @@ function ProductsComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: '#ffffff' },
+            style: { backgroundColor: colors.primary[500] },
           }}
         >
           <DialogTitle disableTypography>
@@ -223,7 +210,7 @@ function ProductsComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'black' }}>
+              <Typography variant="button" style={{ color: 'white' }}>
                 HỦY
               </Typography>
             </Button>
@@ -237,18 +224,11 @@ function ProductsComponent() {
 
         <DataGrid
           rowHeight={110}
-          rows={data}
-          rowCount={totalRows}
-          pageSize={pageSize}
+          rows={products}
+          pageSize={products.length}
           columns={columns}
-          paginationMode="server"
-          rowsPerPageOptions={[10, 30, 50]}
-          onPageSizeChange={(pageSize) => {
-            handlePageSizeChange(pageSize);
-          }}
-          onPageChange={(page, details) => {
-            fetchListProduct(page);
-          }}
+          pagination={false}
+          rowsPerPageOptions={[products.length]}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
@@ -256,12 +236,12 @@ function ProductsComponent() {
   );
 }
 
-function Products() {
+function CategoryRelatedProductsPage() {
   return (
     <AdminLayout>
-      <ProductsComponent />
+      <CategoryRelatedProducts />
     </AdminLayout>
   );
 }
 
-export default Products;
+export default CategoryRelatedProductsPage;

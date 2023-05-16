@@ -1,10 +1,11 @@
+/* eslint-disable max-len */
 /* eslint-disable func-names */
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Typography, useTheme,
 } from '@mui/material';
-import { useHistory, useParams } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -13,32 +14,44 @@ import * as Yup from 'yup';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
-import AddDiscountButton from './AddDiscountButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
-import { getListDiscountAPI, updateDiscountAPI } from "../../API/DiscountAPI";
-import formatDate from "../../../utils/formatDate";
+import { deleteDiscountProductAPI, getAppliedProductsAPI, updateDiscountAPI } from "../../API/DiscountAPI";
+import AddProdDiscountBtn from './AddProdDiscountBtn';
 
-function DiscountsComponent() {
+function AppliedProducts() {
   const history = useHistory();
   const [discounts, setDiscounts] = useState([]);
+  const discountCode = useParams();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [discountIdToEdit, setDiscountIdToEdit] = useState(null);
-  const fetchListDiscount = function () {
-    getListDiscountAPI().then((response) => {
+  const [delProduct, setDelProduct] = useState(null);
+  const fetchProdDiscount = function () {
+    getAppliedProductsAPI(discountCode.id).then((response) => {
       setDiscounts(response);
     });
   };
+  console.log("discountCode", discountCode.id);
   // Khai báo useEffect khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
-    fetchListDiscount();
+    fetchProdDiscount();
   }, []);
 
-  const handleOpenDialog = (code) => {
-    setDiscountIdToEdit(code);
+  const handleOpenDialog = (id) => {
+    setDelProduct(id);
     setIsDialogOpen(true);
   };
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
+  };
+
+  const handleDeleteProdDiscount = async () => {
+    await deleteDiscountProductAPI(delProduct, discountCode.id);
+    fetchProdDiscount();
+  };
+
+  const handleConfirmDelete = () => {
+    handleDeleteProdDiscount();
+    handleCloseDialog();
   };
 
   const theme = useTheme();
@@ -49,57 +62,41 @@ function DiscountsComponent() {
   });
 
   const columns = [
-    { field: 'code', headerName: 'Code Giảm Giá', flex: 1 },
+    { field: 'id', headerName: 'ID sản phẩm', flex: 1 },
     {
-      field: 'description',
-      headerName: 'Tên Chương Trình',
+      field: 'name',
+      headerName: 'Tên sản phẩm',
       flex: 1.5,
     },
-    {
-      field: 'discountPercent',
-      headerName: '% Giảm Giá',
-      flex: 0.5,
-    },
-    {
-      field: 'startDate',
-      headerName: 'Ngày Bắt Đầu',
-      flex: 0.75,
-      renderCell: ({ row }) => (
-        <Typography>{formatDate(row.startDate)}</Typography>
-      )
-    },
-    {
-      field: 'endDate',
-      headerName: 'Ngày Kết Thúc',
-      flex: 0.75,
-      renderCell: ({ row }) => (
-        <Typography>{formatDate(row.endDate)}</Typography>
-      )
-    },
+    // {
+    //   field: 'discountPercent',
+    //   headerName: '% Giảm Giá',
+    //   flex: 0.5,
+    // },
+    // {
+    //   field: 'startDate',
+    //   headerName: 'Ngày Bắt Đầu',
+    //   flex: 0.75,
+    // },
+    // {
+    //   field: 'endDate',
+    //   headerName: 'Ngày Kết Thúc',
+    //   flex: 0.75,
+    // },
     {
       field: 'action',
       headerName: 'Hành Động',
       flex: 2.5,
       renderCell: ({ row }) => (
         <Stack direction="row" spacing={1}>
-          <Button variant="contained" color="info" onClick={() => history.push(`/admin/discounts/view/${row?.code}`)}>
+          {/* <Button variant="contained" color="info" onClick={() => history.push(`/admin/discounts/view/${row?.id}`)}>
             Xem Chi Tiết
-          </Button>
-          <Button onClick={() => handleOpenDialog(row?.code)} variant="contained" color="success">
-            Thay Đổi Chương Trình
+          </Button> */}
+          <Button onClick={() => handleOpenDialog(row?.id)} variant="contained" color="error">
+            Xóa sản phẩm
           </Button>
         </Stack>
       ),
-    },
-  ];
-  const rows = [
-    {
-      id: 'orderid1',
-      name: 'ZO Skin Health Calming Toner',
-      category: 'Nước Hoa Hồng',
-      quantity: 100,
-      cost: 100000,
-      date: '03/03/2023',
     },
   ];
 
@@ -110,16 +107,16 @@ function DiscountsComponent() {
       endDate: values.endDate
     };
     updateDiscountAPI(jsonBody);
-    fetchListDiscount();
+    fetchProdDiscount();
     handleCloseDialog();
   };
 
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Giảm Giá" subtitle="Chương Trình Giảm Giá" />
+        <Header title="Mã Chương Trình" subtitle="Sản Phẩm Chương Trình Giảm Giá" />
         <Box>
-          <AddDiscountButton />
+          <AddProdDiscountBtn />
         </Box>
       </Box>
       <Box
@@ -148,7 +145,8 @@ function DiscountsComponent() {
           },
           '& .MuiCheckbox-root': {
             color: `${colors.greenAccent[200]} !important`,
-          },
+          }
+
         }}
       >
         <Dialog
@@ -160,53 +158,32 @@ function DiscountsComponent() {
           }}
         >
           <DialogTitle disableTypography>
-            <Typography variant="h6" color="warning">
-              THAY ĐỔI THÔNG TIN CHƯƠNG TRÌNH
+            <Typography variant="h6" color="error">
+              XÁC NHẬN XÓA DANH MỤC
             </Typography>
           </DialogTitle>
-          <Formik
-            initialValues={{ startDate: '', endDate: '' }}
-            validationSchema={validationSchema}
-            onSubmit={handleEditDiscountSubmit}
-          >
-            {({ errors, touched }) => (
-              <Form>
-                <DialogContent>
-                  <Field
-                    name="startDate"
-                    type="text"
-                    label="Ngày Bắt Đầu"
-                    error={touched.startDate && errors.startDate}
-                    helperText={touched.startDate && errors.startDate}
-                  />
-
-                </DialogContent>
-                <DialogContent>
-                  <Field
-                    name="endDate"
-                    type="text"
-                    label="Ngày Kết Thúc"
-                    error={touched.endDate && errors.endDate}
-                    helperText={touched.endDate && errors.endDate}
-                  />
-                </DialogContent>
-
-                <DialogActions>
-                  <Button onClick={handleCloseDialog} color="primary">
-                    Hủy
-                  </Button>
-                  <Button type="submit" color="primary" autoFocus>
-                    Lưu
-                  </Button>
-                </DialogActions>
-              </Form>
-            )}
-          </Formik>
+          <DialogContent dividers>
+            <Typography variant="body1">
+              Bạn có chắc chắn muốn xóa sản phẩm này không?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              <Typography variant="button" style={{ color: 'white' }}>
+                HỦY
+              </Typography>
+            </Button>
+            <Button onClick={handleConfirmDelete} color="primary" autoFocus>
+              <Typography variant="button" color="error">
+                XÓA
+              </Typography>
+            </Button>
+          </DialogActions>
         </Dialog>
         <DataGrid
           rows={discounts}
           columns={columns}
-          getRowId={(row) => row.code}
+          getRowId={(row) => row.id}
         />
       </Box>
     </Box>
@@ -216,7 +193,7 @@ function DiscountsComponent() {
 function Discounts() {
   return (
     <AdminLayout>
-      <DiscountsComponent />
+      <AppliedProducts />
     </AdminLayout>
   );
 }

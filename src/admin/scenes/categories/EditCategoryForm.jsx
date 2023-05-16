@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  TextField,
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Formik, Form, Field } from 'formik';
@@ -39,17 +40,16 @@ function EditCategoryDialog({
   const handleEditCategorySubmit = async (values) => {
     console.log("values", id);
     updateCategoryAPI(id, values.newName);
-    fetchListCategory();
     onClose();
   };
-
+  fetchListCategory();
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
       PaperProps={{
         elevation: 8,
-        style: { backgroundColor: colors.primary[500] },
+        style: { backgroundColor: '#ffffff' },
       }}
     >
       <DialogTitle>Chỉnh Sửa Danh Mục</DialogTitle>
@@ -59,10 +59,11 @@ function EditCategoryDialog({
         onSubmit={handleEditCategorySubmit}
       >
         {({ errors, touched }) => (
-          <Form>
+          <Form style={{ backgroundColor: '#your_color' }}>
             <DialogContent>
               <Field
                 name="newName"
+                as={TextField}
                 type="text"
                 label="Tên danh mục mới"
                 error={touched.newName && errors.newName}
