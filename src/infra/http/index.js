@@ -5,6 +5,7 @@ axios.defaults.baseURL = 'http://localhost:8080/api';
 axios.defaults.headers = {
   'content-type': 'application/json',
   'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': '[GET, POST, PUT, DELETE]'
 };
 
 const token = localStorage.getItem('jwt');
