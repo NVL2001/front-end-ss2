@@ -156,7 +156,7 @@ function DiscountsComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: { backgroundColor: '#ffffff' },
           }}
         >
           <DialogTitle disableTypography>
