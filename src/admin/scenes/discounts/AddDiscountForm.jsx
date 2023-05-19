@@ -31,7 +31,6 @@ function AddDiscountFormComponent() {
   const [previewAvatarUrl, setPreviewAvatarUrl] = useState();
   const [previewAvatarFile, setPreviewAvatarFile] = useState();
   const [selectedDate, setSelectedDate] = useState();
-  const [saveImages, setImages] = useState([]);
 
   const fetchListDiscount = function () {
     getListDiscountAPI().then((response) => {
@@ -67,22 +66,6 @@ function AddDiscountFormComponent() {
     fetchListProduct();
   }, []);
 
-  const [imagePreviews, setImagePreviews] = useState("");
-
-  const avatarInputFile = useRef(null);
-  const onChangeAvatarInput = (e) => {
-    // Assuming only image
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = (e) => {
-      setPreviewAvatarUrl(reader.result);
-      setPreviewAvatarFile(file);
-      setImages([...saveImages, file]);
-    };
-  };
-
   return (
     <Box m="20px">
       <Header title="Thêm Chương Trình Giảm Giá Mới" />
@@ -108,6 +91,7 @@ function AddDiscountFormComponent() {
               },
               productIds: selectedProducts
             };
+            console.log("jsonBody", jsonBody);
             createDiscountAPI(jsonBody);
           } catch (error) {
             alert(error);
