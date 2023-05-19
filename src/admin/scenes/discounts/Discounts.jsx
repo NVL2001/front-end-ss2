@@ -50,11 +50,11 @@ function DiscountsComponent() {
 
   const columns = [
     { field: 'code', headerName: 'Code Giảm Giá', flex: 1 },
-    {
-      field: 'description',
-      headerName: 'Tên Chương Trình',
-      flex: 1.5,
-    },
+    // {
+    //   field: 'description',
+    //   headerName: 'Tên Chương Trình',
+    //   flex: 1.5,
+    // },
     {
       field: 'discountPercent',
       headerName: '% Giảm Giá',
@@ -75,6 +75,31 @@ function DiscountsComponent() {
       renderCell: ({ row }) => (
         <Typography>{formatDate(row.endDate)}</Typography>
       )
+    },
+    {
+      field: 'discountStatus',
+      headerName: 'Trạng thái',
+      flex: 0.75,
+      renderCell: ({ row }) => {
+        const currentDate = new Date(); // Get the current date
+
+        // Example start and end dates from the backend
+        const startDate = new Date(row.startDate);
+        const endDate = new Date(row.endDate);
+
+        if (currentDate >= startDate && currentDate <= endDate) {
+          return (
+            <Typography style={{ color: 'green' }}>
+              ACTIVE
+            </Typography>
+          );
+        }
+        return (
+          <Typography style={{ color: 'red' }}>
+            Expired
+          </Typography>
+        );
+      }
     },
     {
       field: 'action',
@@ -156,7 +181,7 @@ function DiscountsComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: { backgroundColor: '#ffffff' },
           }}
         >
           <DialogTitle disableTypography>

@@ -4,7 +4,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -107,32 +107,34 @@ function AddProdDiscountFormComponent() {
             <Box
               display="grid"
               gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+              gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              <Select
-                fullWidth
-                value={selectedDiscount}
-                onChange={(discount) => handleDiscountChange(discount)}
-                variant="outlined"
-                label="Mã chương trình giảm giá"
-              // sx={{ marginTop: 16 }}
-              >
-                {discountDropdown}
-              </Select>
-              <Select
-                fullWidth
-                value={selectedProducts}
-                onChange={(product) => handleProductChange(product)}
-                variant="outlined"
-                label="Sản phẩm"
-                multiple
-              // sx={{ marginTop: 16 }}
-              >
-                {productDropdown}
-              </Select>
+              <Box>
+                <Typography variant="subtitle1">Mã chương trình giảm giá</Typography>
+                <Select
+                  fullWidth
+                  value={selectedDiscount}
+                  onChange={(discount) => handleDiscountChange(discount)}
+                  variant="outlined"
+                >
+                  {discountDropdown}
+                </Select>
+              </Box>
+              <Box>
+                <Typography variant="subtitle1">Sản phẩm</Typography>
+                <Select
+                  fullWidth
+                  value={selectedProducts}
+                  onChange={(product) => handleProductChange(product)}
+                  variant="outlined"
+                  multiple
+                >
+                  {productDropdown}
+                </Select>
+              </Box>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
