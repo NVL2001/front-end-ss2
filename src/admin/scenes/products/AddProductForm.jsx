@@ -3,7 +3,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid, useTheme
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -22,6 +22,9 @@ import { APIRoutes } from "../../../constants/APIRoutes";
 
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+
+  const boxColor = theme.palette.mode === 'dark' ? 'dark' : 'white';
 
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
@@ -99,6 +102,7 @@ function AddProductFormComponent() {
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                backgroundColor: boxColor,
               }}
             >
               <TextField
