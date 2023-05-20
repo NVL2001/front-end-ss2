@@ -43,6 +43,7 @@ function ProductsComponent() {
     getProductByIdAPI(id).then((response) => {
       window.localStorage.setItem("editProduct", JSON.stringify(response));
       // window.localStorage.setItem("editProduct", response);
+      console.log("response", response);
       if (response) {
         history.push(`/admin/products/${id}/edit`);
       }

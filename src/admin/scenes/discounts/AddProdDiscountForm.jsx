@@ -16,6 +16,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 // import { DatePicker } from '@mui/x-date-pickers';
+import { toast } from "react-toastify";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
@@ -95,8 +96,24 @@ function AddProdDiscountFormComponent() {
             };
 
             addProdToDiscountAPI(jsonBody);
+            toast.success("Thêm sản phẩm thành công.", {
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           } catch (error) {
-            alert(error);
+            toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >

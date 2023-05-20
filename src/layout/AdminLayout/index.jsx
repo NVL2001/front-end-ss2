@@ -16,7 +16,7 @@ export function AdminLayout({ children }) {
         <Stack direction="row">
           <Sidebar isSidebar={isSidebar} />
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+            {/* <Topbar setIsSidebar={setIsSidebar} /> */}
             {children}
           </main>
         </Stack>

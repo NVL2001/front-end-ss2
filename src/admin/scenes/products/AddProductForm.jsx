@@ -9,6 +9,7 @@ import {
   Formik, Form, Field, formik
 } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -17,7 +18,6 @@ import { getListCategoryAPI } from "../../API/CategoryAPI";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
-import { addProductNewAPI } from "../../API/ProductAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 
 function AddProductFormComponent() {
@@ -85,10 +85,25 @@ function AddProductFormComponent() {
 
             const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
             if (response.status === 200) {
-              alert("Tạo mới sản phẩm thành công");
+              toast.success("Thêm sản phẩm thành công.", {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
             }
           } catch (error) {
-            console.log(error);
+            toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >
