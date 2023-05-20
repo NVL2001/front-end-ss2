@@ -55,7 +55,7 @@ function Sidebar() {
     localStorage.removeItem("jwt");
     // eslint-disable-next-line dot-notation
     delete axios.defaults.headers['Authorization'];
-    history.push("/admin/calendar");
+    history.push("/");
   };
   return (
     <Box
