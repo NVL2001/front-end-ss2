@@ -29,14 +29,13 @@ function Item({
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.grey[100],
+        color: `${colors.grey[100]}`,
       }}
       onClick={() => setSelected(title)}
       icon={icon}
     >
-      <Link to={to}>
-        <Typography>{title}</Typography>
-      </Link>
+      <Typography>{title}</Typography>
+      <Link to={to} />
     </MenuItem>
   );
 }
