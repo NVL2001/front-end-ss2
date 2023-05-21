@@ -10,6 +10,7 @@ import {
 import Button from '@mui/material/Button';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { toast } from "react-toastify";
 import { tokens } from '../../theme';
 import { updateCategoryAPI } from '../../API/CategoryAPI';
 
@@ -39,8 +40,14 @@ function EditCategoryDialog({
   // };
   const handleEditCategorySubmit = async (values) => {
     console.log("values", id);
-    updateCategoryAPI(id, values.newName);
-    onClose();
+    updateCategoryAPI(id, values.newName)
+      .then(() => {
+        toast.success("Danh Mục Đã Được Cập Nhật");
+        onClose();
+      })
+      .catch((error) => {
+        toast.error(`Cập Nhật Danh Mục Bị Lỗi: ${error.message}`);
+      });
   };
   fetchListCategory();
   return (

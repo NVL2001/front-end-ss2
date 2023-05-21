@@ -73,7 +73,7 @@ function DashboardComponent() {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Trang Chủ" subtitle="Chào mừng tới Cosmetics Shop" />
+        <Header title="Trang Chủ" subtitle="Chào mừng tới Rose Secret" />
       </Box>
 
       {/* GRID & CHARTS */}
