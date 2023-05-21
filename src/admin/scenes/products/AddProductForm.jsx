@@ -11,6 +11,7 @@ import {
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -23,7 +24,7 @@ import { APIRoutes } from "../../../constants/APIRoutes";
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
-
+  const history = useHistory();
   const boxColor = theme.palette.mode === 'dark' ? 'dark' : 'white';
 
   const [categories, setCategories] = useState([]);
@@ -93,6 +94,7 @@ function AddProductFormComponent() {
                 draggable: true,
                 progress: undefined,
               });
+              setTimeout(() => history.push('/admin/products'), 1000);
             }
           } catch (error) {
             toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {

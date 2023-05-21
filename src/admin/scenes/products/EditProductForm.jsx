@@ -14,6 +14,7 @@ import {
 import * as Yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import { toast } from "react-toastify";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -140,6 +141,7 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
 }
 
 function EditProductFormComponent() {
+  const history = useHistory();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const productId = useParams();
   const [categories, setCategories] = useState([]);
@@ -180,8 +182,6 @@ function EditProductFormComponent() {
     fetchCategory();
     fetchEditProduct();
   }, [editProd]);
-
-  console.log("editProd", editProd);
 
   return (
     <Box m="20px">
@@ -243,7 +243,7 @@ function EditProductFormComponent() {
                 draggable: true,
                 progress: undefined,
               });
-              setTimeout(() => window.location.reload(), 1000);
+              setTimeout(() => history.push('/admin/products'), 1000);
             }
           } catch (error) {
             console.log(error);
