@@ -34,6 +34,16 @@ const updateProductAPI = (productUpdate) => {
   const url = `products/${productUpdate.id}`;
   return api('PUT', url, productUpdate);
 };
+
+const addProdImgAPI = (body) => {
+  const url = `product/add-image`;
+  return api('POST', url, body);
+};
+
+const delProdImgAPI = (body) => {
+  const url = `product/remove-image`;
+  return api('DELETE', url, body);
+};
 export {
-  getListProductAPI, addProductNewAPI, deleteProductAPI, updateProductAPI, getProductByIdAPI
+  getListProductAPI, addProductNewAPI, deleteProductAPI, updateProductAPI, getProductByIdAPI, addProdImgAPI, delProdImgAPI
 };

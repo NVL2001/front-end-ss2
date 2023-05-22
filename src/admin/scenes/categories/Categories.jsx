@@ -13,6 +13,7 @@ import { DataGrid } from '@mui/x-data-grid';
 // import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { toast } from "react-toastify";
 import AddIcon from '@mui/icons-material/Add';
 import { React, useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
@@ -43,6 +44,7 @@ function CategoriesComponent() {
   };
 
   const handleDeleteCategory = async () => {
+    toast.success(`Danh mục '${nameToDelete}' đã bị xóa!`);
     await deleteCategoryAPI(nameToDelete);
     fetchListCategory();
   };
@@ -72,7 +74,6 @@ function CategoriesComponent() {
     setCategoryIdToEdit(id);
     setIsEditDialogOpen(true);
   };
-  console.log(categories);
   const columns = [
     { field: 'id', headerName: 'ID Danh Mục', flex: 1 },
     {
@@ -89,11 +90,11 @@ function CategoriesComponent() {
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
-            color="primary"
+            color="info"
             onClick={() => {
               history.push({
                 pathname: "/admin/category/related-products",
-                state: { categoryName: row.name }
+                state: { categoryName: row.name, categoryId: row.id }
               });
             }}
           >
@@ -166,7 +167,7 @@ function CategoriesComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: colors.primary[500] },
+            style: { backgroundColor: '#ffffff' },
           }}
         >
           <DialogTitle disableTypography>
@@ -181,7 +182,7 @@ function CategoriesComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'white' }}>
+              <Typography variant="button" style={{ color: 'black' }}>
                 HỦY
               </Typography>
             </Button>
