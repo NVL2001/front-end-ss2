@@ -2,21 +2,27 @@
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
 import {
-  Box, MenuItem, Select, Typography, useTheme,
+  Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Typography, useTheme,
 } from '@mui/material';
+import { useHistory, useParams } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
 import AddDiscountButton from './AddDiscountButton';
 import { AdminLayout } from "../../../layout/AdminLayout";
-import { getListDiscountAPI } from "../../API/DiscountAPI";
+import { getListDiscountAPI, updateDiscountAPI } from "../../API/DiscountAPI";
 import formatDate from "../../../utils/formatDate";
 
 function DiscountsComponent() {
+  const history = useHistory();
   const [discounts, setDiscounts] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [discountIdToEdit, setDiscountIdToEdit] = useState(null);
   const fetchListDiscount = function () {
     getListDiscountAPI().then((response) => {
       setDiscounts(response);
@@ -26,16 +32,29 @@ function DiscountsComponent() {
   useEffect(() => {
     fetchListDiscount();
   }, []);
-  console.log(discounts);
+
+  const handleOpenDialog = (code) => {
+    setDiscountIdToEdit(code);
+    setIsDialogOpen(true);
+  };
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const validationSchema = Yup.object({
+    startDate: Yup.string().required('Ngày bắt đầu mới là bắt buộc'),
+    endDate: Yup.string().required('Ngày kết thúc mới là bắt buộc'),
+  });
+
   const columns = [
     { field: 'code', headerName: 'Code Giảm Giá', flex: 1 },
-    {
-      field: 'description',
-      headerName: 'Tên Chương Trình',
-      flex: 1.5,
-    },
+    // {
+    //   field: 'description',
+    //   headerName: 'Tên Chương Trình',
+    //   flex: 1.5,
+    // },
     {
       field: 'discountPercent',
       headerName: '% Giảm Giá',
@@ -58,15 +77,49 @@ function DiscountsComponent() {
       )
     },
     {
+      field: 'discountStatus',
+      headerName: 'Trạng thái',
+      flex: 0.75,
+      renderCell: ({ row }) => {
+        const currentDate = new Date(); // Get the current date
+
+        // Example start and end dates from the backend
+        const startDate = new Date(row.startDate);
+        const endDate = new Date(row.endDate);
+
+        if (currentDate >= startDate && currentDate <= endDate) {
+          return (
+            <Typography style={{ color: 'green' }}>
+              Đang giảm giá
+            </Typography>
+          );
+        }
+
+        if (currentDate <= startDate) {
+          return (
+            <Typography style={{ color: 'blue' }}>
+              Chưa bắt đầu
+            </Typography>
+          );
+        }
+
+        return (
+          <Typography style={{ color: 'red' }}>
+            Hết hạn
+          </Typography>
+        );
+      }
+    },
+    {
       field: 'action',
       headerName: 'Hành Động',
       flex: 2.5,
       renderCell: ({ row }) => (
         <Stack direction="row" spacing={1}>
-          <Button variant="contained" color="info">
+          <Button variant="contained" color="info" onClick={() => history.push(`/admin/discounts/view/${row?.code}`)}>
             Xem Chi Tiết
           </Button>
-          <Button variant="contained" color="success">
+          <Button onClick={() => handleOpenDialog(row?.code)} variant="contained" color="success">
             Thay Đổi Chương Trình
           </Button>
         </Stack>
@@ -83,6 +136,17 @@ function DiscountsComponent() {
       date: '03/03/2023',
     },
   ];
+
+  const handleEditDiscountSubmit = async (values) => {
+    const jsonBody = {
+      id: discountIdToEdit,
+      startDate: values.startDate,
+      endDate: values.endDate
+    };
+    updateDiscountAPI(jsonBody);
+    fetchListDiscount();
+    handleCloseDialog();
+  };
 
   return (
     <Box m="20px">
@@ -121,6 +185,58 @@ function DiscountsComponent() {
           },
         }}
       >
+        <Dialog
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          PaperProps={{
+            elevation: 8,
+            style: { backgroundColor: '#ffffff' },
+          }}
+        >
+          <DialogTitle disableTypography>
+            <Typography variant="h6" color="warning">
+              THAY ĐỔI THÔNG TIN CHƯƠNG TRÌNH
+            </Typography>
+          </DialogTitle>
+          <Formik
+            initialValues={{ startDate: '', endDate: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleEditDiscountSubmit}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <DialogContent>
+                  <Field
+                    name="startDate"
+                    type="text"
+                    label="Ngày Bắt Đầu"
+                    error={touched.startDate && errors.startDate}
+                    helperText={touched.startDate && errors.startDate}
+                  />
+
+                </DialogContent>
+                <DialogContent>
+                  <Field
+                    name="endDate"
+                    type="text"
+                    label="Ngày Kết Thúc"
+                    error={touched.endDate && errors.endDate}
+                    helperText={touched.endDate && errors.endDate}
+                  />
+                </DialogContent>
+
+                <DialogActions>
+                  <Button onClick={handleCloseDialog} color="primary">
+                    Hủy
+                  </Button>
+                  <Button type="submit" color="primary" autoFocus>
+                    Lưu
+                  </Button>
+                </DialogActions>
+              </Form>
+            )}
+          </Formik>
+        </Dialog>
         <DataGrid
           rows={discounts}
           columns={columns}

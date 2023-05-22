@@ -3,13 +3,15 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid, useTheme
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
 } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -17,12 +19,14 @@ import { getListCategoryAPI } from "../../API/CategoryAPI";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
-import { addProductNewAPI } from "../../API/ProductAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
 
+  const colors = tokens(theme.palette.mode);
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -66,9 +70,6 @@ function AddProductFormComponent() {
 
           try {
             const formData = new FormData();
-            // const enc = new TextEncoder();
-            // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
-            // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
             formData.append('name', values.name);
             formData.append('description', values.description);
             formData.append('price', values.price);
@@ -82,17 +83,37 @@ function AddProductFormComponent() {
 
             const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
             if (response.status === 200) {
-              alert("Tạo mới sản phẩm thành công");
+              toast.success("Thêm sản phẩm thành công.", {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setTimeout(() => history.push('/admin/products'), 1000);
             }
           } catch (error) {
-            console.log(error);
+            toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >
         {({
           values, errors, touched, handleBlur, handleChange, submitForm
         }) => (
-          <Form>
+          <Form
+            style={{
+              background: colors.primary[400]
+            }}
+          >
             <Box
               display="grid"
               gap="30px"
@@ -249,7 +270,9 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
             {/* </Button> */}
             {imageForPreview.length < 6 && (
             <Button variant="contained" onClick={handleAddMore}>
-              Thêm mới
+
+              Thêm Ảnh
+
             </Button>
             )}
           </InputLabel>

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/react-in-jsx-scope */
@@ -12,26 +14,149 @@ import {
 import * as Yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
+import { toast } from "react-toastify";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { getListCategoryAPI } from "../../API/CategoryAPI";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
-import { addProductNewAPI, getProductByIdAPI } from "../../API/ProductAPI";
+import { addProdImgAPI, addProductNewAPI, getProductByIdAPI } from "../../API/ProductAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 
+function ImageUpload({ onImagesSelected, imagesForUpload }) {
+  const [exceedLimit, setExceedLimit] = useState(false);
+  const [imageForPreview, setImageForPreview] = useState([]);
+
+  const chooseImageForUpload = (event) => {
+    const { files } = event.target;
+    const newImagesForPreview = [...imageForPreview];
+    const newImagesForUpload = [...imagesForUpload];
+
+    if (newImagesForUpload.length + files.length > 6) {
+      setExceedLimit(true);
+      return;
+    }
+
+    setExceedLimit(false);
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      // reader.readAsBinaryString(file);
+
+      reader.onload = (e) => {
+        newImagesForPreview.push(e.target.result);
+        // const binaryStr = reader.result;
+        newImagesForUpload.push(file);
+
+        if (newImagesForUpload.length === imagesForUpload.length + files.length) {
+          setImageForPreview(newImagesForPreview);
+          onImagesSelected(newImagesForUpload); // Invoke the callback function with the uploaded images
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAddMore = (event) => {
+    event.preventDefault();
+    const uploadInput = document.getElementById('upload-image');
+    uploadInput.value = null;
+    uploadInput.click();
+  };
+
+  const handleDeleteImage = (index) => {
+    const newImagesForPreview = [...imageForPreview];
+    const newImagesForUpload = [...imagesForUpload];
+
+    newImagesForPreview.splice(index, 1);
+    newImagesForUpload.splice(index, 1);
+
+    onImagesSelected(newImagesForUpload);
+    setImageForPreview(newImagesForPreview);
+  };
+
+  return (
+    <div>
+      {exceedLimit && (
+        <Typography variant="body2" color="error">
+          Maximum of 6 images allowed.
+        </Typography>
+      )}
+
+      {imageForPreview.length < 6 && (
+        <div>
+          <InputLabel htmlFor="upload-image">
+            {/* <Button component="span" variant="contained"> */}
+            {/*  Chọn ảnh */}
+            {/* </Button> */}
+            {imageForPreview.length < 6 && (
+            <Button variant="contained" onClick={handleAddMore}>
+              Thêm Ảnh
+            </Button>
+            )}
+          </InputLabel>
+          <input
+            type="file"
+            id="upload-image"
+            accept="image/*"
+            multiple // Enable selecting multiple images
+            style={{ display: 'none' }}
+            onChange={chooseImageForUpload}
+          />
+        </div>
+      )}
+
+      <Grid container spacing={2}>
+        {imageForPreview.map((image, index) => (
+          <Grid key={index} item xs={6}>
+            <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
+              <img
+                src={image}
+                alt={`Preview ${index}`}
+                style={{
+                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'
+                }}
+                onClick={() => {
+                  handleDeleteImage(index);
+                }}
+              />
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+
+      {imageForPreview.length > 0 && (
+        <Typography variant="subtitle1" align="center">
+          {`${imageForPreview.length} image(s) selected`}
+        </Typography>
+      )}
+
+    </div>
+  );
+}
+
 function EditProductFormComponent() {
+  const history = useHistory();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const productId = useParams();
   const [categories, setCategories] = useState([]);
+  const [editProd, setEditProd] = useState(false);
   const [product, setProduct] = useState(false);
   const [images, setImages] = useState([]);
   const initProd = JSON.parse(localStorage.getItem("editProduct"));
   const fetchCategory = function () {
     getListCategoryAPI().then((response) => {
-      console.log("getListCategoryAPI", response);
       setCategories(response);
+    });
+  };
+  const fetchEditProduct = function () {
+    getProductByIdAPI(productId.id).then((response) => {
+      setProduct(response);
     });
   };
 
@@ -39,12 +164,25 @@ function EditProductFormComponent() {
     // Handle the selected images here
     setImages(selectedImages);
   };
+
+  const handleDeleteImage = (index) => {
+    const newImages = [...initProd.productImages];
+    newImages.splice(index, 1); // Remove the image at the specified index
+    // Save the modified array back to localStorage
+    const updatedProduct = {
+      ...initProd,
+      productImages: newImages,
+    };
+    localStorage.setItem("editProduct", JSON.stringify(updatedProduct));
+    setEditProd(updatedProduct);
+  };
+
   // Khai báo useEffect, useEffect này khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
     fetchCategory();
-  }, []);
+    fetchEditProduct();
+  }, [editProd]);
 
-  console.log("getProductByIdAPI", initProd.id);
   return (
     <Box m="20px">
       <Header title="Chỉnh Sửa Sản Phẩm" />
@@ -70,34 +208,54 @@ function EditProductFormComponent() {
           };
 
           try {
-            // const formData = new FormData();
+            const formData = new FormData();
             // // const enc = new TextEncoder();
             // // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
             // // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
-            // formData.append('name', values.name);
+            formData.append('productID', initProd.id);
             // formData.append('description', values.description);
             // formData.append('price', values.price);
             // formData.append('quantity', values.quantity);
             // formData.append('categoryName', values.categoryName);
             // console.log(`${formData.get('description')} ${formData.get('categoryName')}`);
-
-            // Array.from(images).forEach((file) => {
-            //   formData.append('images', file);
-            // }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
+            if (images.length > 0) {
+              Array.from(images).forEach((file) => {
+                formData.append('images', file);
+                addProdImgAPI(formData);
+              }); // phải sử dụng append mới là binary, nếu cho nguyên array vào thì nó vẫn là type object?
+            }
             const jsonBody = {
               id: initProd.id,
               name: values.name,
               description: values.description,
               price: values.price,
               quantity: values.quantity,
-              newCategory: values.categoryName
+              newCategory: values.categoryName,
+              productImages: []
             };
             const response = await axios.post(APIRoutes.UPDATE_PRODUCT, jsonBody, config);
             if (response.status === 200) {
-              alert("Chỉnh sửa sản phẩm thành công");
+              toast.success("Chỉnh sửa sản phẩm thành công", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setTimeout(() => history.push('/admin/products'), 1000);
             }
           } catch (error) {
             console.log(error);
+            toast.error("Sửa sản phẩm thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >
@@ -179,6 +337,25 @@ function EditProductFormComponent() {
                 helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 4" }}
               />
+              {!Array.isArray(initProd.productImages) ? <div>Giá trị không hợp lệ</div>
+                : <Grid container spacing={2}>
+                  {initProd.productImages.map((image, index) => (
+                    <Grid key={index} item xs={6}>
+                      <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
+                        <img
+                          src={`${axios.defaults.baseURL}${image}`}
+                          style={{
+                            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', cursor: "pointer"
+                          }}
+                          onClick={() => {
+                            handleDeleteImage(index);
+                          }}
+                        />
+                      </div>
+                    </Grid>
+                  ))}
+                </Grid>}
+              <ImageUpload imagesForUpload={images} onImagesSelected={handleImagesSelected} />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">

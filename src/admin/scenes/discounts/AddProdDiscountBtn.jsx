@@ -6,33 +6,32 @@ import { tokens } from "../../theme";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
-function AddProductButton(props) {
-  const { prodIds, cateId, callBack } = props;
+function AddProdDiscountBtn(props) {
   const history = useHistory();
+  const { callBackFun, productIds, discountCode } = props;
 
-  const handleAddProductClick = () => {
-    history.push('/admin/products/add');
+  const handleAddProdDiscountClick = () => {
+    history.push('/admin/product-discount/add');
   };
 
-  const removeProductsFromCategory = (pro, cat) => {
+  function removeDiscountFromProduct(proId) {
     const body = {
-      productIds: pro,
-      categoryId: cat
+      discountCode: discountCode.id,
+      productIds
     };
-    axios.post(`${axios.defaults.baseURL}/category/delete-products`, body)
-      .then((res) => {
-        if (res.status === 200) {
-          alert("Xóa thành công");
-        }
-        callBack();
-      }).catch((err) => alert("Xóa không thành công"));
-  };
+    console.log(body);
+    axios.post(`${axios.defaults.baseURL}/discount/remove-applied-prouducts`, body)
+      .then((r) => {
+        alert("Xóa thành công");
+        callBackFun();
+      }).catch((err) => alert(err.response.data));
+  }
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <>
       <Button
-        type="submit"
         sx={{
           backgroundColor: colors.redAccent[700],
           color: colors.redAccent[100],
@@ -41,7 +40,7 @@ function AddProductButton(props) {
           padding: "10px 20px",
           borderRadius: 0
         }}
-        onClick={() => removeProductsFromCategory(prodIds, cateId)}
+        onClick={() => removeDiscountFromProduct(productIds)}
       >
         Xóa sản phẩm được chọn
       </Button>
@@ -54,12 +53,12 @@ function AddProductButton(props) {
           padding: "10px 20px",
           borderRadius: 0
         }}
-        onClick={handleAddProductClick}
+        onClick={handleAddProdDiscountClick}
       >
-        Thêm sản phẩm
+        Thêm sản phẩm vào chương trình
       </Button>
     </>
   );
 }
 
-export default AddProductButton;
+export default AddProdDiscountBtn;

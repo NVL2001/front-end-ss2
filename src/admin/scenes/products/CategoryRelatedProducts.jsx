@@ -21,12 +21,16 @@ function CategoryRelatedProducts() {
   const [idToDelete, setIdToDelete] = useState(null);
   const [products, setProducts] = useState([]);
   const location = useLocation();
-  const { categoryName } = location.state;
+  const [selectedIds, setSelectedIds] = useState([]);
+  const { categoryName, categoryId } = location.state;
 
   async function fetchData() {
-    const response = await axios.get(`${APIRoutes.GET_PRODUCT_BY_CATEGORY}/${categoryName}`);
-    return response.data;
+    axios.get(`${APIRoutes.GET_PRODUCT_BY_CATEGORY}/${categoryName}`).then((r) => setProducts(r.data));
   }
+
+  const handleSelectionModelChange = (selection) => {
+    setSelectedIds(selection);
+  };
 
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const history = useHistory();
@@ -60,9 +64,7 @@ function CategoryRelatedProducts() {
   };
 
   useEffect(() => {
-    fetchData().then((r) => {
-      setProducts(r);
-    });
+    fetchData();
   }, []);
 
   const handleOpenDialog = (id) => {
@@ -136,13 +138,6 @@ function CategoryRelatedProducts() {
             <Button variant="contained" color="success" onClick={() => handleEditProductClick(row?.id)}>
               Chỉnh Sửa
             </Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => handleOpenDialog(row?.id)}
-            >
-              Xóa
-            </Button>
           </Stack>
         );
       },
@@ -154,7 +149,12 @@ function CategoryRelatedProducts() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Sản phẩm" subtitle={categoryName} />
         <Box>
-          <AddProductButton />
+          <AddProductButton
+            prodIds={selectedIds}
+            cateId={categoryId}
+            /* eslint-disable-next-line react/jsx-no-bind */
+            callBack={fetchData}
+          />
         </Box>
       </Box>
       <Box
@@ -227,9 +227,12 @@ function CategoryRelatedProducts() {
           rows={products}
           pageSize={products.length}
           columns={columns}
-          pagination={false}
+          selectionModel={selectedIds}
+          onSelectionModelChange={handleSelectionModelChange}
           rowsPerPageOptions={[products.length]}
           components={{ Toolbar: GridToolbar }}
+          checkboxSelection
+          disableRowSelectionOnClick
         />
       </Box>
     </Box>

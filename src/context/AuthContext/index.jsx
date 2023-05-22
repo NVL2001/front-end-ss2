@@ -1,6 +1,7 @@
 import React, {
   useContext, useEffect, useMemo, useState,
 } from 'react';
+import { UserRoles } from "../../constants/UserRoles";
 
 export const AuthContext = React.createContext({});
 
@@ -20,6 +21,14 @@ export function AuthContextProvider({ children }) {
     if (user) {
       setUser(JSON.parse(user));
     }
+    // const jwt = localStorage.getItem("jwt");
+    // if (jwt) {
+    //   const decodedJwt = jwtDecode(jwt);
+    //   const roles = decodedJwt.role.map((item) => item.authority);
+    //   if (roles.includes(UserRoles.ADMIN) || roles.includes(UserRoles.STAFF)) {
+    //     window.location.href = '/admin/dashboard';
+    //   }
+    // }
   }, []);
 
   const setUserAvatar = (url) => {
