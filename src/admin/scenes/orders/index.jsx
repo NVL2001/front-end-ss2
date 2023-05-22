@@ -4,10 +4,11 @@ import {
   Box, Dialog, DialogActions, DialogContent, DialogTitle,
   MenuItem, Modal, Select, TextField, Typography, useTheme,
 } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import axios from "axios";
+import { toast } from "react-toastify";
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -127,9 +128,9 @@ function OrdersComponent() {
       setIsStatusSaved(true);
       handleCloseDialog();
       setIsStatusSaved(false);
-      alert("Thay đổi trạng thái thành công!");
+      toast.success("Thay đổi trạng thái thành công!");
     } catch (err) {
-      alert("Thay đổi trạng thái thất bại!");
+      toast.error("Thay đổi trạng thái thất bại!");
     }
   };
 
@@ -314,6 +315,7 @@ function OrdersComponent() {
           onPageChange={(page, details) => {
             fetchListOrder(page);
           }}
+          components={{ Toolbar: GridToolbar }}
         />
       </Box>
     </Box>

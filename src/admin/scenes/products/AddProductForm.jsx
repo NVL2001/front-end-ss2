@@ -9,7 +9,9 @@ import {
   Formik, Form, Field, formik
 } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -17,13 +19,14 @@ import { getListCategoryAPI } from "../../API/CategoryAPI";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
-import { addProductNewAPI } from "../../API/ProductAPI";
 import { APIRoutes } from "../../../constants/APIRoutes";
 
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
+
   const colors = tokens(theme.palette.mode);
+
 
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
@@ -81,10 +84,26 @@ function AddProductFormComponent() {
 
             const response = await axios.post(APIRoutes.CREATE_PRODUCT, formData, config);
             if (response.status === 200) {
-              alert("Tạo mới sản phẩm thành công");
+              toast.success("Thêm sản phẩm thành công.", {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+              setTimeout(() => history.push('/admin/products'), 1000);
             }
           } catch (error) {
-            console.log(error);
+            toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >
@@ -252,7 +271,9 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
             {/* </Button> */}
             {imageForPreview.length < 6 && (
             <Button variant="contained" onClick={handleAddMore}>
-              Chọn ảnh
+
+              Thêm Ảnh
+
             </Button>
             )}
           </InputLabel>

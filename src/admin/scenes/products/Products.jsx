@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
+import { toast } from "react-toastify";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link, useHistory } from 'react-router-dom';
@@ -43,6 +44,7 @@ function ProductsComponent() {
     getProductByIdAPI(id).then((response) => {
       window.localStorage.setItem("editProduct", JSON.stringify(response));
       // window.localStorage.setItem("editProduct", response);
+      console.log("response", response);
       if (response) {
         history.push(`/admin/products/${id}/edit`);
       }
@@ -61,6 +63,7 @@ function ProductsComponent() {
   };
 
   const handleDeleteProduct = async () => {
+    toast.success(`Sản Phẩm có ID '${idToDelete}' đã bị xóa!`);
     await deleteProductAPI(idToDelete);
     fetchListProduct();
   };

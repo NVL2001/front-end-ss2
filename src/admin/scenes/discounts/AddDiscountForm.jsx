@@ -16,8 +16,12 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 // import { DatePicker } from '@mui/x-date-pickers';
+
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import { toast } from "react-toastify";
+
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
@@ -65,7 +69,6 @@ function AddDiscountFormComponent() {
     setSelectedProducts(product);
   };
 
-  console.log("products", products);
   useEffect(() => {
     fetchListDiscount();
     fetchListProduct();
@@ -98,10 +101,27 @@ function AddDiscountFormComponent() {
               },
               productIds: selectedProducts
             };
-            console.log("jsonBody", jsonBody);
-            // createDiscountAPI(jsonBody);
+
+            createDiscountAPI(jsonBody);
+            toast.success("Thêm chương trình giảm giá thành công.", {
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
           } catch (error) {
-            alert(error);
+            toast.error("Thêm chương trình giảm giá thất bại. Vui lòng thử lại.", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         }}
       >
@@ -217,7 +237,6 @@ function AddDiscountFormComponent() {
               </Box>
             </Form>
           </Box>
-
         )}
       </Formik>
     </Box>
