@@ -4,7 +4,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Grid, useTheme
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -16,11 +16,14 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 // import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "../../components/Header";
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
 import { addProductNewAPI, getListProductAPI } from "../../API/ProductAPI";
 import { createDiscountAPI, getListDiscountAPI } from "../../API/DiscountAPI";
+import { StyledMenu } from "../../../utils/components/StyledMenu";
 
 function AddDiscountFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -28,6 +31,8 @@ function AddDiscountFormComponent() {
   const [discounts, setDiscounts] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [previewAvatarUrl, setPreviewAvatarUrl] = useState();
   const [previewAvatarFile, setPreviewAvatarFile] = useState();
   const [selectedDate, setSelectedDate] = useState();
@@ -76,6 +81,8 @@ function AddDiscountFormComponent() {
           name: "",
           description: "",
           discountPercent: "",
+          startDate: null,
+          endDate: null
         }}
         validationSchema={Yup.object({
           //
@@ -92,7 +99,7 @@ function AddDiscountFormComponent() {
               productIds: selectedProducts
             };
             console.log("jsonBody", jsonBody);
-            createDiscountAPI(jsonBody);
+            // createDiscountAPI(jsonBody);
           } catch (error) {
             alert(error);
           }
@@ -101,131 +108,116 @@ function AddDiscountFormComponent() {
         {({
           values, errors, touched, handleBlur, handleChange, handleSubmit
         }) => (
-          <Form>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
+          <Box>
+            <Form style={{
+              background: colors.primary[400]
+            }}
             >
-              <TextField
-                label="ID Giảm Giá Được Tạo Tự Động"
-                name="code"
-                // value={values.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.code && errors.code}
-                helperText={touched.code && errors.code}
-                required
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-                disabled
-              />
-              <TextField
-                label="Phần Trăm Giảm Giá"
-                name="discountPercent"
-                // value={values.discountPercent}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.discountPercent && errors.discountPercent}
-                helperText={touched.discountPercent && errors.discountPercent}
-                required
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                label="Mô Tả Chương Trình Giảm Giá"
-                name="description"
-                // value={values.description}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.description && errors.description}
-                helperText={touched.description && errors.description}
-                required
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 4" }}
-              />
-              {/* <DatePicker
-                label="Ngày tạo chương trình"
-                name="startDate"
-                  // value={selectedDate}
-                  // onChange={(date) => setSelectedDate(date)}
-                onBlur={handleBlur}
-                required
-                fullWidth
-                inputVariant="filled"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <DatePicker
-                label="Ngày kết thúc chương trình"
-                name="endDate"
-                  // value={selectedDate}
-                  // onChange={(date) => setSelectedDate(date)}
-                onBlur={handleBlur}
-                required
-                fullWidth
-                inputVariant="filled"
-                sx={{ gridColumn: "span 2" }}
-              /> */}
-              {/* <Field
-                label="Ngày tạo chương trình"
-                name="startDate"
-                value={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                onBlur={handleBlur}
-                required
-                fullWidth
-                inputVariant="filled"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <Field
-                label="Ngày kết thúc chương trình"
-                name="endDate"
-                value={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                onBlur={handleBlur}
-                required
-                fullWidth
-                inputVariant="filled"
-                sx={{ gridColumn: "span 2" }}
-              /> */}
-              <Field
-                name="startDate"
-                type="text"
-                label="Ngày Bắt Đầu"
-                error={touched.startDate && errors.startDate}
-                helperText={touched.startDate && errors.startDate}
-              />
-              <Field
-                name="endDate"
-                type="text"
-                label="Ngày Kết Thúc"
-                error={touched.endDate && errors.endDate}
-                helperText={touched.endDate && errors.endDate}
-              />
-              <Select
-                fullWidth
-                value={selectedProducts}
-                onChange={(product) => handleProductChange(product)}
-                variant="outlined"
-                label="Phân quyền"
-                multiple
-              // sx={{ marginTop: 16 }}
+              <Box
+                display="grid"
+                gap="30px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                  flexGrow: 1,
+                }}
               >
-                {itemDropdown}
-              </Select>
-            </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Thêm Sản Phẩm Mới
-              </Button>
-            </Box>
-          </Form>
+                <TextField
+                  label="ID Giảm Giá Được Tạo Tự Động"
+                  name="code"
+                // value={values.code}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.code && errors.code}
+                  helperText={touched.code && errors.code}
+                  required
+                  fullWidth
+                  variant="filled"
+                  sx={{
+                    gridColumn: "span 2",
+                    background: colors.primary[400]
+                  }}
+                  disabled
+                />
+                <TextField
+                  label="Phần Trăm Giảm Giá"
+                  name="discountPercent"
+                // value={values.discountPercent}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.discountPercent && errors.discountPercent}
+                  helperText={touched.discountPercent && errors.discountPercent}
+                  required
+                  fullWidth
+                  variant="filled"
+                  sx={{
+                    gridColumn: "span 2",
+                    background: colors.primary[400]
+                  }}
+                />
+                <TextField
+                  label="Mô Tả Chương Trình Giảm Giá"
+                  name="description"
+                // value={values.description}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.description && errors.description}
+                  helperText={touched.description && errors.description}
+                  required
+                  fullWidth
+                  variant="filled"
+                  sx={{
+                    gridColumn: "span 4",
+                    background: colors.primary[400]
+                  }}
+                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Thời gian bắt đầu"
+                    ampm={false}
+                    hours="24h"
+                    sx={{
+                      gridColumn: "span 1",
+                      background: colors.primary[400]
+                    }}
+                  />
+                  <DatePicker
+                    label="Ngày bắt đầu"
+                    sx={{
+                      gridColumn: "span 1",
+                      background: colors.primary[400]
+                    }}
+                    views={["day", "month", "year"]}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker
+                    label="Thời gian kết thúc"
+                    ampm={false}
+                    hours="24h"
+                    sx={{
+                      gridColumn: "span 1",
+                      background: colors.primary[400]
+                    }}
+                  />
+                  <DatePicker
+                    label="Ngày kết thúc"
+                    sx={{
+                      gridColumn: "span 1",
+                      background: colors.primary[400]
+                    }}
+                    renderInput={(params) => <TextField name="endDate" {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+              <Box display="flex" justifyContent="end" mt="20px">
+                <Button type="submit" color="secondary" variant="contained">
+                  Thêm Sản Phẩm Mới
+                </Button>
+              </Box>
+            </Form>
+          </Box>
+
         )}
       </Formik>
     </Box>

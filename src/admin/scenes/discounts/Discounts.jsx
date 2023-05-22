@@ -90,13 +90,22 @@ function DiscountsComponent() {
         if (currentDate >= startDate && currentDate <= endDate) {
           return (
             <Typography style={{ color: 'green' }}>
-              ACTIVE
+              Đang giảm giá
             </Typography>
           );
         }
+
+        if (currentDate <= startDate) {
+          return (
+            <Typography style={{ color: 'blue' }}>
+              Chưa bắt đầu
+            </Typography>
+          );
+        }
+
         return (
           <Typography style={{ color: 'red' }}>
-            Expired
+            Hết hạn
           </Typography>
         );
       }

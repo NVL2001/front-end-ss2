@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable eol-last */
 import { React, useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import {
   Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Typography, useTheme,
 } from '@mui/material';
@@ -11,12 +11,16 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from "axios";
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
 import { AdminLayout } from "../../../layout/AdminLayout";
 import { deleteDiscountProductAPI, getAppliedProductsAPI, updateDiscountAPI } from "../../API/DiscountAPI";
-import AddProdDiscountBtn from './AddProdDiscountBtn';
+
+import formatMoney from "../../../utils/formatMoney";
+// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
+import AddProdDiscountBtn from "./AddProdDiscountBtn";
 
 function AppliedProducts() {
   const history = useHistory();
@@ -25,12 +29,17 @@ function AppliedProducts() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [discountIdToEdit, setDiscountIdToEdit] = useState(null);
   const [delProduct, setDelProduct] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const handleSelectionModelChange = (selection) => {
+    setSelectedIds(selection);
+  };
+
   const fetchProdDiscount = function () {
     getAppliedProductsAPI(discountCode.id).then((response) => {
       setDiscounts(response);
     });
   };
-  console.log("discountCode", discountCode.id);
   // Khai báo useEffect khi component được mount và mỗi khi State: listProduct thay đổi
   useEffect(() => {
     fetchProdDiscount();
@@ -62,41 +71,42 @@ function AppliedProducts() {
   });
 
   const columns = [
-    { field: 'id', headerName: 'ID sản phẩm', flex: 1 },
+    { field: 'id', headerName: 'ID Sản Phẩm', flex: 0.8 },
     {
       field: 'name',
-      headerName: 'Tên sản phẩm',
-      flex: 1.5,
+      headerName: 'Tên Sản Phẩm',
+      flex: 5,
+      cellClassName: 'name-column--cell',
     },
-    // {
-    //   field: 'discountPercent',
-    //   headerName: '% Giảm Giá',
-    //   flex: 0.5,
-    // },
-    // {
-    //   field: 'startDate',
-    //   headerName: 'Ngày Bắt Đầu',
-    //   flex: 0.75,
-    // },
-    // {
-    //   field: 'endDate',
-    //   headerName: 'Ngày Kết Thúc',
-    //   flex: 0.75,
-    // },
+    {
+      field: 'price',
+      headerName: 'Giá gốc',
+      flex: 1,
+      renderCell: ({ row }) => <Typography>{formatMoney(row.price)}</Typography>
+    },
+    {
+      field: 'discountPrice',
+      headerName: 'Giảm giá',
+      flex: 1,
+      renderCell: ({ row }) => <Typography>{formatMoney(row.discountPrice)}</Typography>
+    },
     {
       field: 'action',
       headerName: 'Hành Động',
-      flex: 2.5,
-      renderCell: ({ row }) => (
-        <Stack direction="row" spacing={1}>
-          {/* <Button variant="contained" color="info" onClick={() => history.push(`/admin/discounts/view/${row?.id}`)}>
-            Xem Chi Tiết
-          </Button> */}
-          <Button onClick={() => handleOpenDialog(row?.id)} variant="contained" color="error">
-            Xóa sản phẩm
-          </Button>
-        </Stack>
-      ),
+      flex: 1.5,
+      renderCell: ({ row }) => {
+        const { access } = row || {};
+
+        return (
+          <Stack direction="row" spacing={2}>
+            <Link to={`/admin/products/view/${row?.id}`}>
+              <Button variant="contained" color="info">
+                Xem
+              </Button>
+            </Link>
+          </Stack>
+        );
+      },
     },
   ];
 
@@ -116,7 +126,8 @@ function AppliedProducts() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Mã Chương Trình" subtitle="Sản Phẩm Chương Trình Giảm Giá" />
         <Box>
-          <AddProdDiscountBtn />
+          {/* eslint-disable-next-line react/jsx-no-bind */}
+          <AddProdDiscountBtn productIds={selectedIds} discountCode={discountCode} callBackFun={fetchProdDiscount} />
         </Box>
       </Box>
       <Box
@@ -183,7 +194,11 @@ function AppliedProducts() {
         <DataGrid
           rows={discounts}
           columns={columns}
-          getRowId={(row) => row.id}
+          selectionModel={selectedIds}
+          pageSize={discounts.length}
+          onSelectionModelChange={handleSelectionModelChange}
+          checkboxSelection
+          disableRowSelectionOnClick
         />
       </Box>
     </Box>

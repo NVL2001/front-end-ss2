@@ -23,8 +23,7 @@ import { APIRoutes } from "../../../constants/APIRoutes";
 function AddProductFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
-
-  const boxColor = theme.palette.mode === 'dark' ? 'dark' : 'white';
+  const colors = tokens(theme.palette.mode);
 
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
@@ -69,9 +68,6 @@ function AddProductFormComponent() {
 
           try {
             const formData = new FormData();
-            // const enc = new TextEncoder();
-            // const blob = images.map((im) => new Blob([new Uint8Array(im)], { type: "image/jpeg" }))[0];
-            // const blob = new Blob([enc.encode(images[0])], { type: "image/jpeg" });
             formData.append('name', values.name);
             formData.append('description', values.description);
             formData.append('price', values.price);
@@ -95,14 +91,17 @@ function AddProductFormComponent() {
         {({
           values, errors, touched, handleBlur, handleChange, submitForm
         }) => (
-          <Form>
+          <Form
+            style={{
+              background: colors.primary[400]
+            }}
+          >
             <Box
               display="grid"
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                backgroundColor: boxColor,
               }}
             >
               <TextField
@@ -253,7 +252,7 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
             {/* </Button> */}
             {imageForPreview.length < 6 && (
             <Button variant="contained" onClick={handleAddMore}>
-              Thêm mới
+              Chọn ảnh
             </Button>
             )}
           </InputLabel>

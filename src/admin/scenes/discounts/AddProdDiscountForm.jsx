@@ -4,7 +4,20 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable max-len */
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Input,
+  Avatar,
+  Typography,
+  Menu,
+  styled,
+  alpha,
+  useTheme
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -21,6 +34,7 @@ import { AdminLayout } from "../../../layout/AdminLayout";
 import { tokens } from "../../theme";
 import { addProductNewAPI, getListProductAPI } from "../../API/ProductAPI";
 import { addProdToDiscountAPI, getListDiscountAPI } from "../../API/DiscountAPI";
+import { StyledMenu } from "../../../utils/components/StyledMenu";
 
 function AddProdDiscountFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -30,6 +44,8 @@ function AddProdDiscountFormComponent() {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [discount, setDiscount] = useState();
   const [selectedDiscount, setSelectedDiscount] = useState();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const fetchListDiscount = function () {
     getListDiscountAPI().then((response) => {
@@ -75,7 +91,9 @@ function AddProdDiscountFormComponent() {
   }, []);
 
   return (
-    <Box m="20px">
+    <Box
+      m="20px"
+    >
       <Header title="Thêm Sản Phẩm Vào Chương Trình Giảm Giá" />
 
       <Formik
@@ -103,7 +121,10 @@ function AddProdDiscountFormComponent() {
         {({
           values, errors, touched, handleBlur, handleChange, handleSubmit
         }) => (
-          <Form>
+          <Form style={{
+            background: colors.primary[400]
+          }}
+          >
             <Box
               display="grid"
               gap="30px"
