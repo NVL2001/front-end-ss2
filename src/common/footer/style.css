@@ -23,14 +23,7 @@ footer .img {
   border-radius: 5px;
 }
 
-footer .img i {
-  font-size: 20px;
-  margin: 5px;
-}
 
-footer .img span {
-  margin-top: 5px;
-}
 
 footer p {
   font-size: 14px;
@@ -44,8 +37,20 @@ footer h2 {
 }
 
 footer li {
+  color: #bcbcbc;
+
   margin-bottom: 10px;
   opacity: 0.5;
+}
+
+footer a {
+  text-decoration: none;
+  color: #bcbcbc;
+
+}
+
+footer a:hover {
+  color: #ffffff;
 }
 
 .logo,
@@ -56,4 +61,5 @@ footer li {
 .logo img {
   width: 200px;
   height: auto;
+  margin: 0 auto;
 }

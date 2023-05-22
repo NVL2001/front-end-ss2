@@ -304,7 +304,6 @@ function MakeOrder() {
                 </label>
               </div>
             </div>
-            <p>* Phí ship sẽ được thông báo sau khi đặt hàng!</p>
           </form>
         </div>
         {/* order summary */}
