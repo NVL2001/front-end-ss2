@@ -96,7 +96,7 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
             {/* </Button> */}
             {imageForPreview.length < 6 && (
             <Button variant="contained" onClick={handleAddMore}>
-              Thêm mới
+              Thêm Ảnh
             </Button>
             )}
           </InputLabel>
