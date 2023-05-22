@@ -251,7 +251,7 @@ export function RegisterModal({ open, onClose }) {
                 >
                   Đăng ký
                 </Button>
-                <Button>Đã có tài khoản? Đăng nhập ngay!</Button>
+                {/* <Button>Đã có tài khoản? Đăng nhập ngay!</Button> */}
                 {/* <Grid container>
                   <Grid item>
                     <Typography>Đã có tài khoản? Đăng nhập ngay!</Typography>

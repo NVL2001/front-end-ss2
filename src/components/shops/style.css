@@ -256,3 +256,38 @@ select {
   top: 0;
   margin-right: 50px;
 }
+
+/* respopnsive */
+@media screen and (max-width: 768px) {
+  .product-content.grid1 {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .product.mtop {
+    margin: 0;
+    width: auto;
+  }
+
+  .product.mtop h3,
+  .product.mtop span {
+    font-size: 12px;
+  }
+
+  .product.mtop span {}
+
+  .price i {
+    padding: 5px;
+  }
+
+  .box {
+    max-width: 100%;
+
+  }
+
+  .shop.background {
+    margin: 0;
+  }
+}

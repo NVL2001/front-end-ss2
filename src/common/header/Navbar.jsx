@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { Menu, MenuItem } from "@mui/material";
 import { toast } from "react-toastify";
 import { Link, useLocation, useHistory } from "react-router-dom";
-
 import { getCategories } from "../../api/categories";
 import { getProductsByCategory } from "../../api/products";
+/*eslint-disable*/
 
 function Navbar() {
   const location = useLocation();
+  //
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
   // Toogle Menu
-  const [MobileMenu, setMobileMenu] = useState(false);
+  const [showLinks, setShowLinks] = useState(false);
 
-  // fetch '/api/category/get-categories'
+  const handleToggle = () => {
+    setShowLinks(!showLinks);
+  };
+
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -39,12 +48,44 @@ function Navbar() {
   return (
     <header className="header">
       <div className="navlink">
-        <ul
-          className={
-            MobileMenu ? "nav-links-MobileMenu" : "link f_flex capitalize"
-          }
-          onClick={() => setMobileMenu(false)}
-        >
+        {/*  */}
+        <div className="dropdown1">
+          <button onClick={toggleDropdown} className="dropbtn">
+            Danh mục sản phẩm
+            <i className="fas fa-caret-down" />
+          </button>
+
+          {isOpen && (
+            <div className="dropdown-content1">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  to={`/category/${category.name}`}
+                  onClick={() => {
+                    handleCategoryClick(category);
+                    toggleDropdown();
+                  }}
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+        {/*  */}
+        <button className="navbar-toggle" onClick={handleToggle}>
+          {showLinks ? (
+            <i className="fas fa-times close home-btn" />
+          ) : (
+            <i className="fas fa-bars open" />
+          )}
+        </button>
+        <ul className={`navbar-links ${showLinks ? "show" : ""}`}>
+          {/* className={
+          MobileMenu ? "nav-links-MobileMenu" : "link f_flex capitalize"
+        }
+        onClick={() => setMobileMenu(true)}
+        onClick={() => setMobileMenu(!MobileMenu)} */}
           <li>
             <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Trang chủ
@@ -90,13 +131,16 @@ function Navbar() {
           </li>
         </ul>
 
-        <button className="toggle" onClick={() => setMobileMenu(!MobileMenu)}>
+        {/* <button
+          className="navbar-toggler"
+          onClick={() => setMobileMenu(!MobileMenu)}
+        >
           {MobileMenu ? (
             <i className="fas fa-times close home-btn" />
           ) : (
             <i className="fas fa-bars open" />
           )}
-        </button>
+        </button> */}
       </div>
 
       {/* </div> */}

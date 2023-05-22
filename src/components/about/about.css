@@ -26,6 +26,11 @@
     z-index: -20;
 }
 
+.timeline-image i {
+    font-size: 30px;
+    color: #ffffff;
+}
+
 #about .container--text {
     margin: 0 auto;
     max-width: 600px;

@@ -89,18 +89,12 @@ function CartComponent() {
                       ) : (
                         <span>{formatMoney(product.price)}</span>
                       )}
-                      <span>* {item.qty}</span>
-                      <span>:</span>
+                      <span>* {item.qty}</span> {"     "}
+                      <span>:</span> {"     "}
                       <span>{formatMoney(subPriceTotal)}</span>
                     </h4>
                   </div>
                   <div className="cart-items-function">
-                    <div className="removeCart">
-                      <button className="removeCart">
-                        <i className="fa-solid fa-xmark" />
-                      </button>
-                    </div>
-
                     <div className="cartControl d_flex">
                       {/* clear this item */}
                       <button

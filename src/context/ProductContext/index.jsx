@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { integerPropType } from "@mui/utils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export const ProductContext = React.createContext({});
 
@@ -24,9 +24,9 @@ export function ProductContextProvider({ children }) {
           return item;
         })
       );
-      toast.success(`+1 ${product.name}`)
+      toast.success(`+1 ${product.name}`);
     } else {
-      toast.success(`Đã thêm mới sản phẩm ${product.name} vào giỏ hàng`)
+      toast.success(`Đã thêm mới sản phẩm ${product.name} vào giỏ hàng`);
       setCartItem([...CartItem, { ...product, qty: 1 }]);
     }
   };
@@ -36,6 +36,7 @@ export function ProductContextProvider({ children }) {
 
     if (productExit.qty === 1) {
       setCartItem(CartItem.filter((item) => item.id !== product.id));
+      toast.error(`-1 ${product.name}`);
     } else {
       setCartItem(
         CartItem.map((item) =>
@@ -44,11 +45,13 @@ export function ProductContextProvider({ children }) {
             : item
         )
       );
+      toast.error(`-1 ${product.name}`);
     }
   };
   // decrease to 0 or clear this item incart
   const removeItem = (product) => {
     setCartItem(CartItem.filter((item) => item.id !== product.id));
+    toast.error(`Xóa ${product.name} khỏi giỏ hàng`);
   };
   // clear all item in cart
   const clearItem = () => {
@@ -78,7 +81,7 @@ export function ProductContextProvider({ children }) {
       removeItem,
       clearItem,
       CartItem,
-      setCartItem
+      setCartItem,
     }),
     // [CartItem, shopItems, productItems]
     [CartItem]

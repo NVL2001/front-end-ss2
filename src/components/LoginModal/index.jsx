@@ -32,8 +32,8 @@ export function LoginModal({ open, onClose }) {
   const onSubmit = useCallback(async (value) => {
     try {
       const { data } = await login(value);
-      setAxiosAuthorizeHeader(data.jwtToken)
-      const { data: userInfo } = await getUserInfo()
+      setAxiosAuthorizeHeader(data.jwtToken);
+      const { data: userInfo } = await getUserInfo();
 
       setUser({
         address: userInfo.address,
@@ -42,8 +42,8 @@ export function LoginModal({ open, onClose }) {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         phoneNumber: userInfo.phoneNumber,
-        username: userInfo.username
-      })
+        username: userInfo.username,
+      });
 
       toast.success("Đăng nhập thành công");
       const userRoles = data.roles.map((role) => role.name);
@@ -154,8 +154,9 @@ export function LoginModal({ open, onClose }) {
                 >
                   Đăng nhập
                 </Button>
-                <Typography>Quên mật khẩu?</Typography>
-                <Button>Chưa có tài khoản? Đăng ký ngay!</Button>
+                {/* <Button >
+                  Chưa có tài khoản? Đăng ký ngay!
+                </Button> */}
               </>
             )}
           />

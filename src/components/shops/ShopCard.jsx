@@ -88,8 +88,8 @@ function ShopCard({ addToCart }) {
             <div className="product-details">
               <Link to={`/product/${item.id}`}>
                 <h3>
-                  {item.name.length > 65
-                    ? `${item.name.slice(0, 65)}...`
+                  {item.name.length > 50
+                    ? `${item.name.slice(0, 50)}...`
                     : item.name}
                 </h3>
               </Link>

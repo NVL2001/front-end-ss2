@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Head() {
   return (
@@ -16,8 +16,8 @@ function Head() {
             <Link
               to="/"
               style={{
-                textDecoration: 'none',
-                color: 'white',
+                textDecoration: "none",
+                color: "white",
               }}
             >
               Rose Secret
@@ -36,9 +36,15 @@ function Head() {
             <label>Đăng nhập</label>
             <span>🏳️</span>
             <label>Đăng ký</label> */}
-          <i className="fab fa-facebook-square" />
-          <i className="fab fa-instagram-square" />
-          <i className="fab fa-twitter" />
+          <a target="blank" href="http://facebook.com/rosesecret.cosmetic">
+            <i className="fab fa-facebook-square" />
+          </a>
+          <a target="blank" href="http://instagram.com/rosesecret.cosmetic">
+            <i className="fab fa-instagram-square" />
+          </a>
+          <a target="blank" href="http://twitter.com">
+            <i className="fab fa-twitter" />
+          </a>
         </div>
       </div>
     </section>

@@ -164,3 +164,47 @@
         transform: rotate(360deg);
     }
 }
+
+/* responsive */
+
+@media (max-width: 768px) {
+    .product-detail {
+        flex-direction: column;
+        min-width: 100%;
+
+    }
+
+    .leftside,
+    .rightside {
+        width: 100%;
+        margin: 0;
+    }
+
+    .slider img {
+        display: block;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .zoom-image {
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .slider-nav {
+        position: relative;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .quantity-controls {
+        align-self: center;
+        margin: 0 auto;
+    }
+
+    .quantity-controls button {
+        color: #fff;
+        background-color: #e94560;
+    }
+}

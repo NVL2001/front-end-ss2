@@ -261,3 +261,86 @@ span.count {
 
 
 }
+
+
+@media screen and (max-width: 768px) {
+    form {
+        min-width: 100%;
+    }
+
+    .main {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .order-summary {
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .cart-list {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .item-name {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .total-detail {
+        margin: 0;
+    }
+
+    .total-detail span {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    .total-detail h1 {
+        font-size: 16px;
+    }
+
+    .total-detail p {
+        font-size: 16px;
+    }
+
+    .total-detail a {
+        font-size: 16px;
+    }
+
+    .total-detail button {
+        font-size: 16px;
+    }
+
+    .total-detail .btn {
+        padding: 5px 15px;
+    }
+
+    .total-detail .btn:hover {
+        padding: 5px 15px;
+    }
+
+    .address {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .total-detail {
+        margin: 50px 0;
+    }
+
+
+
+}

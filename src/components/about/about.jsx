@@ -97,11 +97,8 @@ function About() {
             <li className="timeline-inverted">
               <div className="timeline-image">
                 <h4>
-                  Hãy
                   <br />
-                  tham gia
-                  <br />
-                  cùng chúng tôi!
+                  <i className="fa fa-heart " />
                 </h4>
               </div>
             </li>

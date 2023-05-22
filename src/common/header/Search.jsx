@@ -1,7 +1,14 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
-import {Link, useHistory} from "react-router-dom";
-import {Button, debounce, Menu, MenuItem, Stack, Typography} from "@mui/material";
+import { Link, useHistory } from "react-router-dom";
+import {
+  Button,
+  debounce,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import logo from "../../components/assets/images/logo.png";
 import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
@@ -9,7 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useProduct } from "../../context/ProductContext";
 import axios from "axios";
 import SearchInput from "./SearchInput";
-import {APIRoutes} from "../../constants/APIRoutes";
+import { APIRoutes } from "../../constants/APIRoutes";
 
 function Search() {
   const { CartItem, clearItem, setCartItem } = useProduct();
@@ -19,19 +26,18 @@ function Search() {
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   const handelSearchProduct = debounce(async (value) => {
-    if (value === "")
-      return
+    if (value === "") return;
 
     const res = await axios.get(APIRoutes.SEARCH_PRODUCT_BY_NAME, {
       params: {
-        q: value
-      }
-    })
-    setProducts(res.data)
-  }, 500)
+        q: value,
+      },
+    });
+    setProducts(res.data);
+  }, 500);
 
   const handleOpenLoginModal = () => {
     setOpenLoginModal(true);
@@ -57,23 +63,22 @@ function Search() {
   };
 
   const handleSignOut = () => {
-
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("jwt");
     clearItem();
     setCartItem([]);
-    delete axios.defaults.headers['Authorization'];
-    history.push("/")
+    delete axios.defaults.headers["Authorization"];
+    history.push("/");
   };
 
   return (
     <section className="search">
       <div className="container c_flex">
         <div className="logo width ">
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="" />
-          </a>
+          </Link>
         </div>
 
         <div className="search-box" aria-label="search">
@@ -81,7 +86,10 @@ function Search() {
 
           {/*<i className="fa fa-search" />*/}
           {/*<input id="search" type="text" placeholder="Nhập từ tìm kiếm..." />*/}
-          <SearchInput products={products} onSearchProduct={handelSearchProduct} />
+          <SearchInput
+            products={products}
+            onSearchProduct={handelSearchProduct}
+          />
           {/* <span>All Category</span> */}
           <div className="autocom-box" />
         </div>
@@ -114,16 +122,46 @@ function Search() {
             </div>
           ) : (
             <>
-              <Button onClick={handleOpenLoginModal}>
+              <Button onClick={handleOpenLoginModal} className="buttonUser">
                 <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
-                  Login
+                  Đăng nhập
                 </Typography>
               </Button>
-              <Button onClick={handleOpenRegisterModal}>
+              <Button onClick={handleOpenRegisterModal} className="buttonUser">
                 <Typography sx={{ color: "#ffffff", textTransform: "none" }}>
-                  Sign Up
+                  Đăng ký
                 </Typography>
               </Button>
+
+              {/* responsive____________________________________ */}
+
+              <div className="loginsignup" onClick={handleClick}>
+                <i className="fa fa-user icon-circle" />
+              </div>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={!!anchorEl}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleOpenLoginModal}>
+                  {/* <Typography
+                      sx={{ color: "#ffffff", textTransform: "none" }}
+                    > */}
+                  Đăng nhập
+                  {/* </Typography> */}
+                </MenuItem>
+                <MenuItem onClick={handleOpenRegisterModal}>
+                  {/* <Typography sx={{ color: "#ffffff", textTransform: "none" }}> */}
+                  Đăng ký
+                  {/* </Typography> */}
+                </MenuItem>
+              </Menu>
+
+              {/* /////////////////////// */}
             </>
           )}
           <Link to="/cart">
