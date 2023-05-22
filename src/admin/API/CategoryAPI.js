@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-import queryString from "query-string";
+// import queryString from "query-string";
 import { api } from './api';
 
 const getListCategoryAPI = () => api('GET', 'category/get-categories', null);

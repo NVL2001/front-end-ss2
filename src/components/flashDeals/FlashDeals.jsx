@@ -1,6 +1,6 @@
-import React from 'react';
-import FlashCard from './FlashCard';
-import './style.css';
+import React from "react";
+import FlashCard from "./FlashCard";
+import "./style.css";
 
 function FlashDeals({ addToCart }) {
   return (
@@ -8,7 +8,7 @@ function FlashDeals({ addToCart }) {
       <div className="container">
         <div className="heading f_flex">
           <i className="fa fa-bolt" />
-          <h1>Flash Sale</h1>
+          <h1>Flash sale</h1>
         </div>
         <FlashCard addToCart={addToCart} />
       </div>

@@ -7,10 +7,13 @@ const register = (payload) => axios.post(APIRoutes.AUTH_REGISTER, payload);
 
 const getUserInfo = () => axios.get(APIRoutes.GET_USER_INFO);
 
+const updateUserInfo = (payload) => axios.put(APIRoutes.UPDATE_USER_INFO, payload);
+
 export {
   login,
   register,
-  getUserInfo
+  getUserInfo,
+  updateUserInfo
 };
 // export const isAuthenticate = () => {
 //   const token = localStorage.getItem('token');

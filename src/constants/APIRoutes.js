@@ -21,5 +21,7 @@ export const APIRoutes = {
   EDIT_USER_AVATAR: '/user/update-image',
   CREATE_PRODUCT: '/product/create-product',
   UPDATE_PRODUCT: '/product/update',
-  GET_ORDER_ADMIN: '/order/admin-orders'
+  GET_ORDER_ADMIN: '/order/admin-orders',
+  SEARCH_PRODUCT_BY_NAME: '/search/product-by-name',
+  UPDATE_USER_INFO: '/user/edit'
 };

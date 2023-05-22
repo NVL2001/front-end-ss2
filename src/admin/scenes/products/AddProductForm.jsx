@@ -26,8 +26,7 @@ function AddProductFormComponent() {
   const theme = useTheme();
 
   const colors = tokens(theme.palette.mode);
-
-
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
 

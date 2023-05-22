@@ -11,7 +11,7 @@ function Header() {
     <>
       <Head />
       <div className="headerAll">
-        <Search CartItem={CartItem} />
+        <Search />
         <Navbar />
       </div>
     </>

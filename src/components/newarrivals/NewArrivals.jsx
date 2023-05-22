@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Cart from './Cart';
-import './style.css';
+import Cart from "./Cart";
+import "./style.css";
 import { APIRoutes } from "../../constants/APIRoutes";
 
 function NewArrivals() {
@@ -19,10 +19,10 @@ function NewArrivals() {
         <div className="heading d_flex">
           <div className="heading-left row  f_flex">
             <img src="https://img.icons8.com/glyph-neue/64/26e07f/new.png" />
-            <h2>New Arrivals </h2>
+            <h2>Mới về</h2>
           </div>
           <div className="heading-right row ">
-            <span>View all</span>
+            <span>Xem thêm</span>
             <i className="fas fa-arrow-right" />
           </div>
         </div>

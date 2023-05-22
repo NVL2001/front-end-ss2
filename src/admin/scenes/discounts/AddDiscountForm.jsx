@@ -103,6 +103,7 @@ function AddDiscountFormComponent() {
             };
 
             createDiscountAPI(jsonBody);
+
             toast.success("Thêm chương trình giảm giá thành công.", {
               autoClose: 3000,
               hideProgressBar: false,
@@ -111,7 +112,6 @@ function AddDiscountFormComponent() {
               draggable: true,
               progress: undefined,
             });
-
           } catch (error) {
             toast.error("Thêm chương trình giảm giá thất bại. Vui lòng thử lại.", {
               position: "top-right",

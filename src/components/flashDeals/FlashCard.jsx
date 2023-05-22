@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -44,15 +44,10 @@ function FlashCard({ productItems, addToCart }) {
         <div className="box">
           <div className="product mtop">
             <div className="img">
-              <span className="discount">
-                {productItems.discount}
-                % Off
-              </span>
+              <span className="discount">{productItems.discount}% Off</span>
               <img src={productItems.cover} alt="" />
               <div className="product-like">
-                <p>{count}</p>
-                {' '}
-                <br />
+                <p>{count}</p> <br />
                 <i className="fa-regular fa-heart" onClick={increment} />
               </div>
             </div>
@@ -67,10 +62,8 @@ function FlashCard({ productItems, addToCart }) {
               </div>
               <div className="price">
                 <h4>
-                  $
-                  {productItems.price}
-                  .00
-                  {' '}
+                  ${productItems.price}
+                  .00{" "}
                 </h4>
                 {/* step : 3
                      if hami le button ma click garryo bahne

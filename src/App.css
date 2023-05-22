@@ -18,6 +18,11 @@ body {
 
 }
 
+/* button on mouse down scale 0.9 */
+button:active {
+  transform: scale(0.9);
+}
+
 .background {
   background: #f6f9fc;
   padding: 50px 0;
@@ -200,23 +205,7 @@ button {
   color: #e94560;
 }
 
-/* 
-.price button {
-  background: none;
-  color: #e94560;
-  font-size: 20px;
-  transition: 0.5s;
-  border: 1px solid rgb(3 0 71 / 9%);
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-}
 
-.price button:hover {
-  cursor: pointer;
-  background-color: #e94560;
-  color: #fff;
-} */
 
 .product-like {
   position: absolute;

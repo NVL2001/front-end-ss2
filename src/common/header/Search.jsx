@@ -1,13 +1,15 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
 import {Link, useHistory} from "react-router-dom";
-import { Button, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import {Button, debounce, Menu, MenuItem, Stack, Typography} from "@mui/material";
 import logo from "../../components/assets/images/logo.png";
 import { LoginModal } from "../../components/LoginModal";
 import { RegisterModal } from "../../components/RegisterModal";
 import { useAuth } from "../../context/AuthContext";
 import { useProduct } from "../../context/ProductContext";
 import axios from "axios";
+import SearchInput from "./SearchInput";
+import {APIRoutes} from "../../constants/APIRoutes";
 
 function Search() {
   const { CartItem, clearItem, setCartItem } = useProduct();
@@ -17,12 +19,19 @@ function Search() {
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
+  const [products, setProducts] = useState([])
 
-  // useEffect(() => {
+  const handelSearchProduct = debounce(async (value) => {
+    if (value === "")
+      return
 
-  // }, []);
-
-  const [isOpen, setIsOpen] = useState(false);
+    const res = await axios.get(APIRoutes.SEARCH_PRODUCT_BY_NAME, {
+      params: {
+        q: value
+      }
+    })
+    setProducts(res.data)
+  }, 500)
 
   const handleOpenLoginModal = () => {
     setOpenLoginModal(true);
@@ -38,10 +47,6 @@ function Search() {
 
   const handleCloseRegisterModal = () => {
     setOpenRegisterModal(false);
-  };
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
   };
 
   const handleClick = (event) => {
@@ -71,11 +76,12 @@ function Search() {
           </a>
         </div>
 
-        <div className="search-box f_flex" aria-label="search">
+        <div className="search-box" aria-label="search">
           {/* <a href="*" target="_blank" hidden /> */}
 
-          <i className="fa fa-search" />
-          <input id="search" type="text" placeholder="Nhập từ tìm kiếm..." />
+          {/*<i className="fa fa-search" />*/}
+          {/*<input id="search" type="text" placeholder="Nhập từ tìm kiếm..." />*/}
+          <SearchInput products={products} onSearchProduct={handelSearchProduct} />
           {/* <span>All Category</span> */}
           <div className="autocom-box" />
         </div>
