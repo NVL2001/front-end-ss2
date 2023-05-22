@@ -1,7 +1,6 @@
 import React, {
   useContext, useEffect, useMemo, useState,
 } from 'react';
-import jwtDecode from "jwt-decode";
 import { UserRoles } from "../../constants/UserRoles";
 
 export const AuthContext = React.createContext({});
