@@ -7,7 +7,7 @@ function Sorting() {
 
   return (
     <div className="topshop">
-      <div className="sortbar">
+      {/* <div className="sortbar">
         <div className=" pagination-dropdown">
           <select id="pagination-select">
             <option value="15">15 mỗi trang</option>
@@ -31,8 +31,7 @@ function Sorting() {
             <option value="oldest">Sắp xếp theo cũ nhất</option>
           </select>
         </div>
-        {/*  */}
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./user.css";
 import {
   Box, Card, styled, Stack, Avatar, Typography, Grid, Button, Modal
@@ -9,9 +9,13 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import HomeIcon from '@mui/icons-material/Home';
 import axios from "axios";
 import { toast } from "react-toastify";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from '@mui/icons-material/Edit';
 import { useAuth } from "../../context/AuthContext";
 import formatDate from "../../utils/formatDate";
 import { APIRoutes } from "../../constants/APIRoutes";
+import { UserEditForm } from "./UserEditForm";
+import { updateUserInfo } from "../../api/auth";
 
 const ActiveTab = {
   PERSONAL_INFORMATION: "PERSONAL_INFORMATION",
@@ -41,6 +45,8 @@ function UserProfile() {
   const [open, setOpen] = React.useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageForUpload, setImageForUpload] = useState(null);
+  const [openUserEditForm, setOpenUserEditForm] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -89,12 +95,29 @@ function UserProfile() {
     return "";
   };
 
+  const handleSubmitForm = async (value) => {
+    try {
+      await updateUserInfo({
+        id: user.id,
+        ...value
+      });
+      setOpenUserEditForm(false);
+    } catch (err) {
+      toast.error("Có gì đó sai sai, thử lại sau!!");
+    }
+  };
+
   const renderPersonalInformation = () => (
     <Box>
       <Stack rowGap={2} pb={5}>
-        <Typography variant="h2">
-          Thông tin cá nhân
-        </Typography>
+        <Stack direction="row" columnGap={2}>
+          <Typography variant="h2">
+            Thông tin cá nhân
+          </Typography>
+          <IconButton onClick={() => setOpenUserEditForm(true)}>
+            <EditIcon htmlColor="#111827" />
+          </IconButton>
+        </Stack>
         <Typography variant="body1">
           Manage your personal information, including phone numbers
           and email address where you can be contacted
@@ -308,6 +331,11 @@ function UserProfile() {
         </Stack>
       </Box>
       {renderBody()}
+      <UserEditForm
+        open={openUserEditForm}
+        onSubmit={handleSubmitForm}
+        onClose={() => setOpenUserEditForm(false)}
+      />
     </Stack>
   );
 }

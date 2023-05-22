@@ -104,10 +104,10 @@
 
 }
 
-.slider img:hover {
+/* .slider img:hover {
     transform: scale(1.1);
     transition: 0.5s;
-}
+} */
 
 /* thumbnail slide img */
 .slider-nav {
