@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   Box, Button, IconButton, Typography, useTheme,
 } from '@mui/material';
@@ -115,7 +116,7 @@ function DashboardComponent() {
             icon={<CancelIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
           />
         </Box>
-        <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
+        {/* <Box gridColumn="span 6" backgroundColor={colors.primary[400]} display="flex" alignItems="center" justifyContent="center">
           <StatBox
             title={obj.revenue ? obj.revenue.toLocaleString("vi", { style: "currency", currency: "VND" }) : 0}
             subtitle="Doanh Thu"
@@ -123,7 +124,7 @@ function DashboardComponent() {
             increase="+43%"
             icon={<AttachMoneyIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
           />
-        </Box>
+        </Box> */}
 
         {/* ROW 2 */}
       </Box>
