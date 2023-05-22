@@ -94,7 +94,7 @@ function CategoriesComponent() {
             onClick={() => {
               history.push({
                 pathname: "/admin/category/related-products",
-                state: { categoryName: row.name }
+                state: { categoryName: row.name, categoryId: row.id }
               });
             }}
           >
