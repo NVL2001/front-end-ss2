@@ -156,6 +156,9 @@ function ProductsComponent() {
               variant="contained"
               color="error"
               onClick={() => handleOpenDialog(row?.id)}
+              style={{
+                color: theme.palette.mode === 'dark' ? 'black' : 'white',
+              }}
             >
               Xóa
             </Button>
@@ -211,7 +214,7 @@ function ProductsComponent() {
           onClose={handleCloseDialog}
           PaperProps={{
             elevation: 8,
-            style: { backgroundColor: '#ffffff' },
+            style: { background: colors.primary[400] },
           }}
         >
           <DialogTitle disableTypography>
@@ -226,7 +229,7 @@ function ProductsComponent() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} color="primary">
-              <Typography variant="button" style={{ color: 'black' }}>
+              <Typography variant="button" style={{ color: colors.grey[400] }}>
                 HỦY
               </Typography>
             </Button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box, Typography, useTheme, Dialog,
   DialogTitle,
@@ -43,20 +43,21 @@ function EditCategoryDialog({
     updateCategoryAPI(id, values.newName)
       .then(() => {
         toast.success("Danh Mục Đã Được Cập Nhật");
+        fetchListCategory();
         onClose();
       })
       .catch((error) => {
         toast.error(`Cập Nhật Danh Mục Bị Lỗi: ${error.message}`);
       });
   };
-  fetchListCategory();
+
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
       PaperProps={{
         elevation: 8,
-        style: { backgroundColor: '#ffffff' },
+        style: { backgroundColor: 'colors.primary[400]' },
       }}
     >
       <DialogTitle>Chỉnh Sửa Danh Mục</DialogTitle>
@@ -66,8 +67,14 @@ function EditCategoryDialog({
         onSubmit={handleEditCategorySubmit}
       >
         {({ errors, touched }) => (
-          <Form style={{ backgroundColor: '#your_color' }}>
-            <DialogContent>
+          <Form style={{
+            backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary[400] : theme.palette.common.white,
+          }}
+          >
+            <DialogContent style={{
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary[400] : theme.palette.common.white,
+            }}
+            >
               <Field
                 name="newName"
                 as={TextField}
@@ -78,7 +85,7 @@ function EditCategoryDialog({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose} color="primary">
+              <Button onClick={onClose} style={{ backgroundColor: "#ffffff" }}>
                 Hủy
               </Button>
               <Button type="submit" color="primary" autoFocus>
