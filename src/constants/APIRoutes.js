@@ -23,5 +23,6 @@ export const APIRoutes = {
   UPDATE_PRODUCT: '/product/update',
   GET_ORDER_ADMIN: '/order/admin-orders',
   SEARCH_PRODUCT_BY_NAME: '/search/product-by-name',
-  UPDATE_USER_INFO: '/user/edit'
+  UPDATE_USER_INFO: '/user/edit',
+  CLIENT_SIDE_SEARCH: '/search/get-all'
 };
