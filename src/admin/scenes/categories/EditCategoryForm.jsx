@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box, Typography, useTheme, Dialog,
   DialogTitle,
@@ -43,13 +43,14 @@ function EditCategoryDialog({
     updateCategoryAPI(id, values.newName)
       .then(() => {
         toast.success("Danh Mục Đã Được Cập Nhật");
+        fetchListCategory();
         onClose();
       })
       .catch((error) => {
         toast.error(`Cập Nhật Danh Mục Bị Lỗi: ${error.message}`);
       });
   };
-  fetchListCategory();
+
   return (
     <Dialog
       open={isOpen}

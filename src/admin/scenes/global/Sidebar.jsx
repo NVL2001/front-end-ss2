@@ -181,8 +181,8 @@ function Sidebar() {
             >
               Tài Khoản
             </Typography>
-            {/* <Item title="Cài Đặt Tài Khoản" to="/admin/form" icon={<ManageAccountsOutlinedIcon />} selected={selected} setSelected={setSelected} />
-            <Item title="Quản Lý Tài Khoản" to="/admin/team" icon={<ManageAccountsOutlinedIcon />} selected={selected} setSelected={setSelected} /> */}
+            <Item title="Cài Đặt Tài Khoản" to="/admin/form" icon={<ManageAccountsOutlinedIcon />} selected={selected} setSelected={setSelected} />
+            <Item title="Quản Lý Tài Khoản" to="/admin/team" icon={<ManageAccountsOutlinedIcon />} selected={selected} setSelected={setSelected} />
             <MenuItem
               onClick={handleSignOut}
               style={{
