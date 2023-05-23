@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import axios from "axios";
 import { tokens } from '../../theme';
 import { mockDataInvoices } from '../../data/mockData';
 import Header from '../../components/Header';
@@ -41,6 +42,17 @@ function DiscountsComponent() {
     setIsDialogOpen(false);
   };
 
+  const handleDeleteDiscount = (id) => {
+    axios.post(`${axios.defaults.baseURL}/discount/delete`, {
+      id
+    })
+      .then((response) => {
+        alert(response.data);
+        fetchListDiscount();
+      })
+      .catch((err) => alert(err.response.data));
+  };
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const validationSchema = Yup.object({
@@ -59,6 +71,14 @@ function DiscountsComponent() {
       field: 'discountPercent',
       headerName: '% Giảm Giá',
       flex: 0.5,
+    },
+    {
+      field: 'createdDate',
+      headerName: 'Ngày Tạo',
+      flex: 0.75,
+      renderCell: ({ row }) => (
+        <Typography>{formatDate(row.createdDate)}</Typography>
+      )
     },
     {
       field: 'startDate',
@@ -120,7 +140,10 @@ function DiscountsComponent() {
             Xem Chi Tiết
           </Button>
           <Button onClick={() => handleOpenDialog(row?.code)} variant="contained" color="success">
-            Thay Đổi Chương Trình
+            Thay Đổi
+          </Button>
+          <Button variant="contained" color="error" onClick={() => handleDeleteDiscount(row.code)}>
+            Xóa
           </Button>
         </Stack>
       ),
@@ -195,7 +218,7 @@ function DiscountsComponent() {
         >
           <DialogTitle disableTypography>
             <Typography variant="h6" color="warning">
-              THAY ĐỔI THÔNG TIN CHƯƠNG TRÌNH
+              THAY ĐỔI
             </Typography>
           </DialogTitle>
           <Formik

@@ -11,7 +11,9 @@ function AddProdDiscountBtn(props) {
   const { callBackFun, productIds, discountCode } = props;
 
   const handleAddProdDiscountClick = () => {
-    history.push('/admin/product-discount/add');
+    history.push('/admin/product-discount/add', {
+      id: discountCode.id
+    });
   };
 
   function removeDiscountFromProduct(proId) {

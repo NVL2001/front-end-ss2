@@ -131,6 +131,7 @@ function CategoriesComponent() {
             id={categoryIdToEdit}
             fetchListCategory={fetchListCategory}
           />
+
         </Box>
       </Box>
       <Box
@@ -196,8 +197,6 @@ function CategoriesComponent() {
         <DataGrid
           rows={categories}
           columns={columns}
-          pagination={false}
-          rowsPer
           pageSize={categories.length} // Set the pageSize to the total number of rows
           rowsPerPageOptions={[categories.length]}
         />
