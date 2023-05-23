@@ -75,6 +75,19 @@ export function RegisterModal({ open, onClose }) {
             alignItems: "center",
           }}
         >
+          {/* BUTTON CLOSE */}
+          <Button
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              margin: 1,
+            }}
+            onClick={onClose}
+          >
+            <Typography>Đóng</Typography>
+          </Button>
+
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>

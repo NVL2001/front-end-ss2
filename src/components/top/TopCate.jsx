@@ -22,8 +22,8 @@ function TopCate() {
             <h2>Top Danh mục</h2>
           </div>
           <div className="heading-right row ">
-            <span>Xem thêm</span>
-            <i className="fas fa-arrow-right" />
+            {/* <span>Xem thêm</span>
+            <i className="fas fa-arrow-right" /> */}
           </div>
         </div>
         <TopCart data={categories} />

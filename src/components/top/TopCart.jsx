@@ -1,7 +1,7 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Grid } from "@mui/material";
@@ -23,36 +23,52 @@ function TopCart(props) {
     }
   };
   const { data } = props;
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-  };
+  // const settings = {
+  //   dots: false,
+  //   infinite: true,
+  //   slidesToShow: 3,
+  //   slidesToScroll: 1,
+  //   autoplay: true,
+  // };
   return (
-  // <Slider {...settings}>
-    <Grid container spacing={2}>
+    <div className="topCateContainer">
       {data.map((value) => (
-
-        <Grid
-          item
-          xs={2}
-          key={value.id}
-          onClick={
-            () => (handleCategoryClick(value.name))
-        }
+        <div
+          className="itemContainer"
+          onClick={() => handleCategoryClick(value.name)}
         >
           <Link to>
-            <Item color={generateColorFromString(value.name)}>
+            <Item
+              color={generateColorFromString(value.name)}
+              className="topCateItem"
+            >
               {value.name}
             </Item>
           </Link>
-        </Grid>
-
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 }
 
 export default TopCart;
+// <Grid container spacing={2}>
+//   {data.map((value) => (
+//     <Grid
+//       item
+//       xs={2}
+//       key={value.id}
+//       onClick={() => handleCategoryClick(value.name)}
+//       className="topCateContainer"
+//     >
+//       <Link to>
+//         <Item
+//           color={generateColorFromString(value.name)}
+//           className="topCateItem"
+//         >
+//           {value.name}
+//         </Item>
+//       </Link>
+//     </Grid>
+//   ))}
+// </Grid>

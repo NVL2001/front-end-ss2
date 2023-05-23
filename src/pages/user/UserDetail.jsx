@@ -1,16 +1,24 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./user.css";
 import {
-  Box, Card, styled, Stack, Avatar, Typography, Grid, Button, Modal
+  Box,
+  Card,
+  styled,
+  Stack,
+  Avatar,
+  Typography,
+  Grid,
+  Button,
+  Modal,
 } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import HomeIcon from "@mui/icons-material/Home";
 import axios from "axios";
 import { toast } from "react-toastify";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { useAuth } from "../../context/AuthContext";
 import formatDate from "../../utils/formatDate";
 import { APIRoutes } from "../../constants/APIRoutes";
@@ -20,21 +28,21 @@ import { updateUserInfo } from "../../api/auth";
 const ActiveTab = {
   PERSONAL_INFORMATION: "PERSONAL_INFORMATION",
   ORDER_HISTORY: "ORDER_HISTORY",
-  VOUCHERS: "VOUCHERS"
+  VOUCHERS: "VOUCHERS",
 };
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -50,9 +58,7 @@ function UserProfile() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   if (!user) {
     return <div />;
@@ -71,20 +77,24 @@ function UserProfile() {
   const handleSubmitImage = async () => {
     try {
       const formData = new FormData();
-      formData.append('image', imageForUpload);
+      formData.append("image", imageForUpload);
       const config = {
         headers: {
           ...axios.defaults.headers,
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       };
 
-      const response = await axios.post(APIRoutes.EDIT_USER_AVATAR, formData, config);
+      const response = await axios.post(
+        APIRoutes.EDIT_USER_AVATAR,
+        formData,
+        config
+      );
       toast.success("Upload avatar thành công");
       setUserAvatar(response.data);
       handleClose();
     } catch (error) {
-      console.error('Error occurred while uploading image:', error);
+      console.error("Error occurred while uploading image:", error);
     }
   };
 
@@ -99,7 +109,7 @@ function UserProfile() {
     try {
       await updateUserInfo({
         id: user.id,
-        ...value
+        ...value,
       });
       setOpenUserEditForm(false);
     } catch (err) {
@@ -111,57 +121,68 @@ function UserProfile() {
     <Box>
       <Stack rowGap={2} pb={5}>
         <Stack direction="row" columnGap={2}>
-          <Typography variant="h2">
-            Thông tin cá nhân
-          </Typography>
+          <Typography variant="h2">Thông tin cá nhân</Typography>
           <IconButton onClick={() => setOpenUserEditForm(true)}>
             <EditIcon htmlColor="#111827" />
           </IconButton>
         </Stack>
         <Typography variant="body1">
-          Manage your personal information, including phone numbers
-          and email address where you can be contacted
+          Quản lý thông tin cá nhân của bạn, bao gồm số điện thoại và email địa
+          chỉ nơi bạn có thể được liên lạc
         </Typography>
       </Stack>
-      <Grid container spacing={4}>
-        <Grid item xs={6}>
+      <Grid container spacing={4} className="right--container">
+        <Grid item xs={6} className="right--item">
           <StyledInforCard>
             <Stack direction="row" justifyContent="space-between">
               <Stack rowGap={1} alignItems="flex-start">
-                <Typography variant="h3">Username</Typography>
+                <Typography variant="h3">Tên đăng nhập</Typography>
                 <Typography variant="body1">{user.username}</Typography>
               </Stack>
-              <AccountCircleIcon fontSize="large" htmlColor="rgb(229, 140, 115)" />
+              <AccountCircleIcon
+                fontSize="large"
+                htmlColor="rgb(229, 140, 115)"
+              />
             </Stack>
           </StyledInforCard>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} className="right--item">
           <StyledInforCard>
             <Stack direction="row" justifyContent="space-between">
               <Stack rowGap={1} alignItems="flex-start">
                 <Typography variant="h3">Ngày sinh</Typography>
-                <Typography variant="body1">{user.dob ? formatDate(user.dob).split(" ")[1] : "N/A"}</Typography>
+                <Typography variant="body1">
+                  {user.dob ? formatDate(user.dob).split(" ")[1] : "N/A"}
+                </Typography>
               </Stack>
-              <CalendarMonthIcon fontSize="large" htmlColor="rgb(229, 140, 115)" />
+              <CalendarMonthIcon
+                fontSize="large"
+                htmlColor="rgb(229, 140, 115)"
+              />
             </Stack>
           </StyledInforCard>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} className="right--item">
           <StyledInforCard>
             <Stack direction="row" justifyContent="space-between">
               <Stack rowGap={1} alignItems="flex-start">
                 <Typography variant="h3">Số điện thoại</Typography>
-                <Typography variant="body1">{user.phoneNumber ?? "N/A"}</Typography>
+                <Typography variant="body1">
+                  {user.phoneNumber ?? "N/A"}
+                </Typography>
               </Stack>
-              <AlternateEmailIcon fontSize="large" htmlColor="rgb(229, 140, 115)" />
+              <AlternateEmailIcon
+                fontSize="large"
+                htmlColor="rgb(229, 140, 115)"
+              />
             </Stack>
           </StyledInforCard>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} className="right--item">
           <StyledInforCard>
             <Stack direction="row" justifyContent="space-between">
               <Stack rowGap={1} alignItems="flex-start">
-                <Typography variant="h3">Address</Typography>
+                <Typography variant="h3">Địa chỉ</Typography>
                 <Typography variant="body1">{user.address ?? "N/A"}</Typography>
               </Stack>
               <HomeIcon fontSize="large" htmlColor="rgb(229, 140, 115)" />
@@ -175,19 +196,15 @@ function UserProfile() {
   const renderOrderHistory = () => {
     const commonHeader = (
       <Stack rowGap={2} pb={5}>
-        <Typography variant="h2">
-          Order History
-        </Typography>
-        <Typography variant="body1">
-          See what you have ordered
-        </Typography>
+        <Typography variant="h2">Lịch sử đặt hàng</Typography>
+        <Typography variant="body1">Bạn đã đặt hàng những gì</Typography>
       </Stack>
     );
     if (!user.shoppingHistory || user.shoppingHistory.length === 0) {
       return (
         <Box>
           {commonHeader}
-          <Typography variant="body1">There is no order yet!</Typography>
+          <Typography variant="body1">Chưa có đơn hàng!</Typography>
         </Box>
       );
     }
@@ -210,19 +227,15 @@ function UserProfile() {
   const renderVouchers = () => {
     const commonHeader = (
       <Stack rowGap={2} pb={5}>
-        <Typography variant="h2">
-          Vouchers
-        </Typography>
-        <Typography variant="body1">
-          See all your vouchers
-        </Typography>
+        <Typography variant="h2">Vouchers</Typography>
+        <Typography variant="body1">Xem các mã khuyến mãi</Typography>
       </Stack>
     );
     if (!user.vouchers || user.vouchers.length === 0) {
       return (
         <Box>
           {commonHeader}
-          <Typography variant="body1">You have no vouchers!</Typography>
+          <Typography variant="body1">Bạn chưa có mã khuyến mãi!</Typography>
         </Box>
       );
     }
@@ -254,12 +267,13 @@ function UserProfile() {
 
   return (
     <Stack direction="row" maxWidth="lg" margin="0 auto" py={12} columnGap={8}>
-      <Box>
-        <StyledAvatar alt="user avatar" src={axios.defaults.baseURL + user.avatarURL ?? ""} />
+      <Box className="left__user--container">
+        <StyledAvatar
+          alt="user avatar"
+          src={axios.defaults.baseURL + user.avatarURL ?? ""}
+        />
         <Button onClick={handleOpen}>
-          {
-                        user.avatarURL ? "Sửa ảnh" : "Chọn ảnh"
-                    }
+          {user.avatarURL ? "Sửa ảnh" : "Chọn ảnh"}
         </Button>
         <Modal
           open={open}
@@ -279,10 +293,10 @@ function UserProfile() {
                   component="span"
                   onClick={handleSubmitImage}
                   style={{
-                    marginBottom: 3
+                    marginBottom: 3,
                   }}
                 >
-                  Upload ảnh
+                  Tải ảnh lên
                 </Button>
               </>
             ) : (
@@ -292,7 +306,7 @@ function UserProfile() {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               id="upload-image"
             />
             <label htmlFor="upload-image">
@@ -309,21 +323,30 @@ function UserProfile() {
         <Stack rowGap={2} pt={6}>
           <Typography
             variant="h3"
-            sx={{ cursor: "pointer", color: changeActiveColor(ActiveTab.PERSONAL_INFORMATION) }}
+            sx={{
+              cursor: "pointer",
+              color: changeActiveColor(ActiveTab.PERSONAL_INFORMATION),
+            }}
             onClick={() => changeTab(ActiveTab.PERSONAL_INFORMATION)}
           >
-            Personal Information
+            Thông tin cá nhân
           </Typography>
           <Typography
             variant="h3"
-            sx={{ cursor: "pointer", color: changeActiveColor(ActiveTab.ORDER_HISTORY) }}
+            sx={{
+              cursor: "pointer",
+              color: changeActiveColor(ActiveTab.ORDER_HISTORY),
+            }}
             onClick={() => changeTab(ActiveTab.ORDER_HISTORY)}
           >
-            Order History
+            Lịch sử đặt hàng
           </Typography>
           <Typography
             variant="h3"
-            sx={{ cursor: "pointer", color: changeActiveColor(ActiveTab.VOUCHERS) }}
+            sx={{
+              cursor: "pointer",
+              color: changeActiveColor(ActiveTab.VOUCHERS),
+            }}
             onClick={() => changeTab(ActiveTab.VOUCHERS)}
           >
             Vouchers
@@ -350,5 +373,5 @@ const StyledAvatar = styled(Avatar)(() => ({
 const StyledInforCard = styled(Card)(() => ({
   borderRadius: 20,
   boxShadow: "none",
-  border: "1px solid rgba(0, 0, 0, 0.1)"
+  border: "1px solid rgba(0, 0, 0, 0.1)",
 }));

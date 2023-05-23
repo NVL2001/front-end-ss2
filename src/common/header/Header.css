@@ -468,7 +468,7 @@ header ul li a.active {
 
   .search-box {
     height: 50px;
-    width: 50%;
+    width: 55%;
   }
 
   .wrapper>.container {
@@ -490,6 +490,11 @@ header ul li a.active {
 
   .search i {
     margin: 0;
+  }
+
+  #product-search {
+    margin: 5px;
+    place-content: center;
   }
 
 

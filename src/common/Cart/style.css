@@ -175,10 +175,13 @@ section.cart-items {
   .cart-details {
     line-height: 1.5;
     font-size: smaller;
+    text-align: center;
+    margin-top: 0;
+
   }
 
-  .cart-details {
-    text-align: center;
+  .cart-items .cart-details>h3 {
+    margin-top: 0;
   }
 
   section.cart-items {
@@ -188,7 +191,7 @@ section.cart-items {
   .cart-items>.container {
     display: flex;
     flex-direction: column;
-    min-width: 100%;
+    min-width: 98%;
   }
 
   .cart-items .cart-details {

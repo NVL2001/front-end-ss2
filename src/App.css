@@ -257,9 +257,12 @@ button {
 /*----- heading -------*/
 .heading .heading-left i {
   font-size: 30px;
+
 }
 
 .heading .heading-left h2 {
+  display: inline-block;
+  min-width: max-content;
   font-size: 25px;
   margin: 5px;
 }

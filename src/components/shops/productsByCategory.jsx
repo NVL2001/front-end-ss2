@@ -38,7 +38,7 @@ function ProductList({ products }) {
               </div>
             </Link>
             <hr />
-            <div className="product-details">
+            {/* <div className="product-details">
               <Link to={`/product/${product.id}`}>
                 <h3>
                   {product.name.length > 50
@@ -60,6 +60,34 @@ function ProductList({ products }) {
                     </div>
                   ) : (
                     <span>{formatMoney(product.price)}</span>
+                  )}
+                </h4>
+
+                <button className="incCart" onClick={() => addToCart(product)}>
+                  <i className="fa fa-plus" />
+                </button>
+              </div>
+            </div> */}
+            <div className="product-details">
+              <Link to={`/product/${product.id}`}>
+                <h3>
+                  {product.name.length > 50
+                    ? `${product.name.slice(0, 50)}...`
+                    : product.name}
+                </h3>
+              </Link>
+
+              <div className="price">
+                <h4>
+                  {product.discount ? (
+                    <div>
+                      <p style={{ textDecoration: "line-through" }}>
+                        {formatMoney(product.price)}
+                      </p>
+                      <p>{formatMoney(product.discountPrice)}</p>
+                    </div>
+                  ) : (
+                    <p>{formatMoney(product.price)}</p>
                   )}
                 </h4>
 

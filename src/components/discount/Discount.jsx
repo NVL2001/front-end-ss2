@@ -21,8 +21,8 @@ function Discount() {
             <h2>Khuyến mại lớn</h2>
           </div>
           <div className="heading-right row ">
-            <span>Xem thêm</span>
-            <i className="fas fa-arrow-right" />{" "}
+            {/* <span>Xem thêm</span>
+            <i className="fas fa-arrow-right" />{" "} */}
           </div>
         </div>
         <Dcard data={discountPro} />

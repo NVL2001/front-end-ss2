@@ -1,0 +1,33 @@
+.discountContainer {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.box-product {
+    width: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgb(43 52 69 / 10%) 0px 4px 16px;
+
+}
+
+.box-product .img {
+    margin: 0 auto;
+}
+
+.box-product .infor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}

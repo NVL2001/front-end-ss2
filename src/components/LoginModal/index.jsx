@@ -80,6 +80,19 @@ export function LoginModal({ open, onClose }) {
             marginTop: 2,
           }}
         >
+          {" "}
+          {/* BUTTON CLOSE */}
+          <Button
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              margin: 1,
+            }}
+            onClick={onClose}
+          >
+            <Typography>Đóng</Typography>
+          </Button>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main", margin: "0 auto" }}>
             <LockOutlinedIcon />
           </Avatar>
