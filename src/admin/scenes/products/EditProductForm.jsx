@@ -6,7 +6,7 @@
 /* eslint-disable max-len */
 import { useParams } from "react-router";
 import {
-  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid
+  Box, Button, TextField, Select, MenuItem, FormControl, InputLabel, Input, Avatar, Typography, Grid, useTheme
 } from "@mui/material";
 import {
   Formik, Form, Field, formik
@@ -142,6 +142,8 @@ function ImageUpload({ onImagesSelected, imagesForUpload }) {
 
 function EditProductFormComponent() {
   const history = useHistory();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const productId = useParams();
   const [categories, setCategories] = useState([]);
@@ -262,7 +264,10 @@ function EditProductFormComponent() {
         {({
           values, errors, touched, handleBlur, handleChange, submitForm
         }) => (
-          <Form>
+          <Form style={{
+            background: colors.primary[400]
+          }}
+          >
             <Box
               display="grid"
               gap="30px"

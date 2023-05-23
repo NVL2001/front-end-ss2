@@ -71,7 +71,12 @@ function AddCategoryFormComponent() {
           handleChange,
           handleSubmit,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <form
+            style={{
+              background: colors.primary[400]
+            }}
+            onSubmit={handleSubmit}
+          >
             <Box
               display="grid"
               gap="30px"
