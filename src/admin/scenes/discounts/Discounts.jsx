@@ -9,6 +9,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Field, Form, Formik } from 'formik';
+import { toast } from "react-toastify";
 import * as Yup from 'yup';
 import axios from "axios";
 import { tokens } from '../../theme';
@@ -47,10 +48,10 @@ function DiscountsComponent() {
       id
     })
       .then((response) => {
-        alert(response.data);
+        toast.success(response.data);
         fetchListDiscount();
       })
-      .catch((err) => alert(err.response.data));
+      .catch((err) => toast.error(err.response.data));
   };
 
   const theme = useTheme();
