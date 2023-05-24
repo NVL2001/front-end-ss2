@@ -1,7 +1,8 @@
 # Getting Started 
 
-# Class SS2-04
-# Member of the groups:
+## Class SS2-04
+
+## Member of the groups:
 - Nguyễn Nam Trường 1901040234
 - Nguyen Văn Lập 1901040121
 - Nguyễn Hoàng Long 1901040127
