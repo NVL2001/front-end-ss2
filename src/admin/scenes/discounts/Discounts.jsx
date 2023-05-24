@@ -117,7 +117,7 @@ function DiscountsComponent() {
 
         if (currentDate <= startDate) {
           return (
-            <Typography style={{ color: 'blue' }}>
+            <Typography>
               Chưa bắt đầu
             </Typography>
           );
@@ -227,14 +227,20 @@ function DiscountsComponent() {
             onSubmit={handleEditDiscountSubmit}
           >
             {({ errors, touched }) => (
-              <Form>
-                <DialogContent>
+              <Form style={{
+                background: colors.primary[400]
+              }}
+              >
+                <DialogContent sx={{ background: colors.primary[400] }}>
                   <Field
                     name="startDate"
                     type="text"
                     label="Ngày Bắt Đầu"
                     error={touched.startDate && errors.startDate}
                     helperText={touched.startDate && errors.startDate}
+                    sx={{
+                      background: colors.primary[400]
+                    }}
                   />
 
                 </DialogContent>
@@ -245,6 +251,9 @@ function DiscountsComponent() {
                     label="Ngày Kết Thúc"
                     error={touched.endDate && errors.endDate}
                     helperText={touched.endDate && errors.endDate}
+                    sx={{
+                      background: colors.primary[400]
+                    }}
                   />
                 </DialogContent>
 
