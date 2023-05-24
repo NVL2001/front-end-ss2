@@ -258,7 +258,7 @@ function AddDiscountFormComponent() {
               </Box>
             </Form>
             <div style={{ width: '100%' }}>
-              <Typography marginLeft={3}>Sản phẫm được chọn để thêm vào chương trình</Typography>
+              <Typography marginLeft={3}>Sản phẩm được chọn để thêm vào chương trình</Typography>
               <Box
                 sx={{
                   display: 'flex',

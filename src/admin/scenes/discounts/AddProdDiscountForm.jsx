@@ -44,6 +44,7 @@ function AddProdDiscountFormComponent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const location = useLocation();
   const discountId = location.state.id;
+  const history = useHistory();
   const [products, setProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -113,6 +114,7 @@ function AddProdDiscountFormComponent() {
               draggable: true,
               progress: undefined,
             });
+            setTimeout(() => history.push('/admin/discounts'), 1000);
           } catch (error) {
             toast.error("Thêm sản phẩm thất bại. Vui lòng thử lại.", {
               position: "top-right",
@@ -147,7 +149,7 @@ function AddProdDiscountFormComponent() {
             </Form>
 
             <div style={{ width: '100%' }}>
-              <Typography marginLeft={3}>Sản phẫm được chọn để thêm vào chương trình</Typography>
+              <Typography marginLeft={3}>Sản phẩm được chọn để thêm vào chương trình</Typography>
               <Box
                 sx={{
                   display: 'flex',
