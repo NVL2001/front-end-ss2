@@ -51,6 +51,10 @@ function ProductsComponent() {
     });
   };
 
+  const handleAdddProductClick = () => {
+    history.push('/admin/products/add');
+  };
+
   const handleAddProductClick = () => {
     setIsAddingProduct(true);
   };
@@ -173,7 +177,19 @@ function ProductsComponent() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Sản Phẩm" subtitle="Tất Cả Sản Phẩm" />
         <Box>
-          <AddProductButton />
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              borderRadius: 0
+            }}
+            onClick={handleAdddProductClick}
+          >
+            Thêm sản phẩm
+          </Button>
         </Box>
       </Box>
       <Box

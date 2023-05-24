@@ -21,7 +21,6 @@ function AddProdDiscountBtn(props) {
       discountCode: discountCode.id,
       productIds
     };
-    console.log(body);
     axios.post(`${axios.defaults.baseURL}/discount/remove-applied-prouducts`, body)
       .then((r) => {
         alert("Xóa thành công");

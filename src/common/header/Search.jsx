@@ -17,6 +17,8 @@ import { useProduct } from "../../context/ProductContext";
 import axios from "axios";
 import SearchInput from "./SearchInput";
 import { APIRoutes } from "../../constants/APIRoutes";
+import jwt_decode from 'jwt-decode';
+import {UserRoles} from "../../constants/UserRoles";
 
 function Search() {
   const { CartItem, clearItem, setCartItem } = useProduct();
@@ -54,6 +56,20 @@ function Search() {
   const handleCloseRegisterModal = () => {
     setOpenRegisterModal(false);
   };
+
+  function isJwtAdmin() {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+     const decodedJwt = jwt_decode(jwt);
+       const roles = decodedJwt.role.map((item) => item.authority);
+       if (roles.includes(UserRoles.ADMIN) || roles.includes(UserRoles.STAFF)) {
+          return true;
+      }
+     }
+    return false;
+  }
+
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -118,6 +134,11 @@ function Search() {
                   <MenuItem>Tài khoản của tôi</MenuItem>
                 </Link>
                 <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+                {isJwtAdmin() ?
+                    (<MenuItem onClick={() => {window.location.href = '/admin/dashboard';}
+                    }>
+                   Trang admin
+                </MenuItem>) : null}
               </Menu>
             </div>
           ) : (
