@@ -3,10 +3,10 @@
 ## Class SS2-04
 
 ## Member of the groups:
-- Nguyễn Nam Trường 1901040234
-- Nguyen Văn Lập 1901040121
-- Nguyễn Hoàng Long 1901040127
-- Nguyễn Việt Anh
+- Nguyễn Nam Trường 1901040234 - 4c19
+- Nguyen Văn Lập 1901040121 - 4c19
+- Nguyễn Hoàng Long 1901040127 - 1c19
+- Nguyễn Việt Anh 1901040017 5c-19
 
 ## Available Scripts
 
