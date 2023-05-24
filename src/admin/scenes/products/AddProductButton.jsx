@@ -30,35 +30,20 @@ function AddProductButton(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <>
-      <Button
-        type="submit"
-        sx={{
-          backgroundColor: colors.redAccent[700],
-          color: colors.redAccent[100],
-          fontSize: "14px",
-          fontWeight: "bold",
-          padding: "10px 20px",
-          borderRadius: 0
-        }}
-        onClick={() => removeProductsFromCategory(prodIds, cateId)}
-      >
-        Xóa sản phẩm được chọn
-      </Button>
-      <Button
-        sx={{
-          backgroundColor: colors.blueAccent[700],
-          color: colors.grey[100],
-          fontSize: "14px",
-          fontWeight: "bold",
-          padding: "10px 20px",
-          borderRadius: 0
-        }}
-        onClick={handleAddProductClick}
-      >
-        Thêm sản phẩm
-      </Button>
-    </>
+    <Button
+      type="submit"
+      sx={{
+        backgroundColor: colors.redAccent[700],
+        color: colors.redAccent[100],
+        fontSize: "14px",
+        fontWeight: "bold",
+        padding: "10px 20px",
+        borderRadius: 0
+      }}
+      onClick={() => removeProductsFromCategory(prodIds, cateId)}
+    >
+      Xóa sản phẩm được chọn
+    </Button>
   );
 }
 
